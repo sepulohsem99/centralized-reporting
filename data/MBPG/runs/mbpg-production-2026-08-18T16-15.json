@@ -1,0 +1,264 @@
+{
+ "id": "mbpg-production-2026-08-18T16-15",
+ "pbt": "MBPG",
+ "env": "production",
+ "app_version": "18",
+ "generated_at": "2026-08-18T16:15",
+ "tester": "mrsai",
+ "device_model": "Ulefone Armor 27",
+ "duration_seconds": 2676,
+ "summary": {
+  "passed": 10,
+  "failed": 13,
+  "skipped": 24,
+  "lain": 2
+ },
+ "results": {
+  "MBPG-TC-T-001": {
+   "status": "SKIPPED",
+   "nama": "Tetapan Alamat IP",
+   "sebab": "Bootstrap tidak tercetus — IP sudah wujud, jadi peringkat itu dilangkau sepenuhnya."
+  },
+  "MBPG-TC-T-002": {
+   "status": "SKIPPED",
+   "nama": "Tetapan Pelbagai",
+   "sebab": "Sama seperti T-001 — hanya berjalan apabila IP kosong."
+  },
+  "MBPG-TC-T-003": {
+   "status": "PASSED",
+   "nama": "Selaras Pengguna Apps",
+   "sebab": "22.5s"
+  },
+  "MBPG-TC-T-004": {
+   "status": "PASSED",
+   "nama": "Selaras Maklumat Alamat",
+   "sebab": "122.9s. D-01 TIDAK berulang — sync pertama selepas DB dikosongkan."
+  },
+  "MBPG-TC-T-005": {
+   "status": "FAILED",
+   "nama": "Selaras Maklumat Kompaun",
+   "sebab": "AssertionError: [_scroll_down] App TERKELUAR. D-08, 22.3s."
+  },
+  "MBPG-TC-T-006": {
+   "status": "PASSED",
+   "nama": "Selaras Jenis Kenderaan",
+   "sebab": "22.8s"
+  },
+  "MBPG-TC-T-007": {
+   "status": "PASSED",
+   "nama": "Selaras Warna",
+   "sebab": "24.2s"
+  },
+  "MBPG-TC-T-008": {
+   "status": "SKIPPED",
+   "nama": "Selaras Pelesen",
+   "sebab": "LARANGAN MUTLAK. Tiga lapisan penguatkuasaan; tidak disentuh."
+  },
+  "MBPG-TC-T-009": {
+   "status": "PASSED",
+   "nama": "Selaras Barang Sita",
+   "sebab": "24.2s"
+  },
+  "MBPG-TC-T-010": {
+   "status": "SKIPPED",
+   "nama": "Tetapan Skrin Utama",
+   "sebab": "Tidak diwayarkan ke orkestrator."
+  },
+  "MBPG-TC-T-011": {
+   "status": "SKIPPED",
+   "nama": "Semak Kemaskini",
+   "sebab": "Tidak diwayarkan."
+  },
+  "MBPG-TC-T-012": {
+   "status": "PASSED",
+   "nama": "Remember Me / login",
+   "sebab": "Peringkat sesi, 89.8s."
+  },
+  "MBPG-TC-N-001": {
+   "status": "PASSED",
+   "nama": "Daftar Notis Amaran",
+   "sebab": "PGP02N260818001 dicipta 17:00:06. Kandungan TIDAK disahkan."
+  },
+  "MBPG-TC-N-002": {
+   "status": "NO_EVIDENCE",
+   "nama": "Cetak Notis Amaran",
+   "sebab": "Automasi menekan CETAK, tetapi screenshot 'selepas cetak' ialah SKRIN UTAMA — identik dengan 6 larian lain. Tiada bukti kertas."
+  },
+  "MBPG-TC-N-003": {
+   "status": "SKIPPED",
+   "nama": "Lampiran dalam borang N",
+   "sebab": "Ikon klip tidak dijumpai pada peranti; tidak diwayarkan."
+  },
+  "MBPG-TC-N-004": {
+   "status": "FAILED",
+   "nama": "Kemaskini Notis Amaran",
+   "sebab": "TimeoutException: SETERUSNYA MAHUPUN MENYERAHKAN tidak dijumpai. Dump: ui_dumps/kemaskini_no_seterusnya.xml (17:01:39)."
+  },
+  "MBPG-TC-N-005": {
+   "status": "SKIPPED",
+   "nama": "Bookmark borang N",
+   "sebab": "Tidak diwayarkan."
+  },
+  "MBPG-TC-P-001": {
+   "status": "PASSED",
+   "nama": "Daftar Kompaun Pelbagai",
+   "sebab": "PGP02P260818001 dicipta 17:08:35. Kandungan TIDAK disahkan."
+  },
+  "MBPG-TC-P-002": {
+   "status": "NO_EVIDENCE",
+   "nama": "Cetak Kompaun Pelbagai",
+   "sebab": "Sama seperti N-002 — screenshot ialah skrin utama."
+  },
+  "MBPG-TC-P-003": {
+   "status": "PASSED",
+   "nama": "Serah Kompaun Pelbagai",
+   "sebab": "SEBAHAGIAN: SERAH ditekan semasa cipta dan rekod wujud. HANTAR akhir tidak dicapai."
+  },
+  "MBPG-TC-P-004": {
+   "status": "PASSED",
+   "nama": "Kemaskini Kompaun Pelbagai",
+   "sebab": "PGP02P260818002 dicipta 17:10:40 sebagai gantian PGP02P260818001."
+  },
+  "MBPG-TC-P-005": {
+   "status": "SKIPPED",
+   "nama": "Bookmark borang P",
+   "sebab": "Tidak diwayarkan."
+  },
+  "MBPG-TC-P-006": {
+   "status": "SKIPPED",
+   "nama": "Isu tandatangan",
+   "sebab": "Perlukan pemeriksaan mata."
+  },
+  "MBPG-TC-K-001": {
+   "status": "FAILED",
+   "nama": "Daftar Kompaun Letak Kereta",
+   "sebab": "TIGA percubaan gagal serentak (JYX6605, JUA3276, JRT2649). AssertionError: 'KETERANGAN KOD KOMPAUN': mo... TIADA rekod dicipta. 1045s terbuang."
+  },
+  "MBPG-TC-K-002": {
+   "status": "FAILED",
+   "nama": "Cetak Letak Kereta",
+   "sebab": "Tidak dicapai — K-001 gagal dahulu."
+  },
+  "MBPG-TC-K-003": {
+   "status": "FAILED",
+   "nama": "Serah Letak Kereta",
+   "sebab": "Tidak dicapai."
+  },
+  "MBPG-TC-K-004": {
+   "status": "FAILED",
+   "nama": "Kemaskini Letak Kereta",
+   "sebab": "Tidak dicapai."
+  },
+  "MBPG-TC-K-005": {
+   "status": "SKIPPED",
+   "nama": "Bookmark borang K",
+   "sebab": "Tidak diwayarkan."
+  },
+  "MBPG-TC-SK-001": {
+   "status": "FAILED",
+   "nama": "Senarai Kompaun",
+   "sebab": "TimeoutException."
+  },
+  "MBPG-TC-H-001": {
+   "status": "FAILED",
+   "nama": "Hantar Semula Notis",
+   "sebab": "TimeoutException."
+  },
+  "MBPG-TC-H-002": {
+   "status": "FAILED",
+   "nama": "Hantar Semula Pelbagai",
+   "sebab": "TimeoutException."
+  },
+  "MBPG-TC-H-003": {
+   "status": "FAILED",
+   "nama": "Hantar Semula Letak Kereta",
+   "sebab": "TimeoutException."
+  },
+  "MBPG-TC-TN-001": {
+   "status": "FAILED",
+   "nama": "Tarik Notis by Penguatkuasa",
+   "sebab": "TimeoutException."
+  },
+  "MBPG-TC-TN-002": {
+   "status": "FAILED",
+   "nama": "Tarik Notis by No. Notis",
+   "sebab": "TimeoutException."
+  },
+  "MBPG-TC-TN-003": {
+   "status": "FAILED",
+   "nama": "Tarik Notis by Tarikh",
+   "sebab": "TimeoutException."
+  },
+  "MBPG-TC-NK-001": {
+   "status": "SKIPPED",
+   "nama": "Notis ke Kompaun > Kompaun",
+   "sebab": "Tiada notis luput tempoh. Paling awal 2026-08-27."
+  },
+  "MBPG-TC-NK-002": {
+   "status": "SKIPPED",
+   "nama": "Notis ke Kompaun > Patuh",
+   "sebab": "Sama seperti NK-001."
+  },
+  "MBPG-TC-L-001": {
+   "status": "SKIPPED",
+   "nama": "Daftar Kompaun Lesen",
+   "sebab": "Siri L di luar skop."
+  },
+  "MBPG-TC-L-002": {
+   "status": "SKIPPED",
+   "nama": "Cetak Kompaun Lesen",
+   "sebab": "Siri L di luar skop."
+  },
+  "MBPG-TC-L-003": {
+   "status": "SKIPPED",
+   "nama": "Serah Kompaun Lesen",
+   "sebab": "Siri L di luar skop."
+  },
+  "MBPG-TC-L-004": {
+   "status": "SKIPPED",
+   "nama": "Kemaskini Kompaun Lesen",
+   "sebab": "Siri L di luar skop."
+  },
+  "MBPG-TC-L-005": {
+   "status": "SKIPPED",
+   "nama": "Bookmark borang Lesen",
+   "sebab": "Siri L di luar skop."
+  },
+  "MBPG-TC-S-001": {
+   "status": "SKIPPED",
+   "nama": "Daftar Sitaan",
+   "sebab": "Siri S di luar skop."
+  },
+  "MBPG-TC-S-002": {
+   "status": "SKIPPED",
+   "nama": "Cetak Sitaan",
+   "sebab": "Siri S di luar skop."
+  },
+  "MBPG-TC-S-003": {
+   "status": "SKIPPED",
+   "nama": "Serah Sitaan",
+   "sebab": "Siri S di luar skop."
+  },
+  "MBPG-TC-S-004": {
+   "status": "SKIPPED",
+   "nama": "Kemaskini Sitaan",
+   "sebab": "Siri S di luar skop."
+  },
+  "MBPG-TC-S-005": {
+   "status": "SKIPPED",
+   "nama": "Bookmark borang Sitaan",
+   "sebab": "Siri S di luar skop."
+  },
+  "MBPG-TC-H-004": {
+   "status": "SKIPPED",
+   "nama": "Hantar Semula Lesen",
+   "sebab": "Luar skop atas nama pemilik."
+  },
+  "MBPG-TC-H-005": {
+   "status": "SKIPPED",
+   "nama": "Hantar Semula Sitaan",
+   "sebab": "Luar skop atas nama pemilik."
+  }
+ },
+ "sumber": "LAPORAN-LARIAN-2026-08-18.html"
+}

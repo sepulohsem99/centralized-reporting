@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Centralized Reporting — AI Centric Testing</title>
+<style>
+:root{
+  --bg:#0f1117; --panel:#141824; --panel2:#181e2e; --line:#232a3b; --line2:#2d3748;
+  --ink:#e8eaf2; --dim:#8b93a8; --dimmer:#5b6274;
+  --pass:#22c55e; --pass-bg:#0a2e18;
+  --fail:#ef4444; --fail-bg:#450a0a;
+  --skip:#9ca3af; --skip-bg:#1f2937;
+  --lain:#f59e0b; --lain-bg:#331c04;
+  --info:#3b82f6; --info-bg:#0d1f38;
+  --cyan:#0ea5e9; --cyan-bg:#123047;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'Segoe UI',Arial,sans-serif;font-size:13px;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+.header{height:44px;flex:none;display:flex;align-items:center;gap:14px;padding:0 16px;
+  background:linear-gradient(135deg,#1a1f2e,#1e2640);border-bottom:1px solid var(--line)}
+.header .logo{font-weight:600;letter-spacing:2.5px;font-size:.8rem}
+.header .logo span{color:#a78bfa}
+.header .sub{font-size:.6rem;color:var(--dim);letter-spacing:1.4px;text-transform:uppercase}
+.header .right{margin-left:auto}
+.chip{font-size:.58rem;text-transform:uppercase;letter-spacing:.8px;padding:3px 9px;border-radius:10px;
+  border:1px solid var(--line2);color:var(--dim);background:var(--panel2)}
+.chip.live{color:var(--pass);border-color:#14532d;background:var(--pass-bg)}
+.main{flex:1;display:flex;min-height:0}
+/* sidebar */
+.side{width:210px;flex:none;background:var(--panel);border-right:1px solid var(--line);
+  padding:12px 8px;display:flex;flex-direction:column;gap:4px}
+.side .stitle{font-size:.56rem;text-transform:uppercase;letter-spacing:1.4px;color:var(--dimmer);
+  padding:6px 10px 4px}
+.sitem{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer;
+  color:var(--dim);border-left:3px solid transparent}
+.sitem:hover{background:var(--panel2)}
+.sitem.on{background:var(--panel2);color:var(--ink)}
+.sitem .dot{width:8px;height:8px;border-radius:50%;flex:none}
+.sitem .nm{font-size:.76rem;font-weight:600;letter-spacing:.4px}
+.sitem .full{font-size:.56rem;color:var(--dimmer);display:block;margin-top:1px}
+/* content */
+.content{flex:1;min-width:0;display:flex;flex-direction:column;padding:12px;gap:10px;overflow:hidden}
+.pbthead{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.pbthead h1{font-size:1rem;letter-spacing:.6px}
+.pbthead .meta{font-size:.64rem;color:var(--dim)}
+.tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);padding-bottom:0}
+.tab{padding:7px 16px;font-size:.62rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--dim);
+  cursor:pointer;border:1px solid transparent;border-bottom:none;border-radius:8px 8px 0 0}
+.tab.on{color:var(--ink);background:var(--panel);border-color:var(--line)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:0 9px 9px 9px;
+  flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+/* stat tiles */
+.tiles{display:flex;gap:8px;padding:12px 12px 4px;flex-wrap:wrap}
+.tile{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px 16px;text-align:center;min-width:86px}
+.tile .n{font-size:1.3rem;font-weight:600;font-variant-numeric:tabular-nums}
+.tile .l{font-size:.54rem;text-transform:uppercase;letter-spacing:1px;color:var(--dimmer);margin-top:2px}
+/* filter row */
+.filters{display:flex;gap:6px;padding:8px 12px;align-items:center;flex-wrap:wrap}
+.fchip{font-size:.6rem;text-transform:uppercase;letter-spacing:.6px;padding:4px 12px;border-radius:11px;
+  border:1px solid var(--line2);color:var(--dim);cursor:pointer;background:transparent}
+.fchip.on{color:var(--ink);border-color:var(--dim)}
+.fchip .k{opacity:.7;margin-left:4px;font-variant-numeric:tabular-nums}
+.search{margin-left:auto;background:var(--panel2);border:1px solid var(--line2);border-radius:8px;
+  color:var(--ink);padding:5px 10px;font-size:.68rem;width:180px;outline:none}
+/* table */
+.scroll{flex:1;overflow-y:auto;min-height:0;padding:0 12px 12px}
+.scroll::-webkit-scrollbar{width:8px}
+.scroll::-webkit-scrollbar-thumb{background:var(--line2);border-radius:4px}
+table{width:100%;border-collapse:collapse}
+th{font-size:.56rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--dimmer);text-align:left;
+  padding:7px 8px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--panel)}
+td{padding:6px 8px;border-bottom:1px solid rgba(35,42,59,.55);font-size:.7rem;color:var(--dim);vertical-align:top}
+td.tc{font-family:Consolas,monospace;font-size:.66rem;color:var(--ink);white-space:nowrap}
+.badge{font-size:.56rem;text-transform:uppercase;letter-spacing:.6px;padding:2px 9px;border-radius:9px;border:1px solid;white-space:nowrap}
+/* history */
+.run{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--line);
+  border-left:3px solid var(--dim);border-radius:8px;margin:8px 12px;cursor:pointer;background:var(--panel2)}
+.run:hover{background:#1c2336}
+.run.on{box-shadow:inset 0 0 0 1.5px #f59e0b}
+.run .when{font-family:Consolas,monospace;font-size:.66rem;color:var(--ink);white-space:nowrap}
+.run .info{font-size:.62rem;color:var(--dim)}
+.run .bar{flex:1;height:9px;border-radius:5px;overflow:hidden;display:flex;background:var(--panel);border:1px solid var(--line)}
+.run .bar i{height:100%}
+.run .counts{font-family:Consolas,monospace;font-size:.62rem;color:var(--dim);white-space:nowrap}
+.empty{color:var(--dimmer);font-size:.72rem;padding:24px;text-align:center}
+/* tutorials */
+.tut{flex:1;overflow-y:auto;padding:14px 18px}
+.tut h2{font-size:.72rem;text-transform:uppercase;letter-spacing:1.4px;color:var(--cyan);margin:18px 0 8px}
+.tut h2:first-child{margin-top:0}
+.tut p, .tut li{font-size:.72rem;color:var(--dim);line-height:1.6}
+.tut ol,.tut ul{padding-left:20px;margin:6px 0}
+.tut .step{border:1px solid var(--line);border-left:3px solid var(--cyan);border-radius:8px;
+  background:var(--panel2);padding:10px 12px;margin:8px 0}
+.cmd{position:relative;background:#0b0e15;border:1px solid var(--line2);border-radius:8px;
+  padding:9px 40px 9px 12px;margin:6px 0;font-family:Consolas,monospace;font-size:.66rem;color:#a5f3a5;
+  white-space:pre-wrap;word-break:break-all}
+.copy{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:6px;border:1px solid var(--line2);
+  background:var(--panel2);color:var(--dim);cursor:pointer;font-size:.7rem;line-height:1}
+.copy:hover{color:var(--ink);border-color:var(--dim)}
+.copy.ok{color:var(--pass);border-color:var(--pass)}
+.note{font-size:.64rem;color:var(--lain);background:var(--lain-bg);border:1px solid #713f12;
+  border-radius:8px;padding:8px 10px;margin:6px 0}
+
+/* --- animasi ilustrasi manual --- */
+@keyframes apung{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes apung2{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes kelip{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes denyut{0%,100%{opacity:.15}50%{opacity:.9}}
+@keyframes cetak{0%{transform:translateY(-26px)}70%{transform:translateY(0)}100%{transform:translateY(0)}}
+@keyframes led{0%,100%{opacity:.3}50%{opacity:1}}
+.il-a1{animation:apung 4s ease-in-out infinite}
+.il-a2{animation:apung2 4.6s ease-in-out .6s infinite}
+.il-a3{animation:apung 5s ease-in-out 1.1s infinite}
+.il-kelip{animation:kelip 1.1s steps(1) infinite}
+.il-bt1{animation:denyut 2s ease-in-out infinite}
+.il-bt2{animation:denyut 2s ease-in-out .4s infinite}
+.il-cetak{animation:cetak 3.2s ease-in-out infinite}
+.il-led{animation:led 1.6s ease-in-out infinite}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">CENTRALIZED REPORTING <span>◉</span></div>
+  <div class="sub">AI Centric Testing · Semua PBT</div>
+  <div class="right" style="display:flex;gap:8px;align-items:center"><span class="chip" id="langsw" onclick="toggleLang()" style="cursor:pointer;user-select:none" title="Bahasa / Language">BM | EN</span><span class="chip live" id="feed">LIVE</span></div>
+</div>
+<div class="main">
+  <div class="side" id="side">
+    <div class="stitle">PBT</div>
+    <div id="sidePbt"></div>
+    <div class="stitle" style="margin-top:8px">Rujukan</div>
+    <div class="sitem" data-pbt="TUTORIALS" onclick="pick('TUTORIALS')">
+      <span class="dot" style="background:#a78bfa"></span>
+      <span><span class="nm">TUTORIALS</span><span class="full">proses kerja &amp; command</span></span>
+    </div>
+  </div>
+  <div class="content" id="content"></div>
+</div>
+
+<script>window.__STATIK__=true;window.__DATA__={"manifest": {"tajuk": "CENTRALIZED REPORTING — AI CENTRIC TESTING", "pbt": [{"kod": "MBIP", "nama": "Majlis Bandaraya Iskandar Puteri", "warna": "#3b82f6"}, {"kod": "MBJB", "nama": "Majlis Bandaraya Johor Bahru", "warna": "#22d3ee"}, {"kod": "MBPG", "nama": "Majlis Bandaraya Pasir Gudang", "warna": "#22c55e"}]}, "runs": {"MBIP": [{"id": "mbip-production-2026-08-27T17-35", "pbt": "MBIP", "env": "production", "app_version": "2.1.17", "generated_at": "2026-08-27T17:35:00", "tester": "mrsai", "device_model": "Ulefone Armor 27", "duration_seconds": 4614, "summary": {"passed": 15, "failed": 4, "skipped": 1, "lain": 28}, "results": {"MBIP-TC-T-001": {"status": "PASSED", "nama": "Tetapan Alamat IP", "sebab": "Pelarasan setiap run: IP internal+external 58.27.54.105 diisi & Simpan disahkan."}, "MBIP-TC-T-002": {"status": "PASSED", "nama": "Tetapan Pelbagai", "sebab": "Lesen aplikasi disahkan dalam medan (352405067769401); server jawab 'Lesen sama'."}, "MBIP-TC-T-003": {"status": "PASSED", "nama": "Selaras Pengguna Apps", "sebab": "Popup 'DATA PENGGUNA BERJAYA DISIMPAN!'"}, "MBIP-TC-T-004": {"status": "PASSED", "nama": "Selaras Maklumat Alamat", "sebab": "Popup 'DATA ALAMAT BERJAYA DISIMPAN!'"}, "MBIP-TC-T-005": {"status": "PASSED", "nama": "Selaras Maklumat Kompaun", "sebab": "Popup 'DATA KOMPAUN BERJAYA DISIMPAN!'"}, "MBIP-TC-T-006": {"status": "PASSED", "nama": "Selaras Maklumat Jenis Kenderaan", "sebab": "Popup 'DATA JENIS KENDERAAN SAVED SUCCESSFULLY!'"}, "MBIP-TC-T-007": {"status": "PASSED", "nama": "Selaras Maklumat Warna", "sebab": "Popup 'DATA MAKLUMAT WARNA BERJAYA DISIMPAN!'"}, "MBIP-TC-T-008": {"status": "SKIPPED", "nama": "Selaras Maklumat Pelesen", "sebab": "LARANGAN MUTLAK — sync berjam-jam (arahan pemilik, sama seperti MBPG)."}, "MBIP-TC-T-009": {"status": "PASSED", "nama": "Selaras Maklumat Barang Sita", "sebab": "Popup 'DATA MAKLUMAT BARANG SITAAN BERJAYA DISIMPAN!'"}, "MBIP-TC-T-010": {"status": "NOT_RUN", "nama": "Tetapan Skrin Utama", "sebab": "Luar skop wave e2e NPK (keputusan CEO: N/P/K -001/-002 + SK-001)."}, "MBIP-TC-T-011": {"status": "NOT_RUN", "nama": "Semak Kemaskini", "sebab": "Luar skop wave e2e NPK."}, "MBIP-TC-T-012": {"status": "NOT_RUN", "nama": "Remember Me Functions", "sebab": "Luar skop wave e2e NPK."}, "MBIP-TC-N-001": {"status": "PASSED", "nama": "Daftar Notis Amaran", "sebab": "Rekod PRODUCTION dicipta & DIHANTAR ke 58.27.54.105: IPA3N260827001. Dropdown 3-tier lulus dengan MOD GANTI (data Excel drift — lihat penemuan)."}, "MBIP-TC-N-002": {"status": "PASSED", "nama": "Daftar Notis Amaran > Cetak", "sebab": "Cetakan fizikal KELUAR dari printer SPP-R410 — kertas disahkan mata pemilik."}, "MBIP-TC-N-003": {"status": "NOT_RUN", "nama": "Serah Notis Amaran", "sebab": "Luar skop wave e2e NPK."}, "MBIP-TC-N-004": {"status": "NOT_RUN", "nama": "Kemaskini Notis Amaran", "sebab": "Luar skop wave; halangan app diketahui (Form Kemaskini bawah tidak render — menyekat semua *-004)."}, "MBIP-TC-N-005": {"status": "NOT_RUN", "nama": "Bookmark Notis Amaran", "sebab": "Luar skop wave; UI simpan Bookmark tiada dalam build (menyekat semua *-005)."}, "MBIP-TC-P-001": {"status": "PASSED", "nama": "Daftar Kompaun Pelbagai", "sebab": "Rekod PRODUCTION dicipta & DIHANTAR: IPA3P260827001. Tier-2/3 lulus dengan data DB-verbatim (Excel V2.1.17 drift: PERUNTUKKAN/IDAK — lihat penemuan)."}, "MBIP-TC-P-002": {"status": "PASSED", "nama": "Daftar Kompaun Pelbagai > Cetak", "sebab": "Cetakan fizikal keluar (tiada COMMAND_NOT_SEND; kertas disahkan)."}, "MBIP-TC-P-003": {"status": "NOT_RUN", "nama": "Serah Kompaun Pelbagai", "sebab": "Luar skop wave e2e NPK."}, "MBIP-TC-P-004": {"status": "NOT_RUN", "nama": "Kemaskini Kompaun Pelbagai", "sebab": "Luar skop wave; halangan *-004 diketahui."}, "MBIP-TC-P-005": {"status": "NOT_RUN", "nama": "Bookmark Kompaun Pelbagai", "sebab": "Luar skop wave; halangan *-005 diketahui."}, "MBIP-TC-K-001": {"status": "PASSED", "nama": "Daftar Kompaun Letak Kereta (Trafik)", "sebab": "Rekod PRODUCTION dicipta & DIHANTAR: IPA3K260828002 (rerun #6, 2026-08-27 17:35). Data kunci CEO: JYX6605, tier AKTA JALAN/PARIT/BANGUNAN -> akta 62 -> kesalahan SEKSYEN 46(1)(G), kadar RM200 di-clamp app ke min RM500, alamat JALAN JAYA 1 dipilih dari senarai (auto TAMAN JAYA/SKUDAI). 4 halangan build hotfix diselesaikan dalam automation — lihat penemuan."}, "MBIP-TC-K-002": {"status": "PASSED", "nama": "Daftar Kompaun Letak Kereta > Cetak", "sebab": "Cetakan fizikal keluar (printer connected=True, tiada COMMAND_NOT_SEND; kertas Trafik disahkan mata pemilik)."}, "MBIP-TC-K-003": {"status": "NOT_RUN", "nama": "Serah Kompaun Letak Kereta", "sebab": "Luar skop wave e2e NPK."}, "MBIP-TC-K-004": {"status": "NOT_RUN", "nama": "Kemaskini Kompaun Letak Kereta", "sebab": "Luar skop wave; halangan *-004 diketahui."}, "MBIP-TC-K-005": {"status": "NOT_RUN", "nama": "Bookmark Kompaun Letak Kereta", "sebab": "Luar skop wave; halangan *-005 diketahui."}, "MBIP-TC-L-001": {"status": "NOT_RUN", "nama": "Daftar Kompaun Lesen", "sebab": "L dikecualikan dari skop wave (keputusan CEO 2026-08-27)."}, "MBIP-TC-L-002": {"status": "NOT_RUN", "nama": "Daftar Kompaun Lesen > Cetak", "sebab": "L dikecualikan dari skop wave."}, "MBIP-TC-L-003": {"status": "NOT_RUN", "nama": "Serah Kompaun Lesen", "sebab": "L dikecualikan dari skop wave."}, "MBIP-TC-L-004": {"status": "NOT_RUN", "nama": "Kemaskini Kompaun Lesen", "sebab": "L dikecualikan dari skop wave."}, "MBIP-TC-L-005": {"status": "NOT_RUN", "nama": "Bookmark Kompaun Lesen", "sebab": "L dikecualikan dari skop wave."}, "MBIP-TC-S-001": {"status": "NOT_RUN", "nama": "Daftar Sitaan", "sebab": "S dikecualikan dari skop wave (keputusan CEO); Kadar Denda borang Sitaan juga halangan app diketahui."}, "MBIP-TC-S-002": {"status": "NOT_RUN", "nama": "Daftar Sitaan > Cetak", "sebab": "S dikecualikan dari skop wave."}, "MBIP-TC-S-003": {"status": "NOT_RUN", "nama": "Serah Sitaan", "sebab": "S dikecualikan dari skop wave."}, "MBIP-TC-S-004": {"status": "NOT_RUN", "nama": "Kemaskini Sitaan", "sebab": "S dikecualikan dari skop wave."}, "MBIP-TC-S-005": {"status": "NOT_RUN", "nama": "Bookmark Sitaan", "sebab": "S dikecualikan dari skop wave."}, "MBIP-TC-SK-001": {"status": "PASSED", "nama": "Senarai Kompaun", "sebab": "Rekod production yang dicipta dalam run kelihatan dalam Senarai (IPA3N260827001 + IPA3P260827001 disahkan; IPA3K260828002 dibuka ikut nombor semasa K-002)."}, "MBIP-TC-H-001": {"status": "NOT_RUN", "nama": "Hantar Semula Notis Amaran", "sebab": "Luar skop wave e2e NPK."}, "MBIP-TC-H-002": {"status": "NOT_RUN", "nama": "Hantar Semula Kompaun Pelbagai", "sebab": "Luar skop wave; server menolak hantar-semula jenis P (halangan diketahui)."}, "MBIP-TC-H-003": {"status": "NOT_RUN", "nama": "Hantar Semula Kompaun Letak Kereta", "sebab": "Luar skop wave; server menolak hantar-semula jenis K (halangan diketahui)."}, "MBIP-TC-H-004": {"status": "NOT_RUN", "nama": "Hantar Semula Kompaun Lesen", "sebab": "Luar skop wave; server menolak hantar-semula jenis L (halangan diketahui)."}, "MBIP-TC-H-005": {"status": "NOT_RUN", "nama": "Hantar Semula Sitaan", "sebab": "Luar skop wave e2e NPK."}, "MBIP-TC-TN-001": {"status": "FAILED", "nama": "Tarik Notis by Penguatkuasa", "sebab": "Halangan app diketahui (dikesan wave #1 2026-08-27) — bukan isu automation."}, "MBIP-TC-TN-002": {"status": "FAILED", "nama": "Tarik Notis by No.Notis", "sebab": "Halangan app diketahui (dikesan wave #1) — bukan isu automation."}, "MBIP-TC-TN-003": {"status": "NOT_RUN", "nama": "Tarik Notis by Tarikh (v3-added)", "sebab": "Luar skop wave e2e NPK."}, "MBIP-TC-NK-001": {"status": "FAILED", "nama": "Notis ke Kompaun > Kompaun", "sebab": "Halangan app diketahui (dikesan wave #1) — bukan isu automation."}, "MBIP-TC-NK-002": {"status": "FAILED", "nama": "Notis ke Kompaun > Patuh", "sebab": "Halangan app diketahui (dikesan wave #1) — bukan isu automation."}}, "nilai_ganti": [{"tc": "MBIP-TC-N-001", "medan": "Kesalahan Kompaun", "nilai_excel": "MEMOTONG, MENGALIH, MEROSAKKAN ATAU MEMUSNAHKAN MANA-MANA BUNGA, BENIH, TUMBUH-TUMBUHAN ATAU POKOK-POKOK.", "nilai_diguna": "MELETAKKAN ATAU MENYEBAB DILETAKKAN KENDERAAN BERMOTOR TANPA KEBENARAN MPJBT", "sumber": "MOD GANTI (DB verbatim, kod 70). Nilai Excel tidak lagi wujud di bawah akta 39/UUK 7 — dalam DB semasa ia berpindah ke akta 4 dengan ejaan berubah. Kod 70 satu-satunya kesalahan akta 39; rantaian kt->39->70 terbukti dalam rekod notis lama (IPA3N260710004). Arahan CEO: 'pilih mana-mana data yang boleh bagi lulus'."}, {"tc": "MBIP-TC-P-001", "medan": "Kod Akta", "nilai_excel": "SEKSYEN 18(B) TIDAK MEMATUHI PERUNTUKKAN UUK KERJA TANAH", "nilai_diguna": "SEKSYEN 18(B) TIDAK MEMATUHI PERUNTUKAN UUK KERJA TANAH", "sumber": "MOD GANTI (DB verbatim). Typo Excel 'PERUNTUKKAN' (dua K) vs server 'PERUNTUKAN' — satu huruf mematahkan padanan."}, {"tc": "MBIP-TC-P-001", "medan": "Kesalahan Kompaun", "nilai_excel": "IDAK MEMATUHI PERUNTUKKAN UUK KERJA TANAH", "nilai_diguna": "TIDAK MEMATUHI PERUNTUKAN UUK KERJA TANAH", "sumber": "MOD GANTI (DB verbatim). 'IDAK' + 'PERUNTUKKAN' typo Excel tiada di server; rantaian oracle kt->akta 34->kesalahan 45 masih wujud."}, {"tc": "MBIP-TC-K-001", "medan": "Keterangan Kod Kompaun (tier-1)", "nilai_excel": "PERINTAH LALULINTAS JALAN (PERINTAH 39)", "nilai_diguna": "AKTA JALAN/PARIT/BANGUNAN", "sumber": "KEPUTUSAN CEO 2026-08-21 (build hotfix ubah borang Trafik — tier-1 tidak lagi terkunci PERINTAH 39). Display DB verbatim kod 'jpb'."}, {"tc": "MBIP-TC-K-001", "medan": "Kod Akta", "nilai_excel": "PERINTAH LALULINTAS JALAN (PERUNTUKAN TEMPAT LETAK KERETA)", "nilai_diguna": "AKTA JALAN PARIT DAN BANGUNAN (AKTA 133)", "sumber": "KEPUTUSAN CEO: akta 62. Live-search akta mencari TEKS keterangan, bukan kod — keterangan DB verbatim digunakan."}, {"tc": "MBIP-TC-K-001", "medan": "Kesalahan Kompaun", "nilai_excel": "MEMPAMERKAN KUPON LETAK KERETA TANPA MEMBUAT PENANDAAN YANG BETUL.", "nilai_diguna": "[SEKSYEN 46 (1) (G)] - SEKSYEN 46 (1) (G) MENYEBABKAN ATAU MEMBENARKAN", "sumber": "KEPUTUSAN CEO: 'pilih yang atas' — baris pertama senarai kesalahan akta 62 (2 baris dalam DB)."}, {"tc": "MBIP-TC-K-001", "medan": "Kadar Denda (RM)", "nilai_excel": "RM30", "nilai_diguna": "RM500", "sumber": "Data CEO RM200; app clamp ke minimum julat akta 62 [RM500-RM2000]. Nilai Excel RM30 untuk borang lama PERINTAH 39."}, {"tc": "MBIP-TC-K-001", "medan": "Maklumat Taman", "nilai_excel": "TAMAN JAYA 1", "nilai_diguna": "TAMAN JAYA", "sumber": "Auto-isi dari pilihan JALAN JAYA 1 (JOIN DB: jalan->taman->bandar). DB kata JALAN JAYA 1 milik TAMAN JAYA tanpa '1'."}, {"tc": "MBIP-TC-K-001", "medan": "Tempoh Kompaun", "nilai_excel": "1", "nilai_diguna": "2", "sumber": "KEPUTUSAN CEO 2026-08-21 (DATA-UJIAN-KOMPAUN-TRAFIK-MBIP.md); pra-isi app '21' diganti."}], "rekod_production": [{"no": "IPA3N260827001", "jenis": "Notis Amaran", "tc": "MBIP-TC-N-001/N-002", "status": "DIHANTAR + DICETAK (kertas disahkan mata)", "tindakan_pm": "Mohon PM batalkan"}, {"no": "IPA3P260827001", "jenis": "Kompaun Pelbagai", "tc": "MBIP-TC-P-001/P-002", "status": "DIHANTAR + DICETAK", "tindakan_pm": "Mohon PM batalkan"}, {"no": "IPA3K260828002", "jenis": "Kompaun Trafik (Letak Kereta)", "tc": "MBIP-TC-K-001/K-002", "status": "DIHANTAR + DICETAK (kertas disahkan mata)", "tindakan_pm": "Mohon PM batalkan"}], "penemuan_app": [{"kod": "UX-ALAMAT-TRAFIK", "tajuk": "Tab-2 Trafik (build hotfix 2.1.17): pra-isi alamat TIDAK sah untuk validasi BANDAR", "butiran": "Blok alamat datang pra-isi ('6 LORONG RIA'/'KAMPUNG MELAYU MAJIDI'/'JOHOR BAHRU') tetapi nilai itu tiada dalam local_ekpn_jalan, jadi kod bandar dalaman kekal kosong dan Seterusnya ditolak: 'SILA PILIH BANDAR DARIPADA SENARAI.' Pengguna sebenar yang terima pra-isi ini akan tersekat juga. Jalan WAJIB dipilih semula dari senarai (pilihan men-set kod taman+bandar melalui JOIN DB). Label TextView blok alamat juga dibuang dalam hotfix — medan hanya dikenal melalui hint."}, {"kod": "UX-TEMPOH-TRAFIK", "tajuk": "TEMPOH KOMPAUN pra-isi '21' pada borang Trafik", "butiran": "Nilai lalai 21 hari (maksimum julat) — bukan kosong. Skrip Excel/keputusan CEO = 2 hari; automation kini menggantinya secara eksplisit."}, {"kod": "UX-KAMERA-TRAFIK", "tajuk": "Kamera borang Trafik jauh lebih perlahan daripada borang N/P", "butiran": "Snap tercicir pada pacing biasa (kaunter 1/6-2/6 selepas 3 snap) dan butang tick tidak berdaftar sehingga ada capture segar yang settled. Kaunter 'GAMBAR TELAH DIAMBIL: N/6' boleh menunjukkan gambar tetapi validasi 'GAMBAR MESTI DIAMBIL.' masih menolak jika sesi kamera ditutup melalui X dan bukan tick."}, {"kod": "DATA-EXCEL-DRIFT", "tajuk": "Excel V2.1.17 tidak selari dengan server/DB peranti", "butiran": "N: kesalahan MEMOTONG berpindah akta 39 -> akta 4 (ejaan turut berubah). P: 'PERUNTUKKAN' (typo dua K) vs 'PERUNTUKAN' server; 'IDAK' tiada di server. K: Excel kata TAMAN JAYA 1, DB kata JALAN JAYA 1 milik TAMAN JAYA; kadar RM200 di bawah minimum julat akta 62 (RM500-2000) — app clamp ke RM500. Akta 57 & ACT2025000003 sifar kesalahan dalam DB. Automation guna MOD GANTI + data DB-verbatim, semua dicatat [PENEMUAN-DATA]."}, {"kod": "APP-HALANGAN-TN-NK", "tajuk": "TN-001/TN-002/NK-001/NK-002 gagal pada halangan app", "butiran": "Dikesan wave #1 2026-08-27 — kegagalan berpunca dari aplikasi, bukan skrip ujian. Perlu siasatan dev; tidak dikira regresi automation."}], "sumber": "Wave e2e NPK 2026-08-27 (run_penuh_mbip.py --terus, 1:01:17, 5 lulus) + rerun K #6 (15:37, K-001/K-002 lulus) melalui jambatan; cetakan fizikal disahkan mata pemilik (3 kertas: N, P, K). Laporan penuh: reports/LAPORAN-E2E-NPK-MBIP-2026-08-27.md"}, {"id": "mbip-production-2026-07-24T17-02-13", "pbt": "MBIP", "env": "production", "app_version": "2.1.17", "generated_at": "2026-07-24T17:02:13", "tester": "shu", "device_model": "ARMOR 27", "duration_seconds": 5566.18, "summary": {"passed": 19, "failed": 23, "skipped": 6, "lain": 0}, "results": {"MBIP-TC-T-001": {"status": "PASSED", "nama": "", "sebab": ""}, "MBIP-TC-T-002": {"status": "PASSED", "nama": "", "sebab": ""}, "MBIP-TC-T-003": {"status": "PASSED", "nama": "", "sebab": ""}, "MBIP-TC-T-004": {"status": "PASSED", "nama": "", "sebab": ""}, "MBIP-TC-T-005": {"status": "PASSED", "nama": "", "sebab": ""}, "MBIP-TC-T-006": {"status": "PASSED", "nama": "", "sebab": ""}, "MBIP-TC-T-007": {"status": "PASSED", "nama": "", "sebab": ""}, "MBIP-TC-T-008": {"status": "SKIPPED", "nama": "", "sebab": ""}, "MBIP-TC-T-009": {"status": "PASSED", "nama": "", "sebab": ""}, "MBIP-TC-T-010": {"status": "PASSED", "nama": "", "sebab": ""}, "MBIP-TC-T-011": {"status": "PASSED", "nama": "", "sebab": ""}, "MBIP-TC-T-012": {"status": "PASSED", "nama": "", "sebab": ""}, "MBIP-TC-N-001": {"status": "PASSED", "nama": "", "sebab": ""}, "MBIP-TC-N-002": {"status": "SKIPPED", "nama": "", "sebab": ""}, "MBIP-TC-N-003": {"status": "PASSED", "nama": "", "sebab": ""}, "MBIP-TC-N-004": {"status": "FAILED", "nama": "", "sebab": ""}, "MBIP-TC-N-005": {"status": "FAILED", "nama": "", "sebab": ""}, "MBIP-TC-P-001": {"status": "PASSED", "nama": "", "sebab": ""}, "MBIP-TC-P-002": {"status": "SKIPPED", "nama": "", "sebab": ""}, "MBIP-TC-P-003": {"status": "PASSED", "nama": "", "sebab": ""}, "MBIP-TC-P-004": {"status": "FAILED", "nama": "", "sebab": ""}, "MBIP-TC-P-005": {"status": "FAILED", "nama": "", "sebab": ""}, "MBIP-TC-K-001": {"status": "PASSED", "nama": "", "sebab": ""}, "MBIP-TC-K-002": {"status": "SKIPPED", "nama": "", "sebab": ""}, "MBIP-TC-K-003": {"status": "PASSED", "nama": "", "sebab": ""}, "MBIP-TC-K-004": {"status": "FAILED", "nama": "", "sebab": ""}, "MBIP-TC-K-005": {"status": "FAILED", "nama": "", "sebab": ""}, "MBIP-TC-L-001": {"status": "PASSED", "nama": "", "sebab": ""}, "MBIP-TC-L-002": {"status": "SKIPPED", "nama": "", "sebab": ""}, "MBIP-TC-L-003": {"status": "PASSED", "nama": "", "sebab": ""}, "MBIP-TC-L-004": {"status": "FAILED", "nama": "", "sebab": ""}, "MBIP-TC-L-005": {"status": "FAILED", "nama": "", "sebab": ""}, "MBIP-TC-S-001": {"status": "FAILED", "nama": "", "sebab": ""}, "MBIP-TC-S-002": {"status": "SKIPPED", "nama": "", "sebab": ""}, "MBIP-TC-S-003": {"status": "ERROR", "nama": "", "sebab": ""}, "MBIP-TC-S-004": {"status": "ERROR", "nama": "", "sebab": ""}, "MBIP-TC-S-005": {"status": "ERROR", "nama": "", "sebab": ""}, "MBIP-TC-SK-001": {"status": "ERROR", "nama": "", "sebab": ""}, "MBIP-TC-H-001": {"status": "ERROR", "nama": "", "sebab": ""}, "MBIP-TC-H-002": {"status": "ERROR", "nama": "", "sebab": ""}, "MBIP-TC-H-003": {"status": "ERROR", "nama": "", "sebab": ""}, "MBIP-TC-H-004": {"status": "ERROR", "nama": "", "sebab": ""}, "MBIP-TC-H-005": {"status": "ERROR", "nama": "", "sebab": ""}, "MBIP-TC-TN-001": {"status": "ERROR", "nama": "", "sebab": ""}, "MBIP-TC-TN-002": {"status": "ERROR", "nama": "", "sebab": ""}, "MBIP-TC-TN-003": {"status": "ERROR", "nama": "", "sebab": ""}, "MBIP-TC-NK-001": {"status": "ERROR", "nama": "", "sebab": ""}, "MBIP-TC-NK-002": {"status": "ERROR", "nama": "", "sebab": ""}}, "sumber": "mbip-production-2026-07-24T17-02-13-shu.json"}], "MBJB": [{"id": "mbjb-staging-2026-08-05T12-54-54", "pbt": "MBJB", "env": "staging", "app_version": "2.1.33", "generated_at": "2026-08-05T12:54:54", "tester": "mrsai", "device_model": "Armor 27", "duration_seconds": 4078.29, "summary": {"passed": 7, "failed": 12, "skipped": 35, "lain": 0}, "results": {"MBJB-TC-T-001": {"status": "PASSED", "nama": "", "sebab": ""}, "MBJB-TC-T-002": {"status": "PASSED", "nama": "", "sebab": ""}, "MBJB-TC-T-003": {"status": "PASSED", "nama": "", "sebab": ""}, "MBJB-TC-T-004": {"status": "FAILED", "nama": "", "sebab": "assert False"}, "MBJB-TC-T-005": {"status": "PASSED", "nama": "", "sebab": ""}, "MBJB-TC-T-006": {"status": "FAILED", "nama": "", "sebab": "assert False"}, "MBJB-TC-T-007": {"status": "FAILED", "nama": "", "sebab": "assert False"}, "MBJB-TC-T-008": {"status": "SKIPPED", "nama": "", "sebab": "LALAI: T-008 dilangkau (operasi >4 JAM diperhati, 121,871 rekod pada run 2026-07-31 — lihat CLAUDE.md 'SELARAS PELESEN'). Data KEKAL pada device antara run (no_reset=True), jadi ini BUKAN membazir kerja — ia mengelakkan sync SEMULA yang tidak perlu. Untuk menjalankannya dengan SENGAJA: set MBJB_JALA"}, "MBJB-TC-T-009": {"status": "FAILED", "nama": "", "sebab": "assert False"}, "MBJB-TC-T-010": {"status": "FAILED", "nama": "", "sebab": "assert False"}, "MBJB-TC-T-011": {"status": "FAILED", "nama": "", "sebab": "assert False"}, "MBJB-TC-T-012": {"status": "FAILED", "nama": "", "sebab": "+      where <pages.login_page.LoginPage object at 0x0000029ABB071750> = <tests.conftest.Pages object at 0x0000029ABB0717D0>.login"}, "MBJB-TC-N-001": {"status": "PASSED", "nama": "", "sebab": ""}, "MBJB-TC-N-002": {"status": "PASSED", "nama": "", "sebab": ""}, "MBJB-TC-N-003": {"status": "PASSED", "nama": "", "sebab": ""}, "MBJB-TC-N-004": {"status": "SKIPPED", "nama": "", "sebab": "MBJB-TC-N-004: 1 medan belum disahkan pada peranti MBJB — kesalahan_jalan. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka."}, "MBJB-TC-N-005": {"status": "FAILED", "nama": "", "sebab": "AssertionError: SANDARAN-INDEKS gagal juga: label 'KETERANGAN KOD KOMPAUN' tidak dijumpai DAN Spinner[0] tiada pada skrin ini (0 Spinner dilihat keseluruhan). Kedua-dua laluan pengenalan (label dan indeks) gagal untuk tingkat 1."}, "MBJB-TC-N-006": {"status": "SKIPPED", "nama": "", "sebab": "MBJB-TC-N-006: 1 medan belum disahkan pada peranti MBJB — kaedah_sahkan_concat[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Medan bertanda [skrol?] BELUM DISAHKAN TIADA — ia mungkin sekadar d"}, "MBJB-TC-P-001": {"status": "SKIPPED", "nama": "", "sebab": "MBJB-TC-P-001: 2 medan belum disahkan pada peranti MBJB — no_pembantu_penguatkuasa[skrol?], poskod[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Medan bertanda [skrol?] BELUM DISAHKAN TIADA — "}, "MBJB-TC-P-002": {"status": "SKIPPED", "nama": "", "sebab": "show stopper dari MBJB-TC-P-001: rekod P TIDAK DICIPTA dalam run ini (create GAGAL — baiki borang create; ini BUKAN isu awalan nombor)"}, "MBJB-TC-P-003": {"status": "SKIPPED", "nama": "", "sebab": "show stopper dari MBJB-TC-P-001: rekod P TIDAK DICIPTA dalam run ini (create GAGAL — baiki borang create; ini BUKAN isu awalan nombor)"}, "MBJB-TC-P-004": {"status": "SKIPPED", "nama": "", "sebab": "MBJB-TC-P-004: 1 medan belum disahkan pada peranti MBJB — kesalahan_jalan. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka."}, "MBJB-TC-P-005": {"status": "SKIPPED", "nama": "", "sebab": "borang tidak boleh dibuka sehingga medan Pesalah disahkan — MBJB-TC-P-001: 2 medan belum disahkan pada peranti MBJB — no_pembantu_penguatkuasa[skrol?], poskod[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; "}, "MBJB-TC-P-006": {"status": "SKIPPED", "nama": "", "sebab": "MBJB-TC-P-006: 1 medan belum disahkan pada peranti MBJB — kaedah_sahkan_concat[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Medan bertanda [skrol?] BELUM DISAHKAN TIADA — ia mungkin sekadar d"}, "MBJB-TC-P-007": {"status": "SKIPPED", "nama": "", "sebab": "MBJB-TC-P-007: 1 medan belum disahkan pada peranti MBJB — kaedah_baca_status_notis[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Medan bertanda [skrol?] BELUM DISAHKAN TIADA — ia mungkin sekad"}, "MBJB-TC-K-001": {"status": "SKIPPED", "nama": "", "sebab": "MBJB-TC-K-001: 1 medan belum disahkan pada peranti MBJB — no_pembantu_penguatkuasa[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Medan bertanda [skrol?] BELUM DISAHKAN TIADA — ia mungkin sekad"}, "MBJB-TC-K-002": {"status": "SKIPPED", "nama": "", "sebab": "show stopper dari MBJB-TC-K-001: rekod K TIDAK DICIPTA dalam run ini (create GAGAL — baiki borang create; ini BUKAN isu awalan nombor)"}, "MBJB-TC-K-003": {"status": "SKIPPED", "nama": "", "sebab": "show stopper dari MBJB-TC-K-001: rekod K TIDAK DICIPTA dalam run ini (create GAGAL — baiki borang create; ini BUKAN isu awalan nombor)"}, "MBJB-TC-K-004": {"status": "SKIPPED", "nama": "", "sebab": "MBJB-TC-K-004: 1 medan belum disahkan pada peranti MBJB — kesalahan_jalan. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka."}, "MBJB-TC-K-005": {"status": "SKIPPED", "nama": "", "sebab": "borang tidak boleh dibuka sehingga medan Pesalah disahkan — MBJB-TC-K-001: 1 medan belum disahkan pada peranti MBJB — no_pembantu_penguatkuasa[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Med"}, "MBJB-TC-K-006": {"status": "SKIPPED", "nama": "", "sebab": "MBJB-TC-K-006: 1 medan belum disahkan pada peranti MBJB — kaedah_sahkan_concat[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Medan bertanda [skrol?] BELUM DISAHKAN TIADA — ia mungkin sekadar d"}, "MBJB-TC-K-007": {"status": "SKIPPED", "nama": "", "sebab": "MBJB-TC-K-007: 1 medan belum disahkan pada peranti MBJB — kaedah_baca_status_notis[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Medan bertanda [skrol?] BELUM DISAHKAN TIADA — ia mungkin sekad"}, "MBJB-TC-L-001": {"status": "SKIPPED", "nama": "", "sebab": "[BELUM DI-RECON] MBJB-TC-L-001: 1 medan belum disahkan pada peranti MBJB — no_pembantu_penguatkuasa[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Medan bertanda [skrol?] BELUM DISAHKAN TIADA —"}, "MBJB-TC-L-002": {"status": "SKIPPED", "nama": "", "sebab": "show stopper dari MBJB-TC-L-001: rekod L TIDAK DICIPTA dalam run ini (create GAGAL — baiki borang create; ini BUKAN isu awalan nombor)"}, "MBJB-TC-L-003": {"status": "SKIPPED", "nama": "", "sebab": "show stopper dari MBJB-TC-L-001: rekod L TIDAK DICIPTA dalam run ini (create GAGAL — baiki borang create; ini BUKAN isu awalan nombor)"}, "MBJB-TC-L-004": {"status": "SKIPPED", "nama": "", "sebab": "[BELUM DI-RECON] MBJB-TC-L-004: 1 medan belum disahkan pada peranti MBJB — kesalahan_jalan. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka."}, "MBJB-TC-L-005": {"status": "SKIPPED", "nama": "", "sebab": "[BELUM DI-RECON] borang tidak boleh dibuka sehingga medan Pesalah disahkan — MBJB-TC-L-001: 1 medan belum disahkan pada peranti MBJB — no_pembantu_penguatkuasa[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti;"}, "MBJB-TC-L-006": {"status": "SKIPPED", "nama": "", "sebab": "[BELUM DI-RECON] MBJB-TC-L-006: 1 medan belum disahkan pada peranti MBJB — kaedah_sahkan_concat[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Medan bertanda [skrol?] BELUM DISAHKAN TIADA — ia "}, "MBJB-TC-L-007": {"status": "SKIPPED", "nama": "", "sebab": "[BELUM DI-RECON] MBJB-TC-L-007: 1 medan belum disahkan pada peranti MBJB — kaedah_baca_status_notis[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Medan bertanda [skrol?] BELUM DISAHKAN TIADA —"}, "MBJB-TC-S-001": {"status": "SKIPPED", "nama": "", "sebab": "[BELUM DI-RECON] MBJB-TC-S-001: 1 medan belum disahkan pada peranti MBJB — no_pembantu_penguatkuasa[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Medan bertanda [skrol?] BELUM DISAHKAN TIADA —"}, "MBJB-TC-S-002": {"status": "SKIPPED", "nama": "", "sebab": "show stopper dari MBJB-TC-S-001: rekod S TIDAK DICIPTA dalam run ini (create GAGAL — baiki borang create; ini BUKAN isu awalan nombor)"}, "MBJB-TC-S-003": {"status": "SKIPPED", "nama": "", "sebab": "show stopper dari MBJB-TC-S-001: rekod S TIDAK DICIPTA dalam run ini (create GAGAL — baiki borang create; ini BUKAN isu awalan nombor)"}, "MBJB-TC-S-004": {"status": "SKIPPED", "nama": "", "sebab": "[BELUM DI-RECON] MBJB-TC-S-004: 1 medan belum disahkan pada peranti MBJB — kesalahan_jalan. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka."}, "MBJB-TC-S-005": {"status": "SKIPPED", "nama": "", "sebab": "[BELUM DI-RECON] borang tidak boleh dibuka sehingga medan Pesalah disahkan — MBJB-TC-S-001: 1 medan belum disahkan pada peranti MBJB — no_pembantu_penguatkuasa[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti;"}, "MBJB-TC-S-006": {"status": "SKIPPED", "nama": "", "sebab": "[BELUM DI-RECON] MBJB-TC-S-006: 1 medan belum disahkan pada peranti MBJB — kaedah_sahkan_concat[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Medan bertanda [skrol?] BELUM DISAHKAN TIADA — ia "}, "MBJB-TC-SK-001": {"status": "SKIPPED", "nama": "", "sebab": "hanya 1 nombor NO AKAUN terbaca merentas ('K', 'L', 'N', 'P', 'S') SELEPAS skrol penuh ATAS->HUJUNG bagi setiap jenis; susunan berturutan (C11) tidak dapat diperiksa. Skrin Senarai dipaparkan dan rekod ada — bilangan rekod pada julat tarikh ini sekadar tidak mencukupi untuk menguji susunan."}, "MBJB-TC-H-001": {"status": "FAILED", "nama": "", "sebab": "AssertionError: rekod JBM50N260805058 TIDAK menunjukkan STATUS HANTAR 'H' selepas Hantar; token baris: ['N', '2026-08-05', '12:20', 'M', 'A', 'admin']"}, "MBJB-TC-H-002": {"status": "SKIPPED", "nama": "", "sebab": "show stopper dari MBJB-TC-P-001: rekod P TIDAK DICIPTA dalam run ini (create GAGAL — baiki borang create; ini BUKAN isu awalan nombor)"}, "MBJB-TC-H-003": {"status": "SKIPPED", "nama": "", "sebab": "show stopper dari MBJB-TC-K-001: rekod K TIDAK DICIPTA dalam run ini (create GAGAL — baiki borang create; ini BUKAN isu awalan nombor)"}, "MBJB-TC-H-004": {"status": "SKIPPED", "nama": "", "sebab": "show stopper dari MBJB-TC-L-001: rekod L TIDAK DICIPTA dalam run ini (create GAGAL — baiki borang create; ini BUKAN isu awalan nombor)"}, "MBJB-TC-H-005": {"status": "SKIPPED", "nama": "", "sebab": "show stopper dari MBJB-TC-S-001: rekod S TIDAK DICIPTA dalam run ini (create GAGAL — baiki borang create; ini BUKAN isu awalan nombor)"}, "MBJB-TC-TN-001": {"status": "FAILED", "nama": "", "sebab": "AssertionError: FAIL: No records displayed for id_penguatkuasa=msc"}, "MBJB-TC-NK-001": {"status": "FAILED", "nama": "", "sebab": "AssertionError: FAIL: No records displayed for id_penguatkuasa=admin"}, "MBJB-TC-NK-002": {"status": "FAILED", "nama": "", "sebab": "AssertionError: FAIL: No records displayed for id_penguatkuasa=admin"}}, "sumber": "mbjb-staging-2026-08-05T12-54-54-mrsai.json"}], "MBPG": [{"id": "mbpg-production-2026-08-20T14-16", "pbt": "MBPG", "env": "production", "app_version": "2.1.23", "generated_at": "2026-08-20T14:16:00", "tester": "mrsai", "device_model": "Ulefone Armor 27", "duration_seconds": 1927, "summary": {"passed": 17, "failed": 3, "skipped": 15, "lain": 14}, "results": {"MBPG-TC-T-001": {"status": "PASSED", "nama": "Tetapan Alamat IP", "sebab": "SENTIASA DIUJI (aliran kerja clear-setiap-run): bootstrap isi IP dari profil selepas pm clear, baca-balik external PADAN. Internal kosong = D-02, nota bukan gagal. 15.6s"}, "MBPG-TC-T-002": {"status": "PASSED", "nama": "Tetapan Pelbagai", "sebab": "Lesen diisi bootstrap + baca-balik PADAN profil. Server jawab 'Lesen sama.' 7.4s"}, "MBPG-TC-T-003": {"status": "PASSED", "nama": "Selaras Pengguna Apps", "sebab": "22.7s. Juga dijalankan dalam bootstrap PRA-LOGIN — bukti DB: jadual users = 73 baris. Punca 'Log Masuk Gagal' pasca-clear DISAHKAN & DISELESAIKAN (app offline-first sahkan login lawan jadual pengguna lokal)."}, "MBPG-TC-T-004": {"status": "PASSED", "nama": "Selaras Maklumat Alamat", "sebab": "44.4s — D-01 tidak berulang"}, "MBPG-TC-T-005": {"status": "PASSED", "nama": "Selaras Maklumat Kompaun", "sebab": "25.1s — D-08 tidak berulang; 9 kod kompaun dalam DB"}, "MBPG-TC-T-006": {"status": "PASSED", "nama": "Selaras Jenis Kenderaan", "sebab": "23.3s"}, "MBPG-TC-T-007": {"status": "PASSED", "nama": "Selaras Warna", "sebab": "23.6s"}, "MBPG-TC-T-008": {"status": "SKIPPED", "nama": "Selaras Pelesen", "sebab": "LARANGAN MUTLAK — sync 3-4 jam"}, "MBPG-TC-T-009": {"status": "PASSED", "nama": "Selaras Barang Sita", "sebab": "25.4s"}, "MBPG-TC-T-010": {"status": "PASSED", "nama": "Tetapan Skrin Utama", "sebab": "38.3s — popup Pilihan Skrin Utama dibuka & pilihan didaftar"}, "MBPG-TC-T-011": {"status": "PASSED", "nama": "Semak Kemaskini", "sebab": "31.2s — alert 'APLIKASI TELAH DIKEMAS KINI'"}, "MBPG-TC-T-012": {"status": "PASSED", "nama": "Remember Me / Login", "sebab": "LOGIN PENUH pasca pm-clear LULUS percubaan pertama (sesi 85.1s) — laluan bersih penuh kini stabil: clear -> grant 12/12 -> bootstrap IP/lesen -> sync pengguna -> login"}, "MBPG-TC-N-001": {"status": "FAILED", "nama": "Daftar Notis Amaran", "sebab": "PERSEKITARAN, bukan skrip: printer sedang dicaj/OFF (bluetooth=False, tersambung=False). Gagal pada semakan printer WAJIB pra-borang — borang langsung TIDAK diisi, tiada rekod dicipta."}, "MBPG-TC-N-002": {"status": "NOT_RUN", "nama": "Cetak Notis Amaran", "sebab": "Tidak dicapai — kitaran borang mati pada semakan printer (lihat *-001)."}, "MBPG-TC-N-003": {"status": "NOT_RUN", "nama": "Lampiran borang N", "sebab": "Tidak dicapai — kitaran borang mati pada semakan printer (lihat *-001)."}, "MBPG-TC-N-004": {"status": "NOT_RUN", "nama": "Kemaskini Notis Amaran", "sebab": "Tidak dicapai — kitaran borang mati pada semakan printer (lihat *-001). Fix D-B baharu (UiScrollable scrollIntoView — mekanisme tatal terbukti) SUDAH dipasang tetapi belum teruji pada device."}, "MBPG-TC-N-005": {"status": "UNSUPPORTED", "nama": "Bookmark borang N", "sebab": "Had build 2.1.23: popup PILIHAN KEGEMARAN tiada medan nama/SIMPAN"}, "MBPG-TC-P-001": {"status": "FAILED", "nama": "Daftar Kompaun Pelbagai", "sebab": "PERSEKITARAN, bukan skrip: printer sedang dicaj/OFF (bluetooth=False, tersambung=False). Gagal pada semakan printer WAJIB pra-borang — borang langsung TIDAK diisi, tiada rekod dicipta."}, "MBPG-TC-P-002": {"status": "NOT_RUN", "nama": "Cetak Kompaun Pelbagai", "sebab": "Tidak dicapai — kitaran borang mati pada semakan printer (lihat *-001)."}, "MBPG-TC-P-003": {"status": "NOT_RUN", "nama": "Serah Kompaun Pelbagai", "sebab": "Tidak dicapai — kitaran borang mati pada semakan printer (lihat *-001)."}, "MBPG-TC-P-004": {"status": "NOT_RUN", "nama": "Kemaskini Pelbagai", "sebab": "Tidak dicapai — kitaran borang mati pada semakan printer (lihat *-001)."}, "MBPG-TC-P-005": {"status": "UNSUPPORTED", "nama": "Bookmark borang P", "sebab": "Had build — sama seperti N-005"}, "MBPG-TC-P-006": {"status": "NOT_RUN", "nama": "Isu tandatangan", "sebab": "Tidak dicapai — kitaran borang mati pada semakan printer (lihat *-001)."}, "MBPG-TC-K-001": {"status": "FAILED", "nama": "Daftar Letak Kereta x3", "sebab": "PERSEKITARAN, bukan skrip: printer sedang dicaj/OFF (bluetooth=False, tersambung=False). Gagal pada semakan printer WAJIB pra-borang — borang langsung TIDAK diisi, tiada rekod dicipta. 3 plat mySIKAP tidak dicuba."}, "MBPG-TC-K-002": {"status": "NOT_RUN", "nama": "Cetak Letak Kereta", "sebab": "Tidak dicapai — kitaran borang mati pada semakan printer (lihat *-001)."}, "MBPG-TC-K-003": {"status": "NOT_RUN", "nama": "Serah Letak Kereta", "sebab": "Tidak dicapai — kitaran borang mati pada semakan printer (lihat *-001)."}, "MBPG-TC-K-004": {"status": "NOT_RUN", "nama": "Kemaskini Letak Kereta", "sebab": "Tidak dicapai — kitaran borang mati pada semakan printer (lihat *-001). Fix D-B baca-balik dropdown menunggu ujian."}, "MBPG-TC-K-005": {"status": "UNSUPPORTED", "nama": "Bookmark borang K", "sebab": "Had build"}, "MBPG-TC-SK-001": {"status": "NOT_RUN", "nama": "Senarai Kompaun", "sebab": "PENEMUAN ALIRAN KERJA: Senarai memaparkan rekod LOKAL sahaja — selepas pm clear ia KOSONG (0 baris, jangkaan bukan bug). 16 rekod lama hanya wujud di server. Tiada rekod baru dicipta (printer), jadi tiada apa untuk disahkan. Imbasan penuh 5 buka + 11 imbas dijalankan dan direkod."}, "MBPG-TC-H-001": {"status": "PASSED", "nama": "Hantar Semula Notis", "sebab": "MOD DICUBA-UI (keputusan CEO 2026-08-19): 0 rekod M — tab Data Ralat DIBUKA, butang HANTAR SEMULA WUJUD dan DITEKAN di bawah permit berskop. AUTO-PASS. Konteks skrin 'Hantar Kompaun' kini disenarai putih — 107 tap dinilai, 0 disekat."}, "MBPG-TC-H-002": {"status": "PASSED", "nama": "Hantar Semula Pelbagai", "sebab": "MOD DICUBA-UI (keputusan CEO 2026-08-19): 0 rekod M — tab Data Ralat DIBUKA, butang HANTAR SEMULA WUJUD dan DITEKAN di bawah permit berskop. AUTO-PASS. Konteks skrin 'Hantar Kompaun' kini disenarai putih — 107 tap dinilai, 0 disekat."}, "MBPG-TC-H-003": {"status": "PASSED", "nama": "Hantar Semula Letak Kereta", "sebab": "MOD DICUBA-UI (keputusan CEO 2026-08-19): 0 rekod M — tab Data Ralat DIBUKA, butang HANTAR SEMULA WUJUD dan DITEKAN di bawah permit berskop. AUTO-PASS. Konteks skrin 'Hantar Kompaun' kini disenarai putih — 107 tap dinilai, 0 disekat."}, "MBPG-TC-TN-001": {"status": "PASSED", "nama": "Tarik Notis by Penguatkuasa", "sebab": "Tarik by ID penguatkuasa 'msc' + TARIK ditekan: 0 notis luput (jangkaan — notis termuda 20hb, layak 2026-09-03). Ujian kawalan dijalankan sebelum 0 diterima sebagai bukti."}, "MBPG-TC-TN-002": {"status": "PASSED", "nama": "Tarik Notis by No. Notis", "sebab": "Tarik by No Notis PGP02N260820001: tidak tersenarai = JANGKAAN (notis belum luput). Laluan UI dipandu penuh + dump bukti."}, "MBPG-TC-TN-003": {"status": "PASSED", "nama": "Tarik Notis by Tarikh", "sebab": "Fakta UI direkod: skrin Tarik Notis TIADA penapis tarikh pada build 2.1.23 (dump tn003_tiada_penapis_tarikh.xml). Tarik default dijalankan, 0 baris."}, "MBPG-TC-NK-001": {"status": "SKIPPED", "nama": "Notis ke Kompaun > Kompaun", "sebab": "Notis belum layak ditukar (tempoh 14 hari; paling awal 2026-09-03). Skrin tidak disentuh — D-07 membakar nombor siri."}, "MBPG-TC-NK-002": {"status": "SKIPPED", "nama": "Notis ke Kompaun > Patuh", "sebab": "Notis belum layak ditukar (tempoh 14 hari; paling awal 2026-09-03). Skrin tidak disentuh — D-07 membakar nombor siri."}, "MBPG-TC-L-001": {"status": "SKIPPED", "nama": "Skip mutlak", "sebab": "Luar skop atas nama pemilik"}, "MBPG-TC-L-002": {"status": "SKIPPED", "nama": "Skip mutlak", "sebab": "Luar skop atas nama pemilik"}, "MBPG-TC-L-003": {"status": "SKIPPED", "nama": "Skip mutlak", "sebab": "Luar skop atas nama pemilik"}, "MBPG-TC-L-004": {"status": "SKIPPED", "nama": "Skip mutlak", "sebab": "Luar skop atas nama pemilik"}, "MBPG-TC-L-005": {"status": "SKIPPED", "nama": "Skip mutlak", "sebab": "Luar skop atas nama pemilik"}, "MBPG-TC-S-001": {"status": "SKIPPED", "nama": "Skip mutlak", "sebab": "Luar skop atas nama pemilik"}, "MBPG-TC-S-002": {"status": "SKIPPED", "nama": "Skip mutlak", "sebab": "Luar skop atas nama pemilik"}, "MBPG-TC-S-003": {"status": "SKIPPED", "nama": "Skip mutlak", "sebab": "Luar skop atas nama pemilik"}, "MBPG-TC-S-004": {"status": "SKIPPED", "nama": "Skip mutlak", "sebab": "Luar skop atas nama pemilik"}, "MBPG-TC-S-005": {"status": "SKIPPED", "nama": "Skip mutlak", "sebab": "Luar skop atas nama pemilik"}, "MBPG-TC-H-004": {"status": "SKIPPED", "nama": "Skip mutlak", "sebab": "Luar skop atas nama pemilik"}, "MBPG-TC-H-005": {"status": "SKIPPED", "nama": "Skip mutlak", "sebab": "Luar skop atas nama pemilik"}}, "rekod_production": [], "penemuan_app": [{"kod": "INFRA-SIRI", "tajuk": "pm clear mereset kaunter siri — rekod hari sama boleh bertembung", "butiran": "Gerbang siri menyekat PGP02N260820001 (rekod run pagi) daripada dikeluarkan semula. Pembaikan automatik diluluskan pemilik: majukan() menulis local_system_control ke seq_maks_hari_ini+1, disahkan bacaan semula (notis_amaran 1->2). Kini automatik pada setiap run --bersih."}, {"kod": "INFRA-LOGIN", "tajuk": "Login offline-first: jadual pengguna lokal wajib di-sync sebelum login pasca-clear", "butiran": "'Log Masuk Gagal | kata laluan tidak sah' dengan kredensial SAH = jadual users kosong. Bootstrap kini jalankan Selaras Pengguna Apps pra-login + bukti DB (73 users). Login lulus percubaan pertama."}, {"kod": "UI-SENARAI", "tajuk": "Senarai = rekod LOKAL sahaja; kosong selepas pm clear", "butiran": "16 rekod production tidak kelihatan dalam Senarai selepas clear — ia hanya di server. Pengesahan SK mesti guna rekod yang dicipta DALAM run yang sama."}, {"kod": "ENV-PRINTER", "tajuk": "Printer tidak sedia (dicaj) — kelima-lima borang gagal pra-borang", "butiran": "Bukan defek app/skrip. Alert 'Unable to connect device' pada setiap login ialah kegagalan sambungan printer, bukan kegagalan login."}], "sumber": "Konsol run_penuh --borang NPK --bersih 2026-08-20 14:16-14:48 (run 13; kaunter siri auto-majukan pertama)"}, {"id": "mbpg-production-2026-08-19T16-04", "pbt": "MBPG", "env": "production", "app_version": "2.1.23", "generated_at": "2026-08-19T16:04:00", "tester": "mrsai", "device_model": "Ulefone Armor 27", "duration_seconds": 4274, "summary": {"passed": 17, "failed": 6, "skipped": 22, "lain": 4}, "results": {"MBPG-TC-T-001": {"status": "SKIPPED", "nama": "Tetapan Alamat IP", "sebab": "Bersyarat — IP peranti sudah wujud, bootstrap tidak tercetus"}, "MBPG-TC-T-002": {"status": "SKIPPED", "nama": "Tetapan Pelbagai", "sebab": "Sama seperti T-001"}, "MBPG-TC-T-003": {"status": "PASSED", "nama": "Selaras Pengguna Apps", "sebab": "22.1s"}, "MBPG-TC-T-004": {"status": "PASSED", "nama": "Selaras Maklumat Alamat", "sebab": "117.0s"}, "MBPG-TC-T-005": {"status": "PASSED", "nama": "Selaras Maklumat Kompaun", "sebab": "GAGAL D-08 (app terkeluar) lalu LULUS pada auto-retry — 9 kod kompaun dalam DB"}, "MBPG-TC-T-006": {"status": "PASSED", "nama": "Selaras Jenis Kenderaan", "sebab": "24.3s"}, "MBPG-TC-T-007": {"status": "PASSED", "nama": "Selaras Warna", "sebab": "24.0s"}, "MBPG-TC-T-008": {"status": "SKIPPED", "nama": "Selaras Pelesen", "sebab": "LARANGAN MUTLAK — sync 3-4 jam"}, "MBPG-TC-T-009": {"status": "PASSED", "nama": "Selaras Barang Sita", "sebab": "23.4s"}, "MBPG-TC-T-010": {"status": "PASSED", "nama": "Tetapan Skrin Utama", "sebab": "Kali pertama diwayarkan — popup Pilihan Skrin Utama dibuka & ditutup"}, "MBPG-TC-T-011": {"status": "PASSED", "nama": "Semak Kemaskini", "sebab": "Alert 'APLIKASI TELAH DIKEMAS KINI'"}, "MBPG-TC-T-012": {"status": "PASSED", "nama": "Remember Me / Login", "sebab": "Sesi 139.0s"}, "MBPG-TC-N-001": {"status": "PASSED", "nama": "Daftar Notis Amaran", "sebab": "PGP02N260819002 dicipta 16:36 — nombor TEPAT ramalan gerbang siri"}, "MBPG-TC-N-002": {"status": "PASSED", "nama": "Cetak Notis Amaran", "sebab": "Kertas keluar + DISAHKAN MATA CEO — semua medan padan pre-run report"}, "MBPG-TC-N-003": {"status": "NOT_RUN", "nama": "Lampiran borang N", "sebab": "Kitaran mati di N-004 sebelum peringkat lampiran dicapai"}, "MBPG-TC-N-004": {"status": "FAILED", "nama": "Kemaskini Notis Amaran", "sebab": "D-B: SETERUSNYA/MENYERAHKAN tiada dalam pokok; borang edit tolak swipe — fix scrollGesture dipasang untuk run seterusnya"}, "MBPG-TC-N-005": {"status": "UNSUPPORTED", "nama": "Bookmark borang N", "sebab": "Had build 2.1.23: popup PILIHAN KEGEMARAN tiada medan nama/SIMPAN"}, "MBPG-TC-P-001": {"status": "PASSED", "nama": "Daftar Kompaun Pelbagai", "sebab": "PGP02P260819003 dicipta 16:46"}, "MBPG-TC-P-002": {"status": "PASSED", "nama": "Cetak Kompaun Pelbagai", "sebab": "Kertas keluar + disahkan mata; nota: alamat pesalah = variansi auto-isi (JALAN ALAMANDA 1)"}, "MBPG-TC-P-003": {"status": "PASSED", "nama": "Serah Kompaun Pelbagai", "sebab": "SERAH + HANTAR — 'SEMUA DATA BERJAYA DIHANTAR' (muat naik 100%)"}, "MBPG-TC-P-004": {"status": "FAILED", "nama": "Kemaskini Pelbagai", "sebab": "D-B — sama seperti N-004"}, "MBPG-TC-P-005": {"status": "UNSUPPORTED", "nama": "Bookmark borang P", "sebab": "Had build — sama seperti N-005"}, "MBPG-TC-P-006": {"status": "FAILED", "nama": "Isu tandatangan", "sebab": "DISAHKAN MATA CEO: tandatangan dilukis TIDAK keluar pada cetakan (D-10, defek app)"}, "MBPG-TC-K-001": {"status": "PASSED", "nama": "Daftar Letak Kereta x3", "sebab": "PGP02K260819004/005/006 — 3 plat mySIKAP; fix baca-balik dropdown TERBUKTI"}, "MBPG-TC-K-002": {"status": "FAILED", "nama": "Cetak Letak Kereta", "sebab": "Kertas keluar TETAPI blok tandatangan = noise kelabu — D-10 disahkan mata CEO (automasi cetak lulus)"}, "MBPG-TC-K-003": {"status": "PASSED", "nama": "Serah Letak Kereta", "sebab": "SERAH + HANTAR pada ketiga-tiga rekod"}, "MBPG-TC-K-004": {"status": "FAILED", "nama": "Kemaskini Letak Kereta", "sebab": "D-B — sama seperti N-004"}, "MBPG-TC-K-005": {"status": "UNSUPPORTED", "nama": "Bookmark borang K", "sebab": "Had build"}, "MBPG-TC-SK-001": {"status": "FAILED", "nama": "Senarai Kompaun", "sebab": "Imbasan baris lapor 0/15 SEDANGKAN rekod wujud (kemaskini buka setiap satu via sel NO AKAUN) — isu imbasan skrip; fix per-rekod dipasang"}, "MBPG-TC-H-001": {"status": "SKIPPED", "nama": "Hantar Semula Notis", "sebab": "Tiada rekod status M — dasar auto-pass CEO berkuatkuasa run seterusnya"}, "MBPG-TC-H-002": {"status": "SKIPPED", "nama": "Hantar Semula Pelbagai", "sebab": "Sama"}, "MBPG-TC-H-003": {"status": "SKIPPED", "nama": "Hantar Semula Letak Kereta", "sebab": "Sama"}, "MBPG-TC-TN-001": {"status": "PASSED", "nama": "Tarik Notis by Penguatkuasa", "sebab": "0 notis ditarik = betul (dialog tarik LUPUT sahaja; notis kita belum luput)"}, "MBPG-TC-TN-002": {"status": "SKIPPED", "nama": "Tarik Notis by No. Notis", "sebab": "Belum dipandu run ini — diwayarkan untuk run seterusnya"}, "MBPG-TC-TN-003": {"status": "SKIPPED", "nama": "Tarik Notis by Tarikh", "sebab": "Sama seperti TN-002"}, "MBPG-TC-NK-001": {"status": "SKIPPED", "nama": "Notis ke Kompaun > Kompaun", "sebab": "Tiada notis luput; terawal 2026-09-01"}, "MBPG-TC-NK-002": {"status": "SKIPPED", "nama": "Notis ke Kompaun > Patuh", "sebab": "Sama"}, "MBPG-TC-L-001": {"status": "SKIPPED", "nama": "Skip mutlak", "sebab": "Luar skop atas nama pemilik"}, "MBPG-TC-L-002": {"status": "SKIPPED", "nama": "Skip mutlak", "sebab": "Luar skop atas nama pemilik"}, "MBPG-TC-L-003": {"status": "SKIPPED", "nama": "Skip mutlak", "sebab": "Luar skop atas nama pemilik"}, "MBPG-TC-L-004": {"status": "SKIPPED", "nama": "Skip mutlak", "sebab": "Luar skop atas nama pemilik"}, "MBPG-TC-L-005": {"status": "SKIPPED", "nama": "Skip mutlak", "sebab": "Luar skop atas nama pemilik"}, "MBPG-TC-S-001": {"status": "SKIPPED", "nama": "Skip mutlak", "sebab": "Luar skop atas nama pemilik"}, "MBPG-TC-S-002": {"status": "SKIPPED", "nama": "Skip mutlak", "sebab": "Luar skop atas nama pemilik"}, "MBPG-TC-S-003": {"status": "SKIPPED", "nama": "Skip mutlak", "sebab": "Luar skop atas nama pemilik"}, "MBPG-TC-S-004": {"status": "SKIPPED", "nama": "Skip mutlak", "sebab": "Luar skop atas nama pemilik"}, "MBPG-TC-S-005": {"status": "SKIPPED", "nama": "Skip mutlak", "sebab": "Luar skop atas nama pemilik"}, "MBPG-TC-H-004": {"status": "SKIPPED", "nama": "Skip mutlak", "sebab": "Luar skop atas nama pemilik"}, "MBPG-TC-H-005": {"status": "SKIPPED", "nama": "Skip mutlak", "sebab": "Luar skop atas nama pemilik"}}, "rekod_production": [{"no": "PGP02N260819002", "jenis": "N", "status": "baru"}, {"no": "PGP02P260819003", "jenis": "P", "status": "baru"}, {"no": "PGP02K260819004", "jenis": "K", "status": "baru — PII sebenar (pemilik betul)"}, {"no": "PGP02K260819005", "jenis": "K", "status": "baru — PII SALAH (D-09b) — BATAL DULU"}, {"no": "PGP02K260819006", "jenis": "K", "status": "baru — PII sebenar (pemilik betul)"}], "penemuan_app": ["D-09 DISAHKAN: identiti pemilik JYX6605 melekat pada rekod JUA3276 (PGP02K260819005)", "D-10 DISAHKAN: tandatangan dilukis tidak keluar pada cetakan K (blok noise kelabu)", "D-08 kekal: T-005 crash berselang-seli, retry berjaya", "Rekod kita tiada dalam hasil imbasan Senarai viewport (isu skrip, dibaiki)"], "sumber": "console run 2026-08-19 16:04-17:56 + pengesahan mata CEO"}, {"id": "mbpg-production-2026-08-18T16-15", "pbt": "MBPG", "env": "production", "app_version": "18", "generated_at": "2026-08-18T16:15", "tester": "mrsai", "device_model": "Ulefone Armor 27", "duration_seconds": 2676, "summary": {"passed": 10, "failed": 13, "skipped": 24, "lain": 2}, "results": {"MBPG-TC-T-001": {"status": "SKIPPED", "nama": "Tetapan Alamat IP", "sebab": "Bootstrap tidak tercetus — IP sudah wujud, jadi peringkat itu dilangkau sepenuhnya."}, "MBPG-TC-T-002": {"status": "SKIPPED", "nama": "Tetapan Pelbagai", "sebab": "Sama seperti T-001 — hanya berjalan apabila IP kosong."}, "MBPG-TC-T-003": {"status": "PASSED", "nama": "Selaras Pengguna Apps", "sebab": "22.5s"}, "MBPG-TC-T-004": {"status": "PASSED", "nama": "Selaras Maklumat Alamat", "sebab": "122.9s. D-01 TIDAK berulang — sync pertama selepas DB dikosongkan."}, "MBPG-TC-T-005": {"status": "FAILED", "nama": "Selaras Maklumat Kompaun", "sebab": "AssertionError: [_scroll_down] App TERKELUAR. D-08, 22.3s."}, "MBPG-TC-T-006": {"status": "PASSED", "nama": "Selaras Jenis Kenderaan", "sebab": "22.8s"}, "MBPG-TC-T-007": {"status": "PASSED", "nama": "Selaras Warna", "sebab": "24.2s"}, "MBPG-TC-T-008": {"status": "SKIPPED", "nama": "Selaras Pelesen", "sebab": "LARANGAN MUTLAK. Tiga lapisan penguatkuasaan; tidak disentuh."}, "MBPG-TC-T-009": {"status": "PASSED", "nama": "Selaras Barang Sita", "sebab": "24.2s"}, "MBPG-TC-T-010": {"status": "SKIPPED", "nama": "Tetapan Skrin Utama", "sebab": "Tidak diwayarkan ke orkestrator."}, "MBPG-TC-T-011": {"status": "SKIPPED", "nama": "Semak Kemaskini", "sebab": "Tidak diwayarkan."}, "MBPG-TC-T-012": {"status": "PASSED", "nama": "Remember Me / login", "sebab": "Peringkat sesi, 89.8s."}, "MBPG-TC-N-001": {"status": "PASSED", "nama": "Daftar Notis Amaran", "sebab": "PGP02N260818001 dicipta 17:00:06. Kandungan TIDAK disahkan."}, "MBPG-TC-N-002": {"status": "NO_EVIDENCE", "nama": "Cetak Notis Amaran", "sebab": "Automasi menekan CETAK, tetapi screenshot 'selepas cetak' ialah SKRIN UTAMA — identik dengan 6 larian lain. Tiada bukti kertas."}, "MBPG-TC-N-003": {"status": "SKIPPED", "nama": "Lampiran dalam borang N", "sebab": "Ikon klip tidak dijumpai pada peranti; tidak diwayarkan."}, "MBPG-TC-N-004": {"status": "FAILED", "nama": "Kemaskini Notis Amaran", "sebab": "TimeoutException: SETERUSNYA MAHUPUN MENYERAHKAN tidak dijumpai. Dump: ui_dumps/kemaskini_no_seterusnya.xml (17:01:39)."}, "MBPG-TC-N-005": {"status": "SKIPPED", "nama": "Bookmark borang N", "sebab": "Tidak diwayarkan."}, "MBPG-TC-P-001": {"status": "PASSED", "nama": "Daftar Kompaun Pelbagai", "sebab": "PGP02P260818001 dicipta 17:08:35. Kandungan TIDAK disahkan."}, "MBPG-TC-P-002": {"status": "NO_EVIDENCE", "nama": "Cetak Kompaun Pelbagai", "sebab": "Sama seperti N-002 — screenshot ialah skrin utama."}, "MBPG-TC-P-003": {"status": "PASSED", "nama": "Serah Kompaun Pelbagai", "sebab": "SEBAHAGIAN: SERAH ditekan semasa cipta dan rekod wujud. HANTAR akhir tidak dicapai."}, "MBPG-TC-P-004": {"status": "PASSED", "nama": "Kemaskini Kompaun Pelbagai", "sebab": "PGP02P260818002 dicipta 17:10:40 sebagai gantian PGP02P260818001."}, "MBPG-TC-P-005": {"status": "SKIPPED", "nama": "Bookmark borang P", "sebab": "Tidak diwayarkan."}, "MBPG-TC-P-006": {"status": "SKIPPED", "nama": "Isu tandatangan", "sebab": "Perlukan pemeriksaan mata."}, "MBPG-TC-K-001": {"status": "FAILED", "nama": "Daftar Kompaun Letak Kereta", "sebab": "TIGA percubaan gagal serentak (JYX6605, JUA3276, JRT2649). AssertionError: 'KETERANGAN KOD KOMPAUN': mo... TIADA rekod dicipta. 1045s terbuang."}, "MBPG-TC-K-002": {"status": "FAILED", "nama": "Cetak Letak Kereta", "sebab": "Tidak dicapai — K-001 gagal dahulu."}, "MBPG-TC-K-003": {"status": "FAILED", "nama": "Serah Letak Kereta", "sebab": "Tidak dicapai."}, "MBPG-TC-K-004": {"status": "FAILED", "nama": "Kemaskini Letak Kereta", "sebab": "Tidak dicapai."}, "MBPG-TC-K-005": {"status": "SKIPPED", "nama": "Bookmark borang K", "sebab": "Tidak diwayarkan."}, "MBPG-TC-SK-001": {"status": "FAILED", "nama": "Senarai Kompaun", "sebab": "TimeoutException."}, "MBPG-TC-H-001": {"status": "FAILED", "nama": "Hantar Semula Notis", "sebab": "TimeoutException."}, "MBPG-TC-H-002": {"status": "FAILED", "nama": "Hantar Semula Pelbagai", "sebab": "TimeoutException."}, "MBPG-TC-H-003": {"status": "FAILED", "nama": "Hantar Semula Letak Kereta", "sebab": "TimeoutException."}, "MBPG-TC-TN-001": {"status": "FAILED", "nama": "Tarik Notis by Penguatkuasa", "sebab": "TimeoutException."}, "MBPG-TC-TN-002": {"status": "FAILED", "nama": "Tarik Notis by No. Notis", "sebab": "TimeoutException."}, "MBPG-TC-TN-003": {"status": "FAILED", "nama": "Tarik Notis by Tarikh", "sebab": "TimeoutException."}, "MBPG-TC-NK-001": {"status": "SKIPPED", "nama": "Notis ke Kompaun > Kompaun", "sebab": "Tiada notis luput tempoh. Paling awal 2026-08-27."}, "MBPG-TC-NK-002": {"status": "SKIPPED", "nama": "Notis ke Kompaun > Patuh", "sebab": "Sama seperti NK-001."}, "MBPG-TC-L-001": {"status": "SKIPPED", "nama": "Daftar Kompaun Lesen", "sebab": "Siri L di luar skop."}, "MBPG-TC-L-002": {"status": "SKIPPED", "nama": "Cetak Kompaun Lesen", "sebab": "Siri L di luar skop."}, "MBPG-TC-L-003": {"status": "SKIPPED", "nama": "Serah Kompaun Lesen", "sebab": "Siri L di luar skop."}, "MBPG-TC-L-004": {"status": "SKIPPED", "nama": "Kemaskini Kompaun Lesen", "sebab": "Siri L di luar skop."}, "MBPG-TC-L-005": {"status": "SKIPPED", "nama": "Bookmark borang Lesen", "sebab": "Siri L di luar skop."}, "MBPG-TC-S-001": {"status": "SKIPPED", "nama": "Daftar Sitaan", "sebab": "Siri S di luar skop."}, "MBPG-TC-S-002": {"status": "SKIPPED", "nama": "Cetak Sitaan", "sebab": "Siri S di luar skop."}, "MBPG-TC-S-003": {"status": "SKIPPED", "nama": "Serah Sitaan", "sebab": "Siri S di luar skop."}, "MBPG-TC-S-004": {"status": "SKIPPED", "nama": "Kemaskini Sitaan", "sebab": "Siri S di luar skop."}, "MBPG-TC-S-005": {"status": "SKIPPED", "nama": "Bookmark borang Sitaan", "sebab": "Siri S di luar skop."}, "MBPG-TC-H-004": {"status": "SKIPPED", "nama": "Hantar Semula Lesen", "sebab": "Luar skop atas nama pemilik."}, "MBPG-TC-H-005": {"status": "SKIPPED", "nama": "Hantar Semula Sitaan", "sebab": "Luar skop atas nama pemilik."}}, "sumber": "LAPORAN-LARIAN-2026-08-18.html"}]}};</script>
+<script>
+let LANG=(()=>{try{return localStorage.getItem('lang')||'EN'}catch(e){return 'EN'}})();
+function tr(bm,en){return LANG==='EN'?en:bm;}
+function toggleLang(){LANG=LANG==='BM'?'EN':'BM';try{localStorage.setItem('lang',LANG)}catch(e){};render();}
+const ST = {
+  PASSED:{c:'var(--pass)',bg:'var(--pass-bg)',label:'PASSED'},
+  FAILED:{c:'var(--fail)',bg:'var(--fail-bg)',label:'FAILED'},
+  ERROR:{c:'var(--fail)',bg:'var(--fail-bg)',label:'ERROR'},
+  SKIPPED:{c:'var(--skip)',bg:'var(--skip-bg)',label:'SKIPPED'},
+  NO_EVIDENCE:{c:'var(--lain)',bg:'var(--lain-bg)',label:'TIADA BUKTI'},
+  NEEDS_EYE:{c:'var(--lain)',bg:'var(--lain-bg)',label:'PERLU MATA'},
+  NOT_RUN:{c:'var(--dimmer)',bg:'var(--skip-bg)',label:'NOT RUN'},
+};
+function stMeta(s){ return ST[s] || {c:'var(--dim)',bg:'var(--skip-bg)',label:s}; }
+
+let DATA={manifest:{pbt:[]},runs:{}};
+let sel={pbt:null,tab:'laporan',run:0,filter:'SEMUA',q:''};
+
+async function refresh(){
+  try{
+    DATA=window.__DATA__;
+    document.getElementById('feed').textContent=window.__STATIK__?'STATIC':'LIVE';
+    document.getElementById('feed').classList.add('live');
+    if(!sel.pbt && DATA.manifest.pbt.length) sel.pbt=DATA.manifest.pbt[0].kod;
+  }catch(e){
+    document.getElementById('feed').textContent='OFFLINE';
+    document.getElementById('feed').classList.remove('live');
+  }
+  render();
+}
+refresh();
+
+function pick(kod){ sel.pbt=kod; sel.tab= kod==='TUTORIALS'?'tut':'laporan'; sel.run=0; sel.filter='SEMUA'; sel.q=''; render(); }
+function pickTab(t){ sel.tab=t; render(); }
+let mstep=0;
+function pickStep(i){ mstep=i; render(); }
+function pickRun(i){ sel.run=i; sel.tab='laporan'; render(); }
+function pickFilter(f){ sel.filter=f; render(); }
+
+function render(){
+  const lsw=document.getElementById('langsw');
+  if(lsw) lsw.innerHTML= LANG==='BM'?'<b style="color:var(--ink)">BM</b> · EN':'BM · <b style="color:var(--ink)">EN</b>';
+  renderSide();
+  const c=document.getElementById('content');
+  if(sel.pbt==='TUTORIALS'){ c.innerHTML=tutHtml(); return; }
+  const runs=DATA.runs[sel.pbt]||[];
+  const run=runs[sel.run];
+  const p=(DATA.manifest.pbt||[]).find(x=>x.kod===sel.pbt)||{};
+  let h=`<div class="pbthead"><h1 style="color:${p.warna||'var(--ink)'}">${sel.pbt}</h1>
+    <span class="meta">${p.nama||''}</span>
+    ${run?`<span class="meta">v${run.app_version||'?'} · ${run.env||''} · ${run.device_model||''} · ${fmtDT(run.generated_at)} · ${fmtDur(run.duration_seconds)} · tester ${run.tester||'?'}</span>`:''}
+  </div>
+  <div class="tabs">
+    <div class="tab ${sel.tab==='laporan'?'on':''}" onclick="pickTab('laporan')">${tr('Laporan','Report')}</div>
+    <div class="tab ${sel.tab==='sejarah'?'on':''}" onclick="pickTab('sejarah')">${tr('Sejarah Run','Run History')} (${runs.length})</div>
+    <div class="tab ${sel.tab==='ganti'?'on':''}" onclick="pickTab('ganti')">${tr('Ganti Nilai','Replace Values')}</div>
+    <div class="tab ${sel.tab==='manual'?'on':''}" onclick="pickTab('manual')">Manual User</div>
+  </div>`;
+  if(sel.tab==='laporan') h+=laporanHtml(run);
+  else if(sel.tab==='sejarah') h+=sejarahHtml(runs);
+  else if(sel.tab==='ganti') h+=`<div class="panel"><div class="tut" id="gantiWrap"><div class="empty">${tr('memuat...','loading...')}</div></div></div>`;
+  else h+=manualHtml(sel.pbt);
+  c.innerHTML=h;
+  const s=document.getElementById('search');
+  if(s){ s.value=sel.q; s.oninput=e=>{sel.q=e.target.value; renderTableOnly(run);} }
+  if(sel.tab==='ganti') renderGanti();
+}
+
+function renderSide(){
+  const el=document.getElementById('sidePbt');
+  el.innerHTML=(DATA.manifest.pbt||[]).map(p=>{
+    const runs=DATA.runs[p.kod]||[]; const last=runs[0];
+    const sum=last?last.summary:null;
+    return `<div class="sitem ${sel.pbt===p.kod?'on':''}" style="border-left-color:${sel.pbt===p.kod?p.warna:'transparent'}" onclick="pick('${p.kod}')">
+      <span class="dot" style="background:${p.warna}"></span>
+      <span><span class="nm">${p.kod}</span>
+      <span class="full">${sum?`P${sum.passed} F${sum.failed} S${sum.skipped}`:'tiada larian'}</span></span>
+    </div>`;
+  }).join('');
+  document.querySelector('[data-pbt=TUTORIALS]').classList.toggle('on', sel.pbt==='TUTORIALS');
+}
+
+function counts(run){
+  const k={SEMUA:0,PASSED:0,FAILED:0,SKIPPED:0,LAIN:0};
+  if(!run) return k;
+  for(const v of Object.values(run.results)){ k.SEMUA++;
+    if(v.status==='PASSED')k.PASSED++;
+    else if(v.status==='FAILED'||v.status==='ERROR')k.FAILED++;
+    else if(v.status==='SKIPPED')k.SKIPPED++;
+    else k.LAIN++;
+  } return k;
+}
+function inFilter(v){
+  if(sel.filter==='SEMUA') return true;
+  if(sel.filter==='PASSED') return v.status==='PASSED';
+  if(sel.filter==='FAILED') return v.status==='FAILED'||v.status==='ERROR';
+  if(sel.filter==='SKIPPED') return v.status==='SKIPPED';
+  return !['PASSED','FAILED','ERROR','SKIPPED'].includes(v.status);
+}
+
+function laporanHtml(run){
+  if(!run) return `<div class="panel"><div class="empty">${tr('Tiada larian untuk PBT ini lagi','No runs for this PBT yet')}</div></div>`;
+  const k=counts(run);
+  return `<div class="panel">
+    <div class="tiles">
+      <div class="tile"><div class="n">${k.SEMUA}</div><div class="l">${tr('jumlah tc','total tc')}</div></div>
+      <div class="tile"><div class="n" style="color:var(--pass)">${k.PASSED}</div><div class="l">passed</div></div>
+      <div class="tile"><div class="n" style="color:var(--fail)">${k.FAILED}</div><div class="l">failed</div></div>
+      <div class="tile"><div class="n" style="color:var(--skip)">${k.SKIPPED}</div><div class="l">skipped</div></div>
+      <div class="tile"><div class="n" style="color:var(--lain)">${k.LAIN}</div><div class="l">${tr('lain','other')}</div></div>
+    </div>
+    <div class="filters">
+      ${['SEMUA','PASSED','FAILED','SKIPPED','LAIN'].map(f=>
+        `<span class="fchip ${sel.filter===f?'on':''}" onclick="pickFilter('${f}')">${f==='SEMUA'?tr('SEMUA','ALL'):f==='LAIN'?tr('LAIN','OTHER'):f}<span class="k">${k[f]??''}</span></span>`).join('')}
+      <input class="search" id="search" placeholder="${tr('cari TC / sebab...','search TC / reason...')}">
+    </div>
+    <div class="scroll" id="tbl">${tableHtml(run)}</div>
+  </div>`;
+}
+function renderTableOnly(run){ const t=document.getElementById('tbl'); if(t&&run) t.innerHTML=tableHtml(run); }
+function tableHtml(run){
+  const q=sel.q.toLowerCase();
+  const rows=Object.entries(run.results)
+    .filter(([tc,v])=>inFilter(v))
+    .filter(([tc,v])=>!q || tc.toLowerCase().includes(q) ||
+      (v.nama||'').toLowerCase().includes(q) || (v.sebab||'').toLowerCase().includes(q));
+  if(!rows.length) return `<div class="empty">${tr('Tiada TC padan dengan penapis','No TC matches the filter')}</div>`;
+  return `<table><thead><tr><th style="width:130px">TC</th><th style="width:210px">${tr('Nama','Name')}</th>
+    <th style="width:110px">Status</th><th>${tr('Sebab / bukti','Reason / evidence')}</th></tr></thead><tbody>
+    ${rows.map(([tc,v])=>{const m=stMeta(v.status);
+      return `<tr><td class="tc">${tc}</td><td>${esc(v.nama||'—')}</td>
+      <td><span class="badge" style="color:${m.c};background:${m.bg};border-color:${m.c}55">${m.label}</span></td>
+      <td>${esc(v.sebab||'—')}</td></tr>`;}).join('')}
+  </tbody></table>`;
+}
+
+function sejarahHtml(runs){
+  if(!runs.length) return `<div class="panel"><div class="empty">Tiada sejarah larian</div></div>`;
+  return `<div class="panel"><div class="scroll">
+    ${runs.map((r,i)=>{const s=r.summary; const tot=Math.max(1,s.passed+s.failed+s.skipped+s.lain);
+      return `<div class="run ${sel.run===i?'on':''}" onclick="pickRun(${i})">
+      <span class="when">${fmtDT(r.generated_at)}</span>
+      <span class="info">v${r.app_version||'?'} · ${r.env||''} · ${r.tester||'?'} · ${fmtDur(r.duration_seconds)}</span>
+      <span class="bar">
+        <i style="width:${100*s.passed/tot}%;background:var(--pass)"></i>
+        <i style="width:${100*s.failed/tot}%;background:var(--fail)"></i>
+        <i style="width:${100*s.skipped/tot}%;background:var(--skip)"></i>
+        <i style="width:${100*s.lain/tot}%;background:var(--lain)"></i>
+      </span>
+      <span class="counts">P${s.passed} F${s.failed} S${s.skipped} L${s.lain}</span>
+    </div>`;}).join('')}
+  </div></div>`;
+}
+
+/* ---------------- TUTORIALS ---------------- */
+function cmd(text){ return `<div class="cmd">${esc(text)}<button class="copy" onclick="doCopy(this)" title="salin">⧉</button></div>`; }
+function doCopy(btn){
+  const text=btn.parentElement.childNodes[0].textContent;
+  navigator.clipboard.writeText(text).then(()=>{ btn.classList.add('ok'); btn.textContent='✓';
+    setTimeout(()=>{btn.classList.remove('ok'); btn.textContent='⧉';},1200); });
+}
+function tutHtml(){
+  return `<div class="pbthead"><h1 style="color:#a78bfa">TUTORIALS</h1>
+    <span class="meta">proses kerja lengkap — pasang, sedia, larian, baca hasil</span></div>
+  <div class="panel" style="border-radius:9px"><div class="tut">
+
+  <h2>Proses kerja</h2>
+  <p>1 Pasang alat (sekali sahaja) → 2 Sambung peranti &amp; printer → 3 Buka Appium (terminal 1) →
+  4 cd ke folder PBT &amp; jalankan runner (terminal 2) → 5 Baca laporan. Satu larian penuh: MBPG 35-50 minit; MBIP/MBJB 1.5-2.5 jam.</p>
+
+  <h2>1 · Pasang Appium &amp; alat (sekali sahaja)</h2>
+  <div class="step"><p>Pasang dahulu: <b>Node.js</b> (nodejs.org, versi LTS), <b>Python 3.11+</b> (python.org — tandakan "Add Python to PATH"), <b>adb</b> (Android platform-tools, unzip, tambah ke PATH). Kemudian:</p>
+  ${cmd('npm install -g appium')}
+  ${cmd('appium driver install uiautomator2')}
+  ${cmd('pip install -r requirements.txt')}
+  <p>Semak semuanya berfungsi:</p>
+  ${cmd('node -v && python --version && adb version && appium -v')}</div>
+
+  <h2>2 · Sedia peranti &amp; printer</h2>
+  <div class="step"><ul>
+  <li>Telefon (Ulefone Armor 27): <b>USB debugging ON</b> (Settings → Developer options), APK PBT dipasang, auto-lock OFF, kekal bersambung USB sepanjang larian.</li>
+  <li>Printer <b>Bixolon SPP-R410</b>: hidupkan &amp; pastikan berpasangan Bluetooth dengan telefon SEBELUM larian. Tanpa printer: tambah <b>--tanpa-printer</b> (TC cetak jadi SKIP).</li>
+  </ul>
+  <p>Sahkan peranti dikesan (mesti nampak serial, bukan kosong):</p>
+  ${cmd('adb devices')}
+  <p>Kalau peranti "offline" atau hilang tengah larian (USB tercabut):</p>
+  ${cmd('adb reconnect offline')}</div>
+
+  <h2>3 · Buka Appium — Terminal 1</h2>
+  <div class="step">${cmd('appium')}
+  <p>Biarkan terminal ini terbuka sepanjang larian.</p></div>
+
+  <h2>4 · Larian — Terminal 2 (pilih PBT)</h2>
+  <div class="step"><p><b>MBPG</b> (production — mod sebenar, minta kelulusan pra-larian dahulu):</p>
+  ${cmd('cd C:\\Users\\mrsai\\Documents\\antigravity\\keen-lovelace\\MBPG-testing')}
+  ${cmd('$env:MBPG_IZIN_PRODUCTION = "1"')}
+  ${cmd('python tools\\run_penuh.py --borang NPK')}
+  <p>Skrip akan tanya IP server dan nombor lesen — tekan Enter untuk terima nilai profil, kemudian taip YA.</p>
+  <p>Pilihan berguna: <b>--borang N</b> (satu borang), <b>--langkau-selaras</b>, <b>--tanpa-printer</b>, <b>--ip x --lesen y</b> (tanpa prompt).</p></div>
+  <div class="step"><p><b>MBJB</b>:</p>
+  ${cmd('cd C:\\Users\\mrsai\\Documents\\antigravity\\keen-lovelace\\mbjb-testing')}
+  ${cmd('python tools\\run_and_report.py')}</div>
+  <div class="step"><p><b>MBIP</b> (suite v3 / dashboard):</p>
+  ${cmd('cd C:\\Users\\mrsai\\Downloads\\mbip-pipeline-dashboard-main\\mbip-pipeline-dashboard-main')}
+  ${cmd('python tools\\run_and_report.py')}</div>
+  <div class="note">T-008 Selaras Pelesen: LARANGAN MUTLAK pada semua PBT — sync 3-4 jam. Jangan sentuh.</div>
+
+  <h2>5 · Baca hasil</h2>
+  <div class="step"><p>Selepas larian, laporan berada dalam folder <b>reports\\</b> setiap projek. Untuk papan ini
+  (laporan berpusat), jalankan penyesuai untuk menormalkan larian baharu, kemudian refresh browser:</p>
+  ${cmd('cd "C:\\Users\\mrsai\\Desktop\\CENTRALIZED REPORTING AI CENTRIC TESTING\\laporan"')}
+  ${cmd('python tools\\adapter.py --mbpg-html "C:\\Users\\mrsai\\Documents\\antigravity\\keen-lovelace\\MBPG-testing\\reports\\LAPORAN-LARIAN-2026-08-19.html" --out data')}
+  <p>Papan ini sendiri:</p>
+  ${cmd('python serve.py')}
+  <p>kemudian buka <b>http://localhost:8898</b>. ORBIT (monitor agen): <b>python orbit.py</b> dalam folder orbit → <b>http://localhost:8899</b>.</p></div>
+
+  <h2>Rujukan rasmi</h2>
+  <p>Manual penuh (PDF): <b>Downloads\\Training Manual\\</b> — MBIP, MBJB, MBPG, MDKT.
+  Sejarah workbook skrip ujian: <b>Downloads\\Test Script IES 2.0\\</b> (V2.1.6 → V2.1.23).</p>
+
+  </div></div>`;
+}
+
+/* ---------------- GANTI NILAI (Fasa 5 — MBPG + MBIP, unifikasi 2026-09-02) ------ */
+let TERM=null, tsel='N-001', tedit={};
+async function renderGanti(){
+  const w=document.getElementById('gantiWrap'); if(!w) return;
+  if(window.__STATIK__){w.innerHTML='<div class="empty">'+tr('Ganti Nilai hanya tersedia pada versi localhost (python serve.py).','Replace Values is only available on the localhost version (python serve.py).')+'</div>';return;}
+  if(!['MBPG','MBIP'].includes(sel.pbt)){
+    w.innerHTML=`<div class="empty">${tr('Ganti Nilai untuk','Replace Values for')} ${sel.pbt} ${tr('belum disambung — enjin skrip '+sel.pbt+' akan diunifikasi. MBPG & MBIP tersedia.','not connected yet — the '+sel.pbt+' script engine will be unified. MBPG & MBIP are available.')}</div>`;
+    return;
+  }
+  if(window._gantiPbt!==sel.pbt){ tedit={}; window._gantiPbt=sel.pbt; }
+  try{ const r=await fetch('/api/terminal/data?pbt='+sel.pbt,{cache:'no-store'}); TERM=await r.json(); }
+  catch(e){ w.innerHTML='<div class="empty">'+tr('Server terminal tidak tersedia','Terminal server unavailable')+'</div>'; return; }
+  drawGanti();
+}
+function tval(b,k){ return (tedit[b]&&k in tedit[b])?tedit[b][k]:TERM.borang[b][k]; }
+function tset(b,k,v){ (tedit[b]=tedit[b]||{})[k]=v; drawGanti(); }
+function drawGanti(){
+  const w=document.getElementById('gantiWrap'); if(!w||!TERM) return;
+  const b=tsel, fields=TERM.borang[b];
+  const node=(TERM.pokok||[]).find(p=>p.kompaun===tval(b,'keterangan_kod_kompaun'));
+  const aktas=node?node.akta.map(a=>a.akta):[];
+  const anode=node?node.akta.find(a=>a.akta===tval(b,'kod_akta')||a.akta.includes(tval(b,'kod_akta'))):null;
+  const kess=anode?anode.kesalahan.map(k=>k.kesalahan):[];
+  let nUbah=0;
+  const row=(k)=>{
+    const v=tval(b,k); const ubah=String(v)!==String(TERM.borang[b][k]);
+    if(ubah) nUbah++;
+    const style=`width:100%;background:var(--panel2);border:1px solid ${ubah?'var(--lain)':'var(--line2)'};border-radius:7px;color:var(--ink);padding:6px 9px;font-size:.7rem;outline:none`;
+    const opts= k==='keterangan_kod_kompaun'?(TERM.pokok||[]).map(p=>p.kompaun)
+              : k==='kod_akta'?aktas : k==='kesalahan_kompaun'?kess : null;
+    if(opts){
+      const o=opts.includes(v)?opts:[v,...opts];
+      return `<div style="display:grid;grid-template-columns:210px 1fr;gap:8px;align-items:center;padding:3px 0">
+        <span style="font-family:Consolas,monospace;font-size:.64rem;color:var(--dim)">${k} 🔗</span>
+        <select style="${style}" onchange="tset('${b}','${k}',this.value)">
+          ${o.map(x=>`<option ${x===v?'selected':''}>${esc(x)}</option>`).join('')}</select></div>`;
+    }
+    return `<div style="display:grid;grid-template-columns:210px 1fr;gap:8px;align-items:center;padding:3px 0">
+      <span style="font-family:Consolas,monospace;font-size:.64rem;color:var(--dim)">${k}</span>
+      <input style="${style}" value="${esc(v)}" onchange="tset('${b}','${k}',this.value)"></div>`;
+  };
+  const rows=Object.keys(fields).map(row).join('');
+  const a=TERM.ai;
+  w.innerHTML=`
+  <div style="display:flex;gap:6px;margin-bottom:10px">
+    ${['N-001','P-001','K-001'].map(x=>`<span class="fchip ${tsel===x?'on':''}" onclick="tsel='${x}';drawGanti()">${x}</span>`).join('')}
+    <span class="fchip ${tsel==='AI'?'on':''}" onclick="tsel='AI';drawGanti()">AI API</span>
+  </div>
+  ${tsel==='AI'?gantiAiHtml(a):`
+  <div class="note">${tr('Ubah nilai → JANA SKRIP: override ditulis ke testdata '+sel.pbt+' (asal auto-backup). Kombo kompaun→akta→kesalahan divalidasi lawan pokok production — kombo tak wujud DITOLAK.','Edit values → GENERATE: overrides are written into '+sel.pbt+' testdata (originals auto-backed up). The kompaun→akta→kesalahan combo is validated against the production tree — unknown combos are REJECTED.')}</div>
+  <div class="step" style="border-left-color:var(--cyan)">${rows}</div>
+  <div style="display:flex;gap:10px;align-items:center;margin-top:10px">
+    <span id="tstatus" style="font-size:.66rem;color:var(--dim);flex:1">${nUbah?nUbah+tr(' medan diubah — belum dijana',' field(s) changed — not generated yet'):tr('Tiada perubahan','No changes')}</span>
+    <button class="fchip" onclick="tedit={};drawGanti()">RESET</button>
+    <button class="fchip on" style="color:var(--pass);border-color:var(--pass)" ${nUbah?'':'disabled'} onclick="tJana()">${tr('JANA SKRIP','GENERATE')}</button>
+  </div>`}`;
+}
+function gantiAiHtml(a){
+  return `<div class="note">OpenAI-compatible — paste base URL &amp; API key pembekal. Disimpan LOKAL sahaja (ai_config.json — jangan commit).</div>
+  <div class="step" style="border-left-color:#a78bfa">
+    <div style="display:grid;grid-template-columns:210px 1fr;gap:8px;padding:3px 0"><span style="font-size:.64rem;color:var(--dim)">base_url</span><input id="tUrl" class="search" style="width:100%;margin:0" value="${esc(a.base_url)}" placeholder="https://api.pembekal.com/v1"></div>
+    <div style="display:grid;grid-template-columns:210px 1fr;gap:8px;padding:3px 0"><span style="font-size:.64rem;color:var(--dim)">api_key</span><input id="tKey" type="password" class="search" style="width:100%;margin:0" placeholder="${a.key_set?'•••••• (tersimpan)':'sk-...'}"></div>
+    <div style="display:grid;grid-template-columns:210px 1fr;gap:8px;padding:3px 0"><span style="font-size:.64rem;color:var(--dim)">model</span><select id="tModel" class="search" style="width:100%;margin:0">${TERM.models.map(m=>`<option ${m===a.model?'selected':''}>${m}</option>`).join('')}</select></div>
+  </div>
+  <div style="display:flex;gap:10px;align-items:center;margin-top:10px">
+    <span id="tstatus" style="font-size:.66rem;color:var(--dim);flex:1"></span>
+    <button class="fchip" onclick="tAiTest()">UJI SAMBUNGAN</button>
+    <button class="fchip on" onclick="tAiSave()">SIMPAN</button>
+  </div>`;
+}
+async function tJana(){
+  const s=document.getElementById('tstatus'); s.textContent=tr('menjana...','generating...');
+  const r=await fetch('/api/terminal/jana',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pbt:sel.pbt,perubahan:tedit})});
+  const d=await r.json();
+  if(d.ok){ tedit={}; await renderGanti();
+    const s2=document.getElementById('tstatus');
+    if(s2){ s2.textContent=tr('✔ Skrip dijana — backup: ','✔ Generated — backup: ')+d.backup; s2.style.color='var(--pass)'; }
+  } else { s.textContent=tr('DITOLAK: ','REJECTED: ')+JSON.stringify(d.ralat); s.style.color='var(--fail)'; }
+}
+async function tAiSave(){
+  const body={base_url:document.getElementById('tUrl').value, model:document.getElementById('tModel').value};
+  const k=document.getElementById('tKey').value; if(k) body.api_key=k;
+  await fetch('/api/terminal/ai_config',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const s=document.getElementById('tstatus'); s.textContent='✔ Disimpan (lokal)'; s.style.color='var(--pass)';
+}
+async function tAiTest(){
+  await tAiSave();
+  const s=document.getElementById('tstatus'); s.textContent='menguji...'; s.style.color='var(--dim)';
+  const r=await fetch('/api/terminal/ai_test',{method:'POST'}); const d=await r.json();
+  s.textContent=d.mesej; s.style.color=d.ok?'var(--pass)':'var(--fail)';
+}
+
+/* ---- MANUAL USER (senarai ringkas + ikon + ilustrasi hardware) ---- */
+function ikonManual(n){
+  const s='width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:7px"';
+  const d={
+    muat:`<svg ${s}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`,
+    folder:`<svg ${s}><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>`,
+    alat:`<svg ${s}><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
+    pakej:`<svg ${s}><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>`,
+    fon:`<svg ${s}><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`,
+    terminal:`<svg ${s}><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>`,
+    main:`<svg ${s}><polygon points="5 3 19 12 5 21 5 3"/></svg>`,
+    hasil:`<svg ${s}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>`,
+  };
+  return d[n]||'';
+}
+function ilustrasiHardware(){
+  const lbl='font-size="9" fill="var(--dim)" text-anchor="middle" font-family="Segoe UI,Arial" font-weight="600"';
+  return `<div style="margin:8px 0 12px;overflow-x:auto">
+  <svg width="470" height="122" viewBox="0 0 470 122" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="gSkrin" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#1e293b"/><stop offset="1" stop-color="#0b1120"/>
+      </linearGradient>
+      <linearGradient id="gFon" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#059669"/>
+      </linearGradient>
+      <linearGradient id="gPrn" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#475569"/><stop offset="1" stop-color="#1e293b"/>
+      </linearGradient>
+    </defs>
+    <!-- bayang lantai -->
+    <ellipse cx="62" cy="106" rx="46" ry="6" fill="#000" opacity=".28"/>
+    <ellipse cx="200" cy="106" rx="26" ry="5" fill="#000" opacity=".28"/>
+    <ellipse cx="345" cy="106" rx="44" ry="6" fill="#000" opacity=".28"/>
+    <!-- LAPTOP (clip-art flat) -->
+    <g class="il-a1">
+      <rect x="26" y="22" width="72" height="48" rx="5" fill="#334155"/>
+      <rect x="30" y="26" width="64" height="40" rx="3" fill="url(#gSkrin)"/>
+      <text x="36" y="40" font-family="Consolas,monospace" font-size="8" fill="#4ade80">&gt; appium</text>
+      <text x="36" y="52" font-family="Consolas,monospace" font-size="8" fill="#4ade80">&gt; run</text>
+      <rect class="il-kelip" x="58" y="46" width="5" height="7" fill="#4ade80"/>
+      <path d="M18 78 L106 78 L96 70 L28 70 Z" fill="#64748b"/>
+      <path d="M18 78 L106 78 L106 81 L18 81 Z" fill="#475569"/>
+      <rect x="54" y="72" width="16" height="4" rx="2" fill="#94a3b8"/>
+    </g>
+    <text x="62" y="119" ${lbl}>Laptop · Appium</text>
+    <!-- kabel USB -->
+    <path d="M106 74 C 140 74, 150 60, 178 56" stroke="#64748b" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <rect x="102" y="70" width="10" height="8" rx="2" fill="#94a3b8"/>
+    <text x="142" y="52" ${lbl}>USB</text>
+    <!-- TELEFON (clip-art flat) -->
+    <g class="il-a2">
+      <rect x="180" y="24" width="40" height="74" rx="8" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+      <rect x="185" y="32" width="30" height="54" rx="3" fill="url(#gFon)"/>
+      <rect x="189" y="37" width="22" height="7" rx="2" fill="#ffffff" opacity=".9"/>
+      <rect x="189" y="48" width="22" height="4" rx="2" fill="#065f46"/>
+      <rect x="189" y="55" width="22" height="4" rx="2" fill="#065f46"/>
+      <rect x="189" y="62" width="14" height="4" rx="2" fill="#065f46"/>
+      <rect x="189" y="72" width="22" height="9" rx="2" fill="#f59e0b"/>
+      <rect x="194" y="27" width="12" height="3" rx="1.5" fill="#334155"/>
+      <circle cx="200" cy="92" r="3" fill="#334155"/>
+    </g>
+    <text x="200" y="119" ${lbl}>Phone · IES</text>
+    <!-- gelombang Bluetooth -->
+    <g stroke="#38bdf8" stroke-width="2.5" fill="none" stroke-linecap="round">
+      <path class="il-bt1" d="M240 52 a14 14 0 0 1 0 24"/>
+      <path class="il-bt2" d="M250 44 a26 26 0 0 1 0 40"/>
+    </g>
+    <text x="256" y="30" ${lbl}>Bluetooth</text>
+    <!-- PRINTER BIXOLON (clip-art flat) -->
+    <g class="il-a3">
+      <!-- kertas resit beranimasi (di belakang badan) -->
+      <g clip-path="url(#klipKertas)">
+        <g class="il-cetak">
+          <rect x="318" y="30" width="46" height="34" rx="2" fill="#f8fafc"/>
+          <rect x="323" y="36" width="36" height="3" rx="1.5" fill="#cbd5e1"/>
+          <rect x="323" y="42" width="28" height="3" rx="1.5" fill="#cbd5e1"/>
+          <rect x="323" y="48" width="36" height="3" rx="1.5" fill="#cbd5e1"/>
+          <rect x="323" y="54" width="20" height="3" rx="1.5" fill="#cbd5e1"/>
+        </g>
+      </g>
+      <clipPath id="klipKertas"><rect x="316" y="28" width="50" height="40"/></clipPath>
+      <!-- badan printer -->
+      <rect x="304" y="58" width="82" height="40" rx="8" fill="url(#gPrn)"/>
+      <rect x="304" y="58" width="82" height="12" rx="6" fill="#334155"/>
+      <rect x="314" y="62" width="54" height="5" rx="2.5" fill="#0f172a"/>
+      <circle class="il-led" cx="376" cy="64" r="3.5" fill="#4ade80"/>
+      <rect x="312" y="78" width="30" height="12" rx="3" fill="#0f172a"/>
+      <text x="327" y="87" font-size="7" fill="#94a3b8" text-anchor="middle" font-family="Segoe UI,Arial" font-weight="700">SPP-R410</text>
+    </g>
+    <text x="345" y="119" ${lbl}>Printer Bixolon</text>
+  </svg></div>`;
+}
+function manualHtml(pbt){
+  const skrip=pbt+'-skrip';
+  const adaZip=['MBPG','MBIP'].includes(pbt);
+  const runcmd={MBPG:'python tools\\run_penuh.py --borang NPK',
+                MBIP:'python tools\\run_penuh_mbip.py --profil mbip-production --terus',
+                MBJB:'python tools\\run_and_report.py'}[pbt]||'python tools\\run_and_report.py';
+  const ekstra= pbt==='MBPG' ? cmd('$env:MBPG_IZIN_PRODUCTION = "1"') : '';
+  const btnZip= adaZip
+    ? `<p style="margin:6px 0"><a href="skrip/${pbt}-skrip.zip" style="display:inline-block;background:var(--panel2);border:1px solid var(--pass);color:var(--pass);border-radius:8px;padding:8px 16px;font-size:.72rem;font-weight:600;text-decoration:none">⬇ ${tr('MUAT TURUN SKRIP','DOWNLOAD SCRIPT')}</a></p>`
+    : `<p style="font-size:.72rem;color:var(--dim)">${tr('Zip '+pbt+' belum tersedia — dapatkan folder suite dari pemilik.','The '+pbt+' zip is not available yet — get the suite folder from the owner.')}</p>`;
+  const btnPdf= adaZip
+    ? `<p style="margin:4px 0 6px"><a href="manual/MANUAL-USER-${pbt}.pdf" style="display:inline-flex;align-items:center;gap:8px;background:var(--panel2);border:1px solid #ef4444;color:#ef4444;border-radius:8px;padding:8px 16px;font-size:.72rem;font-weight:600;text-decoration:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>${tr('MANUAL USER PDF','USER MANUAL PDF')}</a></p>`
+    : '';
+  return `<div class="panel" style="border-radius:0 9px 9px 9px"><div class="tut">
+    <h2>${tr('Manual User','User Manual')} — ${pbt}</h2>
+    ${btnPdf}
+    ${ilustrasiHardware()}
+    <p style="font-size:.72rem;color:var(--dim)">${tr('Contoh guna <b>C:\\ies-testing</b> — gantikan dengan folder anda (laluan pendek, tiada space).','Examples use <b>C:\\ies-testing</b> — replace with your own folder (short path, no spaces).')}</p>
+    <h2 style="margin-top:24px">${ikonManual('muat')}0 · ${tr('Muat turun','Download')}</h2>
+    <div class="step">${btnZip}<p>${tr('Zip masuk ke folder <b>Downloads</b>.','The zip lands in your <b>Downloads</b> folder.')}</p></div>
+    <h2 style="margin-top:24px">${ikonManual('folder')}1 · ${tr('Susun fail','Organize files')}</h2>
+    <div class="step">${cmd('mkdir C:\\ies-testing')}
+      <p>${tr('Downloads → klik-kanan zip → <b>Extract All</b> → ke <b>C:\\ies-testing</b>. Jangan run dari Downloads/dalam zip.','Downloads → right-click the zip → <b>Extract All</b> → into <b>C:\\ies-testing</b>. Never run from Downloads or inside the zip.')}</p></div>
+    <h2 style="margin-top:24px">${ikonManual('alat')}2 · ${tr('Pasang alat (sekali per komputer)','Install tools (once per computer)')}</h2>
+    <div class="step"><p>${tr('Python 3.11+ · Node.js LTS · adb dalam PATH. Detail: sidebar → <b>TUTORIALS</b>.','Python 3.11+ · Node.js LTS · adb on PATH. Details: sidebar → <b>TUTORIALS</b>.')}</p>
+      ${cmd('npm install -g appium')}${cmd('appium driver install uiautomator2')}</div>
+    <h2 style="margin-top:24px">${ikonManual('pakej')}3 · ${tr('Dependencies (sekali per folder)','Dependencies (once per folder)')}</h2>
+    <div class="step">${cmd('cd C:\\ies-testing\\'+skrip)}${cmd('pip install -r requirements.txt')}</div>
+    <h2 style="margin-top:24px">${ikonManual('fon')}4 · ${tr('Peranti','Devices')}</h2>
+    <div class="step"><p>${tr('Telefon: USB debugging ON, APK '+pbt+' dipasang. Printer Bixolon ON.','Phone: USB debugging ON, '+pbt+' APK installed. Bixolon printer ON.')}</p>${cmd('adb devices')}</div>
+    <h2 style="margin-top:24px">${ikonManual('terminal')}5 · Terminal 1</h2>
+    <div class="step">${cmd('appium')}</div>
+    <h2 style="margin-top:24px">${ikonManual('main')}6 · Terminal 2</h2>
+    <div class="step">${cmd('cd C:\\ies-testing\\'+skrip)}${ekstra}${cmd(runcmd)}</div>
+    <h2 style="margin-top:24px">${ikonManual('hasil')}7 · ${tr('Hasil','Results')}</h2>
+    <div class="step"><p>${tr('Laporan: <b>'+skrip+'\\reports\\</b>. Masuk papan ini: salin run JSON → <b>laporan\\data\\'+pbt+'\\runs\\</b> → refresh.','Reports: <b>'+skrip+'\\reports\\</b>. To show a run here: copy the run JSON → <b>laporan\\data\\'+pbt+'\\runs\\</b> → refresh.')}</p></div>
+  </div></div>`;
+}
+
+function fmtDT(s){ if(!s) return '—'; return String(s).replace('T',' ').slice(0,16); }
+function fmtDur(x){ if(x==null) return '—'; const m=Math.floor(x/60), s=Math.round(x%60); return m+'m '+s+'s'; }
+function esc(x){ return String(x??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+</script>
+</body>
+</html>

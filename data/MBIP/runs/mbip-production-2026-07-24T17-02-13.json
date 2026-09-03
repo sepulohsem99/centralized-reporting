@@ -1,0 +1,259 @@
+{
+ "id": "mbip-production-2026-07-24T17-02-13",
+ "pbt": "MBIP",
+ "env": "production",
+ "app_version": "2.1.17",
+ "generated_at": "2026-07-24T17:02:13",
+ "tester": "shu",
+ "device_model": "ARMOR 27",
+ "duration_seconds": 5566.18,
+ "summary": {
+  "passed": 19,
+  "failed": 23,
+  "skipped": 6,
+  "lain": 0
+ },
+ "results": {
+  "MBIP-TC-T-001": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-T-002": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-T-003": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-T-004": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-T-005": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-T-006": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-T-007": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-T-008": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-T-009": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-T-010": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-T-011": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-T-012": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-N-001": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-N-002": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-N-003": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-N-004": {
+   "status": "FAILED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-N-005": {
+   "status": "FAILED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-P-001": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-P-002": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-P-003": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-P-004": {
+   "status": "FAILED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-P-005": {
+   "status": "FAILED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-K-001": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-K-002": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-K-003": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-K-004": {
+   "status": "FAILED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-K-005": {
+   "status": "FAILED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-L-001": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-L-002": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-L-003": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-L-004": {
+   "status": "FAILED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-L-005": {
+   "status": "FAILED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-S-001": {
+   "status": "FAILED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-S-002": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-S-003": {
+   "status": "ERROR",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-S-004": {
+   "status": "ERROR",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-S-005": {
+   "status": "ERROR",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-SK-001": {
+   "status": "ERROR",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-H-001": {
+   "status": "ERROR",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-H-002": {
+   "status": "ERROR",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-H-003": {
+   "status": "ERROR",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-H-004": {
+   "status": "ERROR",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-H-005": {
+   "status": "ERROR",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-TN-001": {
+   "status": "ERROR",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-TN-002": {
+   "status": "ERROR",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-TN-003": {
+   "status": "ERROR",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-NK-001": {
+   "status": "ERROR",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBIP-TC-NK-002": {
+   "status": "ERROR",
+   "nama": "",
+   "sebab": ""
+  }
+ },
+ "sumber": "mbip-production-2026-07-24T17-02-13-shu.json"
+}

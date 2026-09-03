@@ -1,0 +1,287 @@
+{
+ "id": "mbpg-production-2026-08-20T14-16",
+ "pbt": "MBPG",
+ "env": "production",
+ "app_version": "2.1.23",
+ "generated_at": "2026-08-20T14:16:00",
+ "tester": "mrsai",
+ "device_model": "Ulefone Armor 27",
+ "duration_seconds": 1927,
+ "summary": {
+  "passed": 17,
+  "failed": 3,
+  "skipped": 15,
+  "lain": 14
+ },
+ "results": {
+  "MBPG-TC-T-001": {
+   "status": "PASSED",
+   "nama": "Tetapan Alamat IP",
+   "sebab": "SENTIASA DIUJI (aliran kerja clear-setiap-run): bootstrap isi IP dari profil selepas pm clear, baca-balik external PADAN. Internal kosong = D-02, nota bukan gagal. 15.6s"
+  },
+  "MBPG-TC-T-002": {
+   "status": "PASSED",
+   "nama": "Tetapan Pelbagai",
+   "sebab": "Lesen diisi bootstrap + baca-balik PADAN profil. Server jawab 'Lesen sama.' 7.4s"
+  },
+  "MBPG-TC-T-003": {
+   "status": "PASSED",
+   "nama": "Selaras Pengguna Apps",
+   "sebab": "22.7s. Juga dijalankan dalam bootstrap PRA-LOGIN — bukti DB: jadual users = 73 baris. Punca 'Log Masuk Gagal' pasca-clear DISAHKAN & DISELESAIKAN (app offline-first sahkan login lawan jadual pengguna lokal)."
+  },
+  "MBPG-TC-T-004": {
+   "status": "PASSED",
+   "nama": "Selaras Maklumat Alamat",
+   "sebab": "44.4s — D-01 tidak berulang"
+  },
+  "MBPG-TC-T-005": {
+   "status": "PASSED",
+   "nama": "Selaras Maklumat Kompaun",
+   "sebab": "25.1s — D-08 tidak berulang; 9 kod kompaun dalam DB"
+  },
+  "MBPG-TC-T-006": {
+   "status": "PASSED",
+   "nama": "Selaras Jenis Kenderaan",
+   "sebab": "23.3s"
+  },
+  "MBPG-TC-T-007": {
+   "status": "PASSED",
+   "nama": "Selaras Warna",
+   "sebab": "23.6s"
+  },
+  "MBPG-TC-T-008": {
+   "status": "SKIPPED",
+   "nama": "Selaras Pelesen",
+   "sebab": "LARANGAN MUTLAK — sync 3-4 jam"
+  },
+  "MBPG-TC-T-009": {
+   "status": "PASSED",
+   "nama": "Selaras Barang Sita",
+   "sebab": "25.4s"
+  },
+  "MBPG-TC-T-010": {
+   "status": "PASSED",
+   "nama": "Tetapan Skrin Utama",
+   "sebab": "38.3s — popup Pilihan Skrin Utama dibuka & pilihan didaftar"
+  },
+  "MBPG-TC-T-011": {
+   "status": "PASSED",
+   "nama": "Semak Kemaskini",
+   "sebab": "31.2s — alert 'APLIKASI TELAH DIKEMAS KINI'"
+  },
+  "MBPG-TC-T-012": {
+   "status": "PASSED",
+   "nama": "Remember Me / Login",
+   "sebab": "LOGIN PENUH pasca pm-clear LULUS percubaan pertama (sesi 85.1s) — laluan bersih penuh kini stabil: clear -> grant 12/12 -> bootstrap IP/lesen -> sync pengguna -> login"
+  },
+  "MBPG-TC-N-001": {
+   "status": "FAILED",
+   "nama": "Daftar Notis Amaran",
+   "sebab": "PERSEKITARAN, bukan skrip: printer sedang dicaj/OFF (bluetooth=False, tersambung=False). Gagal pada semakan printer WAJIB pra-borang — borang langsung TIDAK diisi, tiada rekod dicipta."
+  },
+  "MBPG-TC-N-002": {
+   "status": "NOT_RUN",
+   "nama": "Cetak Notis Amaran",
+   "sebab": "Tidak dicapai — kitaran borang mati pada semakan printer (lihat *-001)."
+  },
+  "MBPG-TC-N-003": {
+   "status": "NOT_RUN",
+   "nama": "Lampiran borang N",
+   "sebab": "Tidak dicapai — kitaran borang mati pada semakan printer (lihat *-001)."
+  },
+  "MBPG-TC-N-004": {
+   "status": "NOT_RUN",
+   "nama": "Kemaskini Notis Amaran",
+   "sebab": "Tidak dicapai — kitaran borang mati pada semakan printer (lihat *-001). Fix D-B baharu (UiScrollable scrollIntoView — mekanisme tatal terbukti) SUDAH dipasang tetapi belum teruji pada device."
+  },
+  "MBPG-TC-N-005": {
+   "status": "UNSUPPORTED",
+   "nama": "Bookmark borang N",
+   "sebab": "Had build 2.1.23: popup PILIHAN KEGEMARAN tiada medan nama/SIMPAN"
+  },
+  "MBPG-TC-P-001": {
+   "status": "FAILED",
+   "nama": "Daftar Kompaun Pelbagai",
+   "sebab": "PERSEKITARAN, bukan skrip: printer sedang dicaj/OFF (bluetooth=False, tersambung=False). Gagal pada semakan printer WAJIB pra-borang — borang langsung TIDAK diisi, tiada rekod dicipta."
+  },
+  "MBPG-TC-P-002": {
+   "status": "NOT_RUN",
+   "nama": "Cetak Kompaun Pelbagai",
+   "sebab": "Tidak dicapai — kitaran borang mati pada semakan printer (lihat *-001)."
+  },
+  "MBPG-TC-P-003": {
+   "status": "NOT_RUN",
+   "nama": "Serah Kompaun Pelbagai",
+   "sebab": "Tidak dicapai — kitaran borang mati pada semakan printer (lihat *-001)."
+  },
+  "MBPG-TC-P-004": {
+   "status": "NOT_RUN",
+   "nama": "Kemaskini Pelbagai",
+   "sebab": "Tidak dicapai — kitaran borang mati pada semakan printer (lihat *-001)."
+  },
+  "MBPG-TC-P-005": {
+   "status": "UNSUPPORTED",
+   "nama": "Bookmark borang P",
+   "sebab": "Had build — sama seperti N-005"
+  },
+  "MBPG-TC-P-006": {
+   "status": "NOT_RUN",
+   "nama": "Isu tandatangan",
+   "sebab": "Tidak dicapai — kitaran borang mati pada semakan printer (lihat *-001)."
+  },
+  "MBPG-TC-K-001": {
+   "status": "FAILED",
+   "nama": "Daftar Letak Kereta x3",
+   "sebab": "PERSEKITARAN, bukan skrip: printer sedang dicaj/OFF (bluetooth=False, tersambung=False). Gagal pada semakan printer WAJIB pra-borang — borang langsung TIDAK diisi, tiada rekod dicipta. 3 plat mySIKAP tidak dicuba."
+  },
+  "MBPG-TC-K-002": {
+   "status": "NOT_RUN",
+   "nama": "Cetak Letak Kereta",
+   "sebab": "Tidak dicapai — kitaran borang mati pada semakan printer (lihat *-001)."
+  },
+  "MBPG-TC-K-003": {
+   "status": "NOT_RUN",
+   "nama": "Serah Letak Kereta",
+   "sebab": "Tidak dicapai — kitaran borang mati pada semakan printer (lihat *-001)."
+  },
+  "MBPG-TC-K-004": {
+   "status": "NOT_RUN",
+   "nama": "Kemaskini Letak Kereta",
+   "sebab": "Tidak dicapai — kitaran borang mati pada semakan printer (lihat *-001). Fix D-B baca-balik dropdown menunggu ujian."
+  },
+  "MBPG-TC-K-005": {
+   "status": "UNSUPPORTED",
+   "nama": "Bookmark borang K",
+   "sebab": "Had build"
+  },
+  "MBPG-TC-SK-001": {
+   "status": "NOT_RUN",
+   "nama": "Senarai Kompaun",
+   "sebab": "PENEMUAN ALIRAN KERJA: Senarai memaparkan rekod LOKAL sahaja — selepas pm clear ia KOSONG (0 baris, jangkaan bukan bug). 16 rekod lama hanya wujud di server. Tiada rekod baru dicipta (printer), jadi tiada apa untuk disahkan. Imbasan penuh 5 buka + 11 imbas dijalankan dan direkod."
+  },
+  "MBPG-TC-H-001": {
+   "status": "PASSED",
+   "nama": "Hantar Semula Notis",
+   "sebab": "MOD DICUBA-UI (keputusan CEO 2026-08-19): 0 rekod M — tab Data Ralat DIBUKA, butang HANTAR SEMULA WUJUD dan DITEKAN di bawah permit berskop. AUTO-PASS. Konteks skrin 'Hantar Kompaun' kini disenarai putih — 107 tap dinilai, 0 disekat."
+  },
+  "MBPG-TC-H-002": {
+   "status": "PASSED",
+   "nama": "Hantar Semula Pelbagai",
+   "sebab": "MOD DICUBA-UI (keputusan CEO 2026-08-19): 0 rekod M — tab Data Ralat DIBUKA, butang HANTAR SEMULA WUJUD dan DITEKAN di bawah permit berskop. AUTO-PASS. Konteks skrin 'Hantar Kompaun' kini disenarai putih — 107 tap dinilai, 0 disekat."
+  },
+  "MBPG-TC-H-003": {
+   "status": "PASSED",
+   "nama": "Hantar Semula Letak Kereta",
+   "sebab": "MOD DICUBA-UI (keputusan CEO 2026-08-19): 0 rekod M — tab Data Ralat DIBUKA, butang HANTAR SEMULA WUJUD dan DITEKAN di bawah permit berskop. AUTO-PASS. Konteks skrin 'Hantar Kompaun' kini disenarai putih — 107 tap dinilai, 0 disekat."
+  },
+  "MBPG-TC-TN-001": {
+   "status": "PASSED",
+   "nama": "Tarik Notis by Penguatkuasa",
+   "sebab": "Tarik by ID penguatkuasa 'msc' + TARIK ditekan: 0 notis luput (jangkaan — notis termuda 20hb, layak 2026-09-03). Ujian kawalan dijalankan sebelum 0 diterima sebagai bukti."
+  },
+  "MBPG-TC-TN-002": {
+   "status": "PASSED",
+   "nama": "Tarik Notis by No. Notis",
+   "sebab": "Tarik by No Notis PGP02N260820001: tidak tersenarai = JANGKAAN (notis belum luput). Laluan UI dipandu penuh + dump bukti."
+  },
+  "MBPG-TC-TN-003": {
+   "status": "PASSED",
+   "nama": "Tarik Notis by Tarikh",
+   "sebab": "Fakta UI direkod: skrin Tarik Notis TIADA penapis tarikh pada build 2.1.23 (dump tn003_tiada_penapis_tarikh.xml). Tarik default dijalankan, 0 baris."
+  },
+  "MBPG-TC-NK-001": {
+   "status": "SKIPPED",
+   "nama": "Notis ke Kompaun > Kompaun",
+   "sebab": "Notis belum layak ditukar (tempoh 14 hari; paling awal 2026-09-03). Skrin tidak disentuh — D-07 membakar nombor siri."
+  },
+  "MBPG-TC-NK-002": {
+   "status": "SKIPPED",
+   "nama": "Notis ke Kompaun > Patuh",
+   "sebab": "Notis belum layak ditukar (tempoh 14 hari; paling awal 2026-09-03). Skrin tidak disentuh — D-07 membakar nombor siri."
+  },
+  "MBPG-TC-L-001": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Luar skop atas nama pemilik"
+  },
+  "MBPG-TC-L-002": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Luar skop atas nama pemilik"
+  },
+  "MBPG-TC-L-003": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Luar skop atas nama pemilik"
+  },
+  "MBPG-TC-L-004": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Luar skop atas nama pemilik"
+  },
+  "MBPG-TC-L-005": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Luar skop atas nama pemilik"
+  },
+  "MBPG-TC-S-001": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Luar skop atas nama pemilik"
+  },
+  "MBPG-TC-S-002": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Luar skop atas nama pemilik"
+  },
+  "MBPG-TC-S-003": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Luar skop atas nama pemilik"
+  },
+  "MBPG-TC-S-004": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Luar skop atas nama pemilik"
+  },
+  "MBPG-TC-S-005": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Luar skop atas nama pemilik"
+  },
+  "MBPG-TC-H-004": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Luar skop atas nama pemilik"
+  },
+  "MBPG-TC-H-005": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Luar skop atas nama pemilik"
+  }
+ },
+ "rekod_production": [],
+ "penemuan_app": [
+  {
+   "kod": "INFRA-SIRI",
+   "tajuk": "pm clear mereset kaunter siri — rekod hari sama boleh bertembung",
+   "butiran": "Gerbang siri menyekat PGP02N260820001 (rekod run pagi) daripada dikeluarkan semula. Pembaikan automatik diluluskan pemilik: majukan() menulis local_system_control ke seq_maks_hari_ini+1, disahkan bacaan semula (notis_amaran 1->2). Kini automatik pada setiap run --bersih."
+  },
+  {
+   "kod": "INFRA-LOGIN",
+   "tajuk": "Login offline-first: jadual pengguna lokal wajib di-sync sebelum login pasca-clear",
+   "butiran": "'Log Masuk Gagal | kata laluan tidak sah' dengan kredensial SAH = jadual users kosong. Bootstrap kini jalankan Selaras Pengguna Apps pra-login + bukti DB (73 users). Login lulus percubaan pertama."
+  },
+  {
+   "kod": "UI-SENARAI",
+   "tajuk": "Senarai = rekod LOKAL sahaja; kosong selepas pm clear",
+   "butiran": "16 rekod production tidak kelihatan dalam Senarai selepas clear — ia hanya di server. Pengesahan SK mesti guna rekod yang dicipta DALAM run yang sama."
+  },
+  {
+   "kod": "ENV-PRINTER",
+   "tajuk": "Printer tidak sedia (dicaj) — kelima-lima borang gagal pra-borang",
+   "butiran": "Bukan defek app/skrip. Alert 'Unable to connect device' pada setiap login ialah kegagalan sambungan printer, bukan kegagalan login."
+  }
+ ],
+ "sumber": "Konsol run_penuh --borang NPK --bersih 2026-08-20 14:16-14:48 (run 13; kaunter siri auto-majukan pertama)"
+}

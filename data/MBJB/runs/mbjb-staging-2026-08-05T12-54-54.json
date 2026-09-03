@@ -1,0 +1,289 @@
+{
+ "id": "mbjb-staging-2026-08-05T12-54-54",
+ "pbt": "MBJB",
+ "env": "staging",
+ "app_version": "2.1.33",
+ "generated_at": "2026-08-05T12:54:54",
+ "tester": "mrsai",
+ "device_model": "Armor 27",
+ "duration_seconds": 4078.29,
+ "summary": {
+  "passed": 7,
+  "failed": 12,
+  "skipped": 35,
+  "lain": 0
+ },
+ "results": {
+  "MBJB-TC-T-001": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBJB-TC-T-002": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBJB-TC-T-003": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBJB-TC-T-004": {
+   "status": "FAILED",
+   "nama": "",
+   "sebab": "assert False"
+  },
+  "MBJB-TC-T-005": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBJB-TC-T-006": {
+   "status": "FAILED",
+   "nama": "",
+   "sebab": "assert False"
+  },
+  "MBJB-TC-T-007": {
+   "status": "FAILED",
+   "nama": "",
+   "sebab": "assert False"
+  },
+  "MBJB-TC-T-008": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "LALAI: T-008 dilangkau (operasi >4 JAM diperhati, 121,871 rekod pada run 2026-07-31 — lihat CLAUDE.md 'SELARAS PELESEN'). Data KEKAL pada device antara run (no_reset=True), jadi ini BUKAN membazir kerja — ia mengelakkan sync SEMULA yang tidak perlu. Untuk menjalankannya dengan SENGAJA: set MBJB_JALA"
+  },
+  "MBJB-TC-T-009": {
+   "status": "FAILED",
+   "nama": "",
+   "sebab": "assert False"
+  },
+  "MBJB-TC-T-010": {
+   "status": "FAILED",
+   "nama": "",
+   "sebab": "assert False"
+  },
+  "MBJB-TC-T-011": {
+   "status": "FAILED",
+   "nama": "",
+   "sebab": "assert False"
+  },
+  "MBJB-TC-T-012": {
+   "status": "FAILED",
+   "nama": "",
+   "sebab": "+      where <pages.login_page.LoginPage object at 0x0000029ABB071750> = <tests.conftest.Pages object at 0x0000029ABB0717D0>.login"
+  },
+  "MBJB-TC-N-001": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBJB-TC-N-002": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBJB-TC-N-003": {
+   "status": "PASSED",
+   "nama": "",
+   "sebab": ""
+  },
+  "MBJB-TC-N-004": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "MBJB-TC-N-004: 1 medan belum disahkan pada peranti MBJB — kesalahan_jalan. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka."
+  },
+  "MBJB-TC-N-005": {
+   "status": "FAILED",
+   "nama": "",
+   "sebab": "AssertionError: SANDARAN-INDEKS gagal juga: label 'KETERANGAN KOD KOMPAUN' tidak dijumpai DAN Spinner[0] tiada pada skrin ini (0 Spinner dilihat keseluruhan). Kedua-dua laluan pengenalan (label dan indeks) gagal untuk tingkat 1."
+  },
+  "MBJB-TC-N-006": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "MBJB-TC-N-006: 1 medan belum disahkan pada peranti MBJB — kaedah_sahkan_concat[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Medan bertanda [skrol?] BELUM DISAHKAN TIADA — ia mungkin sekadar d"
+  },
+  "MBJB-TC-P-001": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "MBJB-TC-P-001: 2 medan belum disahkan pada peranti MBJB — no_pembantu_penguatkuasa[skrol?], poskod[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Medan bertanda [skrol?] BELUM DISAHKAN TIADA — "
+  },
+  "MBJB-TC-P-002": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "show stopper dari MBJB-TC-P-001: rekod P TIDAK DICIPTA dalam run ini (create GAGAL — baiki borang create; ini BUKAN isu awalan nombor)"
+  },
+  "MBJB-TC-P-003": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "show stopper dari MBJB-TC-P-001: rekod P TIDAK DICIPTA dalam run ini (create GAGAL — baiki borang create; ini BUKAN isu awalan nombor)"
+  },
+  "MBJB-TC-P-004": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "MBJB-TC-P-004: 1 medan belum disahkan pada peranti MBJB — kesalahan_jalan. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka."
+  },
+  "MBJB-TC-P-005": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "borang tidak boleh dibuka sehingga medan Pesalah disahkan — MBJB-TC-P-001: 2 medan belum disahkan pada peranti MBJB — no_pembantu_penguatkuasa[skrol?], poskod[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; "
+  },
+  "MBJB-TC-P-006": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "MBJB-TC-P-006: 1 medan belum disahkan pada peranti MBJB — kaedah_sahkan_concat[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Medan bertanda [skrol?] BELUM DISAHKAN TIADA — ia mungkin sekadar d"
+  },
+  "MBJB-TC-P-007": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "MBJB-TC-P-007: 1 medan belum disahkan pada peranti MBJB — kaedah_baca_status_notis[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Medan bertanda [skrol?] BELUM DISAHKAN TIADA — ia mungkin sekad"
+  },
+  "MBJB-TC-K-001": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "MBJB-TC-K-001: 1 medan belum disahkan pada peranti MBJB — no_pembantu_penguatkuasa[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Medan bertanda [skrol?] BELUM DISAHKAN TIADA — ia mungkin sekad"
+  },
+  "MBJB-TC-K-002": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "show stopper dari MBJB-TC-K-001: rekod K TIDAK DICIPTA dalam run ini (create GAGAL — baiki borang create; ini BUKAN isu awalan nombor)"
+  },
+  "MBJB-TC-K-003": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "show stopper dari MBJB-TC-K-001: rekod K TIDAK DICIPTA dalam run ini (create GAGAL — baiki borang create; ini BUKAN isu awalan nombor)"
+  },
+  "MBJB-TC-K-004": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "MBJB-TC-K-004: 1 medan belum disahkan pada peranti MBJB — kesalahan_jalan. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka."
+  },
+  "MBJB-TC-K-005": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "borang tidak boleh dibuka sehingga medan Pesalah disahkan — MBJB-TC-K-001: 1 medan belum disahkan pada peranti MBJB — no_pembantu_penguatkuasa[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Med"
+  },
+  "MBJB-TC-K-006": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "MBJB-TC-K-006: 1 medan belum disahkan pada peranti MBJB — kaedah_sahkan_concat[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Medan bertanda [skrol?] BELUM DISAHKAN TIADA — ia mungkin sekadar d"
+  },
+  "MBJB-TC-K-007": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "MBJB-TC-K-007: 1 medan belum disahkan pada peranti MBJB — kaedah_baca_status_notis[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Medan bertanda [skrol?] BELUM DISAHKAN TIADA — ia mungkin sekad"
+  },
+  "MBJB-TC-L-001": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "[BELUM DI-RECON] MBJB-TC-L-001: 1 medan belum disahkan pada peranti MBJB — no_pembantu_penguatkuasa[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Medan bertanda [skrol?] BELUM DISAHKAN TIADA —"
+  },
+  "MBJB-TC-L-002": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "show stopper dari MBJB-TC-L-001: rekod L TIDAK DICIPTA dalam run ini (create GAGAL — baiki borang create; ini BUKAN isu awalan nombor)"
+  },
+  "MBJB-TC-L-003": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "show stopper dari MBJB-TC-L-001: rekod L TIDAK DICIPTA dalam run ini (create GAGAL — baiki borang create; ini BUKAN isu awalan nombor)"
+  },
+  "MBJB-TC-L-004": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "[BELUM DI-RECON] MBJB-TC-L-004: 1 medan belum disahkan pada peranti MBJB — kesalahan_jalan. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka."
+  },
+  "MBJB-TC-L-005": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "[BELUM DI-RECON] borang tidak boleh dibuka sehingga medan Pesalah disahkan — MBJB-TC-L-001: 1 medan belum disahkan pada peranti MBJB — no_pembantu_penguatkuasa[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti;"
+  },
+  "MBJB-TC-L-006": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "[BELUM DI-RECON] MBJB-TC-L-006: 1 medan belum disahkan pada peranti MBJB — kaedah_sahkan_concat[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Medan bertanda [skrol?] BELUM DISAHKAN TIADA — ia "
+  },
+  "MBJB-TC-L-007": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "[BELUM DI-RECON] MBJB-TC-L-007: 1 medan belum disahkan pada peranti MBJB — kaedah_baca_status_notis[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Medan bertanda [skrol?] BELUM DISAHKAN TIADA —"
+  },
+  "MBJB-TC-S-001": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "[BELUM DI-RECON] MBJB-TC-S-001: 1 medan belum disahkan pada peranti MBJB — no_pembantu_penguatkuasa[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Medan bertanda [skrol?] BELUM DISAHKAN TIADA —"
+  },
+  "MBJB-TC-S-002": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "show stopper dari MBJB-TC-S-001: rekod S TIDAK DICIPTA dalam run ini (create GAGAL — baiki borang create; ini BUKAN isu awalan nombor)"
+  },
+  "MBJB-TC-S-003": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "show stopper dari MBJB-TC-S-001: rekod S TIDAK DICIPTA dalam run ini (create GAGAL — baiki borang create; ini BUKAN isu awalan nombor)"
+  },
+  "MBJB-TC-S-004": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "[BELUM DI-RECON] MBJB-TC-S-004: 1 medan belum disahkan pada peranti MBJB — kesalahan_jalan. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka."
+  },
+  "MBJB-TC-S-005": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "[BELUM DI-RECON] borang tidak boleh dibuka sehingga medan Pesalah disahkan — MBJB-TC-S-001: 1 medan belum disahkan pada peranti MBJB — no_pembantu_penguatkuasa[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti;"
+  },
+  "MBJB-TC-S-006": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "[BELUM DI-RECON] MBJB-TC-S-006: 1 medan belum disahkan pada peranti MBJB — kaedah_sahkan_concat[skrol?]. Excel V2.1.33 tidak membekalkan nilainya (C9 hanya merujuk nombor rekod run lama). Isi testdata/overrides.py selepas recon peranti; jangan teka. Medan bertanda [skrol?] BELUM DISAHKAN TIADA — ia "
+  },
+  "MBJB-TC-SK-001": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "hanya 1 nombor NO AKAUN terbaca merentas ('K', 'L', 'N', 'P', 'S') SELEPAS skrol penuh ATAS->HUJUNG bagi setiap jenis; susunan berturutan (C11) tidak dapat diperiksa. Skrin Senarai dipaparkan dan rekod ada — bilangan rekod pada julat tarikh ini sekadar tidak mencukupi untuk menguji susunan."
+  },
+  "MBJB-TC-H-001": {
+   "status": "FAILED",
+   "nama": "",
+   "sebab": "AssertionError: rekod JBM50N260805058 TIDAK menunjukkan STATUS HANTAR 'H' selepas Hantar; token baris: ['N', '2026-08-05', '12:20', 'M', 'A', 'admin']"
+  },
+  "MBJB-TC-H-002": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "show stopper dari MBJB-TC-P-001: rekod P TIDAK DICIPTA dalam run ini (create GAGAL — baiki borang create; ini BUKAN isu awalan nombor)"
+  },
+  "MBJB-TC-H-003": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "show stopper dari MBJB-TC-K-001: rekod K TIDAK DICIPTA dalam run ini (create GAGAL — baiki borang create; ini BUKAN isu awalan nombor)"
+  },
+  "MBJB-TC-H-004": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "show stopper dari MBJB-TC-L-001: rekod L TIDAK DICIPTA dalam run ini (create GAGAL — baiki borang create; ini BUKAN isu awalan nombor)"
+  },
+  "MBJB-TC-H-005": {
+   "status": "SKIPPED",
+   "nama": "",
+   "sebab": "show stopper dari MBJB-TC-S-001: rekod S TIDAK DICIPTA dalam run ini (create GAGAL — baiki borang create; ini BUKAN isu awalan nombor)"
+  },
+  "MBJB-TC-TN-001": {
+   "status": "FAILED",
+   "nama": "",
+   "sebab": "AssertionError: FAIL: No records displayed for id_penguatkuasa=msc"
+  },
+  "MBJB-TC-NK-001": {
+   "status": "FAILED",
+   "nama": "",
+   "sebab": "AssertionError: FAIL: No records displayed for id_penguatkuasa=admin"
+  },
+  "MBJB-TC-NK-002": {
+   "status": "FAILED",
+   "nama": "",
+   "sebab": "AssertionError: FAIL: No records displayed for id_penguatkuasa=admin"
+  }
+ },
+ "sumber": "mbjb-staging-2026-08-05T12-54-54-mrsai.json"
+}

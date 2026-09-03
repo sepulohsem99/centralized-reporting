@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.cf_token
+node_modules/
+ai_config.json

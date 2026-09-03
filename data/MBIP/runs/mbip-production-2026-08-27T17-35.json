@@ -1,0 +1,374 @@
+{
+ "id": "mbip-production-2026-08-27T17-35",
+ "pbt": "MBIP",
+ "env": "production",
+ "app_version": "2.1.17",
+ "generated_at": "2026-08-27T17:35:00",
+ "tester": "mrsai",
+ "device_model": "Ulefone Armor 27",
+ "duration_seconds": 4614,
+ "summary": {
+  "passed": 15,
+  "failed": 4,
+  "skipped": 1,
+  "lain": 28
+ },
+ "results": {
+  "MBIP-TC-T-001": {
+   "status": "PASSED",
+   "nama": "Tetapan Alamat IP",
+   "sebab": "Pelarasan setiap run: IP internal+external 58.27.54.105 diisi & Simpan disahkan."
+  },
+  "MBIP-TC-T-002": {
+   "status": "PASSED",
+   "nama": "Tetapan Pelbagai",
+   "sebab": "Lesen aplikasi disahkan dalam medan (352405067769401); server jawab 'Lesen sama'."
+  },
+  "MBIP-TC-T-003": {
+   "status": "PASSED",
+   "nama": "Selaras Pengguna Apps",
+   "sebab": "Popup 'DATA PENGGUNA BERJAYA DISIMPAN!'"
+  },
+  "MBIP-TC-T-004": {
+   "status": "PASSED",
+   "nama": "Selaras Maklumat Alamat",
+   "sebab": "Popup 'DATA ALAMAT BERJAYA DISIMPAN!'"
+  },
+  "MBIP-TC-T-005": {
+   "status": "PASSED",
+   "nama": "Selaras Maklumat Kompaun",
+   "sebab": "Popup 'DATA KOMPAUN BERJAYA DISIMPAN!'"
+  },
+  "MBIP-TC-T-006": {
+   "status": "PASSED",
+   "nama": "Selaras Maklumat Jenis Kenderaan",
+   "sebab": "Popup 'DATA JENIS KENDERAAN SAVED SUCCESSFULLY!'"
+  },
+  "MBIP-TC-T-007": {
+   "status": "PASSED",
+   "nama": "Selaras Maklumat Warna",
+   "sebab": "Popup 'DATA MAKLUMAT WARNA BERJAYA DISIMPAN!'"
+  },
+  "MBIP-TC-T-008": {
+   "status": "SKIPPED",
+   "nama": "Selaras Maklumat Pelesen",
+   "sebab": "LARANGAN MUTLAK — sync berjam-jam (arahan pemilik, sama seperti MBPG)."
+  },
+  "MBIP-TC-T-009": {
+   "status": "PASSED",
+   "nama": "Selaras Maklumat Barang Sita",
+   "sebab": "Popup 'DATA MAKLUMAT BARANG SITAAN BERJAYA DISIMPAN!'"
+  },
+  "MBIP-TC-T-010": {
+   "status": "NOT_RUN",
+   "nama": "Tetapan Skrin Utama",
+   "sebab": "Luar skop wave e2e NPK (keputusan CEO: N/P/K -001/-002 + SK-001)."
+  },
+  "MBIP-TC-T-011": {
+   "status": "NOT_RUN",
+   "nama": "Semak Kemaskini",
+   "sebab": "Luar skop wave e2e NPK."
+  },
+  "MBIP-TC-T-012": {
+   "status": "NOT_RUN",
+   "nama": "Remember Me Functions",
+   "sebab": "Luar skop wave e2e NPK."
+  },
+  "MBIP-TC-N-001": {
+   "status": "PASSED",
+   "nama": "Daftar Notis Amaran",
+   "sebab": "Rekod PRODUCTION dicipta & DIHANTAR ke 58.27.54.105: IPA3N260827001. Dropdown 3-tier lulus dengan MOD GANTI (data Excel drift — lihat penemuan)."
+  },
+  "MBIP-TC-N-002": {
+   "status": "PASSED",
+   "nama": "Daftar Notis Amaran > Cetak",
+   "sebab": "Cetakan fizikal KELUAR dari printer SPP-R410 — kertas disahkan mata pemilik."
+  },
+  "MBIP-TC-N-003": {
+   "status": "NOT_RUN",
+   "nama": "Serah Notis Amaran",
+   "sebab": "Luar skop wave e2e NPK."
+  },
+  "MBIP-TC-N-004": {
+   "status": "NOT_RUN",
+   "nama": "Kemaskini Notis Amaran",
+   "sebab": "Luar skop wave; halangan app diketahui (Form Kemaskini bawah tidak render — menyekat semua *-004)."
+  },
+  "MBIP-TC-N-005": {
+   "status": "NOT_RUN",
+   "nama": "Bookmark Notis Amaran",
+   "sebab": "Luar skop wave; UI simpan Bookmark tiada dalam build (menyekat semua *-005)."
+  },
+  "MBIP-TC-P-001": {
+   "status": "PASSED",
+   "nama": "Daftar Kompaun Pelbagai",
+   "sebab": "Rekod PRODUCTION dicipta & DIHANTAR: IPA3P260827001. Tier-2/3 lulus dengan data DB-verbatim (Excel V2.1.17 drift: PERUNTUKKAN/IDAK — lihat penemuan)."
+  },
+  "MBIP-TC-P-002": {
+   "status": "PASSED",
+   "nama": "Daftar Kompaun Pelbagai > Cetak",
+   "sebab": "Cetakan fizikal keluar (tiada COMMAND_NOT_SEND; kertas disahkan)."
+  },
+  "MBIP-TC-P-003": {
+   "status": "NOT_RUN",
+   "nama": "Serah Kompaun Pelbagai",
+   "sebab": "Luar skop wave e2e NPK."
+  },
+  "MBIP-TC-P-004": {
+   "status": "NOT_RUN",
+   "nama": "Kemaskini Kompaun Pelbagai",
+   "sebab": "Luar skop wave; halangan *-004 diketahui."
+  },
+  "MBIP-TC-P-005": {
+   "status": "NOT_RUN",
+   "nama": "Bookmark Kompaun Pelbagai",
+   "sebab": "Luar skop wave; halangan *-005 diketahui."
+  },
+  "MBIP-TC-K-001": {
+   "status": "PASSED",
+   "nama": "Daftar Kompaun Letak Kereta (Trafik)",
+   "sebab": "Rekod PRODUCTION dicipta & DIHANTAR: IPA3K260828002 (rerun #6, 2026-08-27 17:35). Data kunci CEO: JYX6605, tier AKTA JALAN/PARIT/BANGUNAN -> akta 62 -> kesalahan SEKSYEN 46(1)(G), kadar RM200 di-clamp app ke min RM500, alamat JALAN JAYA 1 dipilih dari senarai (auto TAMAN JAYA/SKUDAI). 4 halangan build hotfix diselesaikan dalam automation — lihat penemuan."
+  },
+  "MBIP-TC-K-002": {
+   "status": "PASSED",
+   "nama": "Daftar Kompaun Letak Kereta > Cetak",
+   "sebab": "Cetakan fizikal keluar (printer connected=True, tiada COMMAND_NOT_SEND; kertas Trafik disahkan mata pemilik)."
+  },
+  "MBIP-TC-K-003": {
+   "status": "NOT_RUN",
+   "nama": "Serah Kompaun Letak Kereta",
+   "sebab": "Luar skop wave e2e NPK."
+  },
+  "MBIP-TC-K-004": {
+   "status": "NOT_RUN",
+   "nama": "Kemaskini Kompaun Letak Kereta",
+   "sebab": "Luar skop wave; halangan *-004 diketahui."
+  },
+  "MBIP-TC-K-005": {
+   "status": "NOT_RUN",
+   "nama": "Bookmark Kompaun Letak Kereta",
+   "sebab": "Luar skop wave; halangan *-005 diketahui."
+  },
+  "MBIP-TC-L-001": {
+   "status": "NOT_RUN",
+   "nama": "Daftar Kompaun Lesen",
+   "sebab": "L dikecualikan dari skop wave (keputusan CEO 2026-08-27)."
+  },
+  "MBIP-TC-L-002": {
+   "status": "NOT_RUN",
+   "nama": "Daftar Kompaun Lesen > Cetak",
+   "sebab": "L dikecualikan dari skop wave."
+  },
+  "MBIP-TC-L-003": {
+   "status": "NOT_RUN",
+   "nama": "Serah Kompaun Lesen",
+   "sebab": "L dikecualikan dari skop wave."
+  },
+  "MBIP-TC-L-004": {
+   "status": "NOT_RUN",
+   "nama": "Kemaskini Kompaun Lesen",
+   "sebab": "L dikecualikan dari skop wave."
+  },
+  "MBIP-TC-L-005": {
+   "status": "NOT_RUN",
+   "nama": "Bookmark Kompaun Lesen",
+   "sebab": "L dikecualikan dari skop wave."
+  },
+  "MBIP-TC-S-001": {
+   "status": "NOT_RUN",
+   "nama": "Daftar Sitaan",
+   "sebab": "S dikecualikan dari skop wave (keputusan CEO); Kadar Denda borang Sitaan juga halangan app diketahui."
+  },
+  "MBIP-TC-S-002": {
+   "status": "NOT_RUN",
+   "nama": "Daftar Sitaan > Cetak",
+   "sebab": "S dikecualikan dari skop wave."
+  },
+  "MBIP-TC-S-003": {
+   "status": "NOT_RUN",
+   "nama": "Serah Sitaan",
+   "sebab": "S dikecualikan dari skop wave."
+  },
+  "MBIP-TC-S-004": {
+   "status": "NOT_RUN",
+   "nama": "Kemaskini Sitaan",
+   "sebab": "S dikecualikan dari skop wave."
+  },
+  "MBIP-TC-S-005": {
+   "status": "NOT_RUN",
+   "nama": "Bookmark Sitaan",
+   "sebab": "S dikecualikan dari skop wave."
+  },
+  "MBIP-TC-SK-001": {
+   "status": "PASSED",
+   "nama": "Senarai Kompaun",
+   "sebab": "Rekod production yang dicipta dalam run kelihatan dalam Senarai (IPA3N260827001 + IPA3P260827001 disahkan; IPA3K260828002 dibuka ikut nombor semasa K-002)."
+  },
+  "MBIP-TC-H-001": {
+   "status": "NOT_RUN",
+   "nama": "Hantar Semula Notis Amaran",
+   "sebab": "Luar skop wave e2e NPK."
+  },
+  "MBIP-TC-H-002": {
+   "status": "NOT_RUN",
+   "nama": "Hantar Semula Kompaun Pelbagai",
+   "sebab": "Luar skop wave; server menolak hantar-semula jenis P (halangan diketahui)."
+  },
+  "MBIP-TC-H-003": {
+   "status": "NOT_RUN",
+   "nama": "Hantar Semula Kompaun Letak Kereta",
+   "sebab": "Luar skop wave; server menolak hantar-semula jenis K (halangan diketahui)."
+  },
+  "MBIP-TC-H-004": {
+   "status": "NOT_RUN",
+   "nama": "Hantar Semula Kompaun Lesen",
+   "sebab": "Luar skop wave; server menolak hantar-semula jenis L (halangan diketahui)."
+  },
+  "MBIP-TC-H-005": {
+   "status": "NOT_RUN",
+   "nama": "Hantar Semula Sitaan",
+   "sebab": "Luar skop wave e2e NPK."
+  },
+  "MBIP-TC-TN-001": {
+   "status": "FAILED",
+   "nama": "Tarik Notis by Penguatkuasa",
+   "sebab": "Halangan app diketahui (dikesan wave #1 2026-08-27) — bukan isu automation."
+  },
+  "MBIP-TC-TN-002": {
+   "status": "FAILED",
+   "nama": "Tarik Notis by No.Notis",
+   "sebab": "Halangan app diketahui (dikesan wave #1) — bukan isu automation."
+  },
+  "MBIP-TC-TN-003": {
+   "status": "NOT_RUN",
+   "nama": "Tarik Notis by Tarikh (v3-added)",
+   "sebab": "Luar skop wave e2e NPK."
+  },
+  "MBIP-TC-NK-001": {
+   "status": "FAILED",
+   "nama": "Notis ke Kompaun > Kompaun",
+   "sebab": "Halangan app diketahui (dikesan wave #1) — bukan isu automation."
+  },
+  "MBIP-TC-NK-002": {
+   "status": "FAILED",
+   "nama": "Notis ke Kompaun > Patuh",
+   "sebab": "Halangan app diketahui (dikesan wave #1) — bukan isu automation."
+  }
+ },
+ "nilai_ganti": [
+  {
+   "tc": "MBIP-TC-N-001",
+   "medan": "Kesalahan Kompaun",
+   "nilai_excel": "MEMOTONG, MENGALIH, MEROSAKKAN ATAU MEMUSNAHKAN MANA-MANA BUNGA, BENIH, TUMBUH-TUMBUHAN ATAU POKOK-POKOK.",
+   "nilai_diguna": "MELETAKKAN ATAU MENYEBAB DILETAKKAN KENDERAAN BERMOTOR TANPA KEBENARAN MPJBT",
+   "sumber": "MOD GANTI (DB verbatim, kod 70). Nilai Excel tidak lagi wujud di bawah akta 39/UUK 7 — dalam DB semasa ia berpindah ke akta 4 dengan ejaan berubah. Kod 70 satu-satunya kesalahan akta 39; rantaian kt->39->70 terbukti dalam rekod notis lama (IPA3N260710004). Arahan CEO: 'pilih mana-mana data yang boleh bagi lulus'."
+  },
+  {
+   "tc": "MBIP-TC-P-001",
+   "medan": "Kod Akta",
+   "nilai_excel": "SEKSYEN 18(B) TIDAK MEMATUHI PERUNTUKKAN UUK KERJA TANAH",
+   "nilai_diguna": "SEKSYEN 18(B) TIDAK MEMATUHI PERUNTUKAN UUK KERJA TANAH",
+   "sumber": "MOD GANTI (DB verbatim). Typo Excel 'PERUNTUKKAN' (dua K) vs server 'PERUNTUKAN' — satu huruf mematahkan padanan."
+  },
+  {
+   "tc": "MBIP-TC-P-001",
+   "medan": "Kesalahan Kompaun",
+   "nilai_excel": "IDAK MEMATUHI PERUNTUKKAN UUK KERJA TANAH",
+   "nilai_diguna": "TIDAK MEMATUHI PERUNTUKAN UUK KERJA TANAH",
+   "sumber": "MOD GANTI (DB verbatim). 'IDAK' + 'PERUNTUKKAN' typo Excel tiada di server; rantaian oracle kt->akta 34->kesalahan 45 masih wujud."
+  },
+  {
+   "tc": "MBIP-TC-K-001",
+   "medan": "Keterangan Kod Kompaun (tier-1)",
+   "nilai_excel": "PERINTAH LALULINTAS JALAN (PERINTAH 39)",
+   "nilai_diguna": "AKTA JALAN/PARIT/BANGUNAN",
+   "sumber": "KEPUTUSAN CEO 2026-08-21 (build hotfix ubah borang Trafik — tier-1 tidak lagi terkunci PERINTAH 39). Display DB verbatim kod 'jpb'."
+  },
+  {
+   "tc": "MBIP-TC-K-001",
+   "medan": "Kod Akta",
+   "nilai_excel": "PERINTAH LALULINTAS JALAN (PERUNTUKAN TEMPAT LETAK KERETA)",
+   "nilai_diguna": "AKTA JALAN PARIT DAN BANGUNAN (AKTA 133)",
+   "sumber": "KEPUTUSAN CEO: akta 62. Live-search akta mencari TEKS keterangan, bukan kod — keterangan DB verbatim digunakan."
+  },
+  {
+   "tc": "MBIP-TC-K-001",
+   "medan": "Kesalahan Kompaun",
+   "nilai_excel": "MEMPAMERKAN KUPON LETAK KERETA TANPA MEMBUAT PENANDAAN YANG BETUL.",
+   "nilai_diguna": "[SEKSYEN 46 (1) (G)] - SEKSYEN 46 (1) (G) MENYEBABKAN ATAU MEMBENARKAN",
+   "sumber": "KEPUTUSAN CEO: 'pilih yang atas' — baris pertama senarai kesalahan akta 62 (2 baris dalam DB)."
+  },
+  {
+   "tc": "MBIP-TC-K-001",
+   "medan": "Kadar Denda (RM)",
+   "nilai_excel": "RM30",
+   "nilai_diguna": "RM500",
+   "sumber": "Data CEO RM200; app clamp ke minimum julat akta 62 [RM500-RM2000]. Nilai Excel RM30 untuk borang lama PERINTAH 39."
+  },
+  {
+   "tc": "MBIP-TC-K-001",
+   "medan": "Maklumat Taman",
+   "nilai_excel": "TAMAN JAYA 1",
+   "nilai_diguna": "TAMAN JAYA",
+   "sumber": "Auto-isi dari pilihan JALAN JAYA 1 (JOIN DB: jalan->taman->bandar). DB kata JALAN JAYA 1 milik TAMAN JAYA tanpa '1'."
+  },
+  {
+   "tc": "MBIP-TC-K-001",
+   "medan": "Tempoh Kompaun",
+   "nilai_excel": "1",
+   "nilai_diguna": "2",
+   "sumber": "KEPUTUSAN CEO 2026-08-21 (DATA-UJIAN-KOMPAUN-TRAFIK-MBIP.md); pra-isi app '21' diganti."
+  }
+ ],
+ "rekod_production": [
+  {
+   "no": "IPA3N260827001",
+   "jenis": "Notis Amaran",
+   "tc": "MBIP-TC-N-001/N-002",
+   "status": "DIHANTAR + DICETAK (kertas disahkan mata)",
+   "tindakan_pm": "Mohon PM batalkan"
+  },
+  {
+   "no": "IPA3P260827001",
+   "jenis": "Kompaun Pelbagai",
+   "tc": "MBIP-TC-P-001/P-002",
+   "status": "DIHANTAR + DICETAK",
+   "tindakan_pm": "Mohon PM batalkan"
+  },
+  {
+   "no": "IPA3K260828002",
+   "jenis": "Kompaun Trafik (Letak Kereta)",
+   "tc": "MBIP-TC-K-001/K-002",
+   "status": "DIHANTAR + DICETAK (kertas disahkan mata)",
+   "tindakan_pm": "Mohon PM batalkan"
+  }
+ ],
+ "penemuan_app": [
+  {
+   "kod": "UX-ALAMAT-TRAFIK",
+   "tajuk": "Tab-2 Trafik (build hotfix 2.1.17): pra-isi alamat TIDAK sah untuk validasi BANDAR",
+   "butiran": "Blok alamat datang pra-isi ('6 LORONG RIA'/'KAMPUNG MELAYU MAJIDI'/'JOHOR BAHRU') tetapi nilai itu tiada dalam local_ekpn_jalan, jadi kod bandar dalaman kekal kosong dan Seterusnya ditolak: 'SILA PILIH BANDAR DARIPADA SENARAI.' Pengguna sebenar yang terima pra-isi ini akan tersekat juga. Jalan WAJIB dipilih semula dari senarai (pilihan men-set kod taman+bandar melalui JOIN DB). Label TextView blok alamat juga dibuang dalam hotfix — medan hanya dikenal melalui hint."
+  },
+  {
+   "kod": "UX-TEMPOH-TRAFIK",
+   "tajuk": "TEMPOH KOMPAUN pra-isi '21' pada borang Trafik",
+   "butiran": "Nilai lalai 21 hari (maksimum julat) — bukan kosong. Skrip Excel/keputusan CEO = 2 hari; automation kini menggantinya secara eksplisit."
+  },
+  {
+   "kod": "UX-KAMERA-TRAFIK",
+   "tajuk": "Kamera borang Trafik jauh lebih perlahan daripada borang N/P",
+   "butiran": "Snap tercicir pada pacing biasa (kaunter 1/6-2/6 selepas 3 snap) dan butang tick tidak berdaftar sehingga ada capture segar yang settled. Kaunter 'GAMBAR TELAH DIAMBIL: N/6' boleh menunjukkan gambar tetapi validasi 'GAMBAR MESTI DIAMBIL.' masih menolak jika sesi kamera ditutup melalui X dan bukan tick."
+  },
+  {
+   "kod": "DATA-EXCEL-DRIFT",
+   "tajuk": "Excel V2.1.17 tidak selari dengan server/DB peranti",
+   "butiran": "N: kesalahan MEMOTONG berpindah akta 39 -> akta 4 (ejaan turut berubah). P: 'PERUNTUKKAN' (typo dua K) vs 'PERUNTUKAN' server; 'IDAK' tiada di server. K: Excel kata TAMAN JAYA 1, DB kata JALAN JAYA 1 milik TAMAN JAYA; kadar RM200 di bawah minimum julat akta 62 (RM500-2000) — app clamp ke RM500. Akta 57 & ACT2025000003 sifar kesalahan dalam DB. Automation guna MOD GANTI + data DB-verbatim, semua dicatat [PENEMUAN-DATA]."
+  },
+  {
+   "kod": "APP-HALANGAN-TN-NK",
+   "tajuk": "TN-001/TN-002/NK-001/NK-002 gagal pada halangan app",
+   "butiran": "Dikesan wave #1 2026-08-27 — kegagalan berpunca dari aplikasi, bukan skrip ujian. Perlu siasatan dev; tidak dikira regresi automation."
+  }
+ ],
+ "sumber": "Wave e2e NPK 2026-08-27 (run_penuh_mbip.py --terus, 1:01:17, 5 lulus) + rerun K #6 (15:37, K-001/K-002 lulus) melalui jambatan; cetakan fizikal disahkan mata pemilik (3 kertas: N, P, K). Laporan penuh: reports/LAPORAN-E2E-NPK-MBIP-2026-08-27.md"
+}

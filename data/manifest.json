@@ -1,0 +1,8 @@
+{
+  "tajuk": "CENTRALIZED REPORTING — AI CENTRIC TESTING",
+  "pbt": [
+    {"kod": "MBIP", "nama": "Majlis Bandaraya Iskandar Puteri", "warna": "#3b82f6"},
+    {"kod": "MBJB", "nama": "Majlis Bandaraya Johor Bahru", "warna": "#22d3ee"},
+    {"kod": "MBPG", "nama": "Majlis Bandaraya Pasir Gudang", "warna": "#22c55e"}
+  ]
+}

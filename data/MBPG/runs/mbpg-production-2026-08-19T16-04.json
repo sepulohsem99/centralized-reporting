@@ -1,0 +1,297 @@
+{
+ "id": "mbpg-production-2026-08-19T16-04",
+ "pbt": "MBPG",
+ "env": "production",
+ "app_version": "2.1.23",
+ "generated_at": "2026-08-19T16:04:00",
+ "tester": "mrsai",
+ "device_model": "Ulefone Armor 27",
+ "duration_seconds": 4274,
+ "summary": {
+  "passed": 17,
+  "failed": 6,
+  "skipped": 22,
+  "lain": 4
+ },
+ "results": {
+  "MBPG-TC-T-001": {
+   "status": "SKIPPED",
+   "nama": "Tetapan Alamat IP",
+   "sebab": "Bersyarat — IP peranti sudah wujud, bootstrap tidak tercetus"
+  },
+  "MBPG-TC-T-002": {
+   "status": "SKIPPED",
+   "nama": "Tetapan Pelbagai",
+   "sebab": "Sama seperti T-001"
+  },
+  "MBPG-TC-T-003": {
+   "status": "PASSED",
+   "nama": "Selaras Pengguna Apps",
+   "sebab": "22.1s"
+  },
+  "MBPG-TC-T-004": {
+   "status": "PASSED",
+   "nama": "Selaras Maklumat Alamat",
+   "sebab": "117.0s"
+  },
+  "MBPG-TC-T-005": {
+   "status": "PASSED",
+   "nama": "Selaras Maklumat Kompaun",
+   "sebab": "GAGAL D-08 (app terkeluar) lalu LULUS pada auto-retry — 9 kod kompaun dalam DB"
+  },
+  "MBPG-TC-T-006": {
+   "status": "PASSED",
+   "nama": "Selaras Jenis Kenderaan",
+   "sebab": "24.3s"
+  },
+  "MBPG-TC-T-007": {
+   "status": "PASSED",
+   "nama": "Selaras Warna",
+   "sebab": "24.0s"
+  },
+  "MBPG-TC-T-008": {
+   "status": "SKIPPED",
+   "nama": "Selaras Pelesen",
+   "sebab": "LARANGAN MUTLAK — sync 3-4 jam"
+  },
+  "MBPG-TC-T-009": {
+   "status": "PASSED",
+   "nama": "Selaras Barang Sita",
+   "sebab": "23.4s"
+  },
+  "MBPG-TC-T-010": {
+   "status": "PASSED",
+   "nama": "Tetapan Skrin Utama",
+   "sebab": "Kali pertama diwayarkan — popup Pilihan Skrin Utama dibuka & ditutup"
+  },
+  "MBPG-TC-T-011": {
+   "status": "PASSED",
+   "nama": "Semak Kemaskini",
+   "sebab": "Alert 'APLIKASI TELAH DIKEMAS KINI'"
+  },
+  "MBPG-TC-T-012": {
+   "status": "PASSED",
+   "nama": "Remember Me / Login",
+   "sebab": "Sesi 139.0s"
+  },
+  "MBPG-TC-N-001": {
+   "status": "PASSED",
+   "nama": "Daftar Notis Amaran",
+   "sebab": "PGP02N260819002 dicipta 16:36 — nombor TEPAT ramalan gerbang siri"
+  },
+  "MBPG-TC-N-002": {
+   "status": "PASSED",
+   "nama": "Cetak Notis Amaran",
+   "sebab": "Kertas keluar + DISAHKAN MATA CEO — semua medan padan pre-run report"
+  },
+  "MBPG-TC-N-003": {
+   "status": "NOT_RUN",
+   "nama": "Lampiran borang N",
+   "sebab": "Kitaran mati di N-004 sebelum peringkat lampiran dicapai"
+  },
+  "MBPG-TC-N-004": {
+   "status": "FAILED",
+   "nama": "Kemaskini Notis Amaran",
+   "sebab": "D-B: SETERUSNYA/MENYERAHKAN tiada dalam pokok; borang edit tolak swipe — fix scrollGesture dipasang untuk run seterusnya"
+  },
+  "MBPG-TC-N-005": {
+   "status": "UNSUPPORTED",
+   "nama": "Bookmark borang N",
+   "sebab": "Had build 2.1.23: popup PILIHAN KEGEMARAN tiada medan nama/SIMPAN"
+  },
+  "MBPG-TC-P-001": {
+   "status": "PASSED",
+   "nama": "Daftar Kompaun Pelbagai",
+   "sebab": "PGP02P260819003 dicipta 16:46"
+  },
+  "MBPG-TC-P-002": {
+   "status": "PASSED",
+   "nama": "Cetak Kompaun Pelbagai",
+   "sebab": "Kertas keluar + disahkan mata; nota: alamat pesalah = variansi auto-isi (JALAN ALAMANDA 1)"
+  },
+  "MBPG-TC-P-003": {
+   "status": "PASSED",
+   "nama": "Serah Kompaun Pelbagai",
+   "sebab": "SERAH + HANTAR — 'SEMUA DATA BERJAYA DIHANTAR' (muat naik 100%)"
+  },
+  "MBPG-TC-P-004": {
+   "status": "FAILED",
+   "nama": "Kemaskini Pelbagai",
+   "sebab": "D-B — sama seperti N-004"
+  },
+  "MBPG-TC-P-005": {
+   "status": "UNSUPPORTED",
+   "nama": "Bookmark borang P",
+   "sebab": "Had build — sama seperti N-005"
+  },
+  "MBPG-TC-P-006": {
+   "status": "FAILED",
+   "nama": "Isu tandatangan",
+   "sebab": "DISAHKAN MATA CEO: tandatangan dilukis TIDAK keluar pada cetakan (D-10, defek app)"
+  },
+  "MBPG-TC-K-001": {
+   "status": "PASSED",
+   "nama": "Daftar Letak Kereta x3",
+   "sebab": "PGP02K260819004/005/006 — 3 plat mySIKAP; fix baca-balik dropdown TERBUKTI"
+  },
+  "MBPG-TC-K-002": {
+   "status": "FAILED",
+   "nama": "Cetak Letak Kereta",
+   "sebab": "Kertas keluar TETAPI blok tandatangan = noise kelabu — D-10 disahkan mata CEO (automasi cetak lulus)"
+  },
+  "MBPG-TC-K-003": {
+   "status": "PASSED",
+   "nama": "Serah Letak Kereta",
+   "sebab": "SERAH + HANTAR pada ketiga-tiga rekod"
+  },
+  "MBPG-TC-K-004": {
+   "status": "FAILED",
+   "nama": "Kemaskini Letak Kereta",
+   "sebab": "D-B — sama seperti N-004"
+  },
+  "MBPG-TC-K-005": {
+   "status": "UNSUPPORTED",
+   "nama": "Bookmark borang K",
+   "sebab": "Had build"
+  },
+  "MBPG-TC-SK-001": {
+   "status": "FAILED",
+   "nama": "Senarai Kompaun",
+   "sebab": "Imbasan baris lapor 0/15 SEDANGKAN rekod wujud (kemaskini buka setiap satu via sel NO AKAUN) — isu imbasan skrip; fix per-rekod dipasang"
+  },
+  "MBPG-TC-H-001": {
+   "status": "SKIPPED",
+   "nama": "Hantar Semula Notis",
+   "sebab": "Tiada rekod status M — dasar auto-pass CEO berkuatkuasa run seterusnya"
+  },
+  "MBPG-TC-H-002": {
+   "status": "SKIPPED",
+   "nama": "Hantar Semula Pelbagai",
+   "sebab": "Sama"
+  },
+  "MBPG-TC-H-003": {
+   "status": "SKIPPED",
+   "nama": "Hantar Semula Letak Kereta",
+   "sebab": "Sama"
+  },
+  "MBPG-TC-TN-001": {
+   "status": "PASSED",
+   "nama": "Tarik Notis by Penguatkuasa",
+   "sebab": "0 notis ditarik = betul (dialog tarik LUPUT sahaja; notis kita belum luput)"
+  },
+  "MBPG-TC-TN-002": {
+   "status": "SKIPPED",
+   "nama": "Tarik Notis by No. Notis",
+   "sebab": "Belum dipandu run ini — diwayarkan untuk run seterusnya"
+  },
+  "MBPG-TC-TN-003": {
+   "status": "SKIPPED",
+   "nama": "Tarik Notis by Tarikh",
+   "sebab": "Sama seperti TN-002"
+  },
+  "MBPG-TC-NK-001": {
+   "status": "SKIPPED",
+   "nama": "Notis ke Kompaun > Kompaun",
+   "sebab": "Tiada notis luput; terawal 2026-09-01"
+  },
+  "MBPG-TC-NK-002": {
+   "status": "SKIPPED",
+   "nama": "Notis ke Kompaun > Patuh",
+   "sebab": "Sama"
+  },
+  "MBPG-TC-L-001": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Luar skop atas nama pemilik"
+  },
+  "MBPG-TC-L-002": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Luar skop atas nama pemilik"
+  },
+  "MBPG-TC-L-003": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Luar skop atas nama pemilik"
+  },
+  "MBPG-TC-L-004": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Luar skop atas nama pemilik"
+  },
+  "MBPG-TC-L-005": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Luar skop atas nama pemilik"
+  },
+  "MBPG-TC-S-001": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Luar skop atas nama pemilik"
+  },
+  "MBPG-TC-S-002": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Luar skop atas nama pemilik"
+  },
+  "MBPG-TC-S-003": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Luar skop atas nama pemilik"
+  },
+  "MBPG-TC-S-004": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Luar skop atas nama pemilik"
+  },
+  "MBPG-TC-S-005": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Luar skop atas nama pemilik"
+  },
+  "MBPG-TC-H-004": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Luar skop atas nama pemilik"
+  },
+  "MBPG-TC-H-005": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Luar skop atas nama pemilik"
+  }
+ },
+ "rekod_production": [
+  {
+   "no": "PGP02N260819002",
+   "jenis": "N",
+   "status": "baru"
+  },
+  {
+   "no": "PGP02P260819003",
+   "jenis": "P",
+   "status": "baru"
+  },
+  {
+   "no": "PGP02K260819004",
+   "jenis": "K",
+   "status": "baru — PII sebenar (pemilik betul)"
+  },
+  {
+   "no": "PGP02K260819005",
+   "jenis": "K",
+   "status": "baru — PII SALAH (D-09b) — BATAL DULU"
+  },
+  {
+   "no": "PGP02K260819006",
+   "jenis": "K",
+   "status": "baru — PII sebenar (pemilik betul)"
+  }
+ ],
+ "penemuan_app": [
+  "D-09 DISAHKAN: identiti pemilik JYX6605 melekat pada rekod JUA3276 (PGP02K260819005)",
+  "D-10 DISAHKAN: tandatangan dilukis tidak keluar pada cetakan K (blok noise kelabu)",
+  "D-08 kekal: T-005 crash berselang-seli, retry berjaya",
+  "Rekod kita tiada dalam hasil imbasan Senarai viewport (isu skrip, dibaiki)"
+ ],
+ "sumber": "console run 2026-08-19 16:04-17:56 + pengesahan mata CEO"
+}
