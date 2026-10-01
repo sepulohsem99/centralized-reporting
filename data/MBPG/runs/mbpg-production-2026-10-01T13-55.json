@@ -1,0 +1,297 @@
+{
+ "id": "mbpg-production-2026-10-01T13-55",
+ "pbt": "MBPG",
+ "env": "production",
+ "app_version": "2.1.25",
+ "generated_at": "2026-10-01T13:55:00",
+ "tester": "mrsai",
+ "device_model": "Ulefone Armor 27",
+ "duration_seconds": 6305,
+ "summary": {
+  "passed": 27,
+  "failed": 3,
+  "skipped": 15,
+  "lain": 4
+ },
+ "results": {
+  "MBPG-TC-T-001": {
+   "status": "PASSED",
+   "nama": "Tetapan Alamat IP",
+   "sebab": "Lulus — bootstrap isi IP, baca-balik PADAN. Disahkan semasa larian run8 (2026-10-01)."
+  },
+  "MBPG-TC-T-002": {
+   "status": "PASSED",
+   "nama": "Tetapan Pelbagai",
+   "sebab": "Lulus — lesen padan profil pasca-bootstrap."
+  },
+  "MBPG-TC-T-003": {
+   "status": "PASSED",
+   "nama": "Selaras Pengguna Apps",
+   "sebab": "Lulus — jadual users terisi pra-login, login run8 berjaya percubaan pertama."
+  },
+  "MBPG-TC-T-004": {
+   "status": "PASSED",
+   "nama": "Selaras Maklumat Alamat",
+   "sebab": "Lulus."
+  },
+  "MBPG-TC-T-005": {
+   "status": "PASSED",
+   "nama": "Selaras Maklumat Kompaun",
+   "sebab": "Lulus."
+  },
+  "MBPG-TC-T-006": {
+   "status": "PASSED",
+   "nama": "Selaras Jenis Kenderaan",
+   "sebab": "Lulus."
+  },
+  "MBPG-TC-T-007": {
+   "status": "PASSED",
+   "nama": "Selaras Warna",
+   "sebab": "Lulus."
+  },
+  "MBPG-TC-T-008": {
+   "status": "SKIPPED",
+   "nama": "Selaras Pelesen",
+   "sebab": "TIDAK DISENTUH — larangan mutlak (sync pelesen 3-4 jam, risiko kunci peranti production). Sama seperti run-run sebelum ini."
+  },
+  "MBPG-TC-T-009": {
+   "status": "PASSED",
+   "nama": "Selaras Barang Sita",
+   "sebab": "Lulus."
+  },
+  "MBPG-TC-T-010": {
+   "status": "PASSED",
+   "nama": "Tetapan Skrin Utama",
+   "sebab": "Lulus."
+  },
+  "MBPG-TC-T-011": {
+   "status": "PASSED",
+   "nama": "Semak Kemaskini",
+   "sebab": "Lulus."
+  },
+  "MBPG-TC-T-012": {
+   "status": "PASSED",
+   "nama": "Remember Me / Login",
+   "sebab": "Lulus — sesi + login mod SEBENAR (MBPG_MOD_SEBENAR=1) berjaya, disahkan berulang kali sepanjang run8."
+  },
+  "MBPG-TC-N-001": {
+   "status": "PASSED",
+   "nama": "Daftar Notis Amaran",
+   "sebab": "Lulus — rekod baru PGP02N261001001 dicipta 2026-10-01 14:04:15 (REKOD-SEBENAR-DICIPTA-2026-10-01.md). Printer BERFUNGSI run ini — lihat INFRA-PRINTER di bawah."
+  },
+  "MBPG-TC-N-002": {
+   "status": "PASSED",
+   "nama": "Cetak Notis Amaran",
+   "sebab": "Lulus — cetak fizikal disahkan (E2E.jsonl 14:04:27, printer SPP-R410_110095, kuota_baki 9988, cetak_dihantar=true, ralat_cetak=null)."
+  },
+  "MBPG-TC-N-003": {
+   "status": "PASSED",
+   "nama": "Lampiran borang N",
+   "sebab": "Lulus — lampiran foto bahagian dari kitaran cipta N-001, disahkan dalam larian ini."
+  },
+  "MBPG-TC-N-004": {
+   "status": "PASSED",
+   "nama": "Kemaskini Notis Amaran",
+   "sebab": "Lulus — PGP02N261001001 -> PGP02N261001002 (hasil-kemaskini), 2026-10-01 14:07:17."
+  },
+  "MBPG-TC-N-005": {
+   "status": "UNSUPPORTED",
+   "nama": "Bookmark borang N",
+   "sebab": "Had build — popup PILIHAN KEGEMARAN masih tiada medan nama/SIMPAN. Disahkan semula pada 2.1.25 (teks mesej skrip sendiri masih rujuk '2.1.23' — isu kosmetik teks skrip, bukan tingkah laku berbeza)."
+  },
+  "MBPG-TC-P-001": {
+   "status": "PASSED",
+   "nama": "Daftar Kompaun Pelbagai",
+   "sebab": "Lulus — rekod baru PGP02P261001001 dicipta 2026-10-01 14:17:42."
+  },
+  "MBPG-TC-P-002": {
+   "status": "PASSED",
+   "nama": "Cetak Kompaun Pelbagai",
+   "sebab": "Lulus — cetak fizikal disahkan (E2E.jsonl 14:17:55, printer SPP-R410_110095, kuota_baki 9988)."
+  },
+  "MBPG-TC-P-003": {
+   "status": "FAILED",
+   "nama": "Serah Kompaun Pelbagai",
+   "sebab": "BLOCKER #4 (skrip/app navigasi): selepas Hantar Akhir, peringkat_senarai gagal — pages.home.open_senarai() TimeoutException, butang 'SENARAI' tidak boleh diklik selepas 15s skrol (forensik 20261001-142729-borang-P.txt, run_e2e.py:1168). Turut cerap mod gagal berasingan: tidak dapat kembali ke skrin utama sebelum membuka Hantar. INI LARIAN SEBELUM Fix#8 — Fix#8 (navigasi peringkat_senarai) dikeluarkan PADA HARI SAMA berdasarkan diagnosis daripada blocker ini."
+  },
+  "MBPG-TC-P-004": {
+   "status": "FAILED",
+   "nama": "Kemaskini Pelbagai",
+   "sebab": "Rekod hasil-kemaskini (dari PGP02P261001001, ~14:20:44) tidak tertangkap no. rekod oleh skrip (lihat REKOD-SEBENAR-DICIPTA-2026-10-01.md, baris 'TIDAK TERTANGKAP') — kemaskini gagal lengkap pada build ini."
+  },
+  "MBPG-TC-P-005": {
+   "status": "UNSUPPORTED",
+   "nama": "Bookmark borang P",
+   "sebab": "Had build — sama seperti N-005."
+  },
+  "MBPG-TC-P-006": {
+   "status": "NOT_RUN",
+   "nama": "Isu tandatangan",
+   "sebab": "Tiada bukti/log khusus isu tandatangan P dalam larian run8 (--borang NPK) — tidak dicuba/tidak tertangkap berasingan. Tidak dianggap lulus atau gagal tanpa bukti."
+  },
+  "MBPG-TC-K-001": {
+   "status": "PASSED",
+   "nama": "Daftar Letak Kereta x3",
+   "sebab": "Lulus x3 — PGP02K261001002 (14:37:29, JYX6605), PGP02K261001004 (14:53:42, JUA3276), PGP02K261001006 (15:10:07, JRT2649)."
+  },
+  "MBPG-TC-K-002": {
+   "status": "PASSED",
+   "nama": "Cetak Letak Kereta",
+   "sebab": "Lulus x3 — cetak fizikal disahkan (E2E.jsonl 14:37:42/14:53:54/15:10:20, printer SPP-R410_110095, kuota_baki 9982/9981/9980)."
+  },
+  "MBPG-TC-K-003": {
+   "status": "FAILED",
+   "nama": "Serah Letak Kereta",
+   "sebab": "BLOCKER #4 — gagal identik x3 (forensik 20261001-144339, 20261001-145955, 20261001-151622-borang-K: TimeoutException sama pada pages.home.open_senarai(), run_e2e.py:1168). Larian SEBELUM Fix#8 — lihat nota P-003."
+  },
+  "MBPG-TC-K-004": {
+   "status": "PASSED",
+   "nama": "Kemaskini Letak Kereta",
+   "sebab": "Lulus x3 — PGP02K261001002->003 (14:41:00), 004->005 (14:57:16), 006->007 (15:13:42), semua hasil-kemaskini tercatat lengkap."
+  },
+  "MBPG-TC-K-005": {
+   "status": "UNSUPPORTED",
+   "nama": "Bookmark borang K",
+   "sebab": "Had build — sama seperti N-005/P-005."
+  },
+  "MBPG-TC-SK-001": {
+   "status": "PASSED",
+   "nama": "Senarai Kompaun",
+   "sebab": "Lulus — imbasan senarai jumpa semua rekod K (002/003/004/005/006/007) walaupun status Hantar belum segar akibat blocker #4; paparan senarai sendiri berfungsi."
+  },
+  "MBPG-TC-H-001": {
+   "status": "PASSED",
+   "nama": "Hantar Semula Notis",
+   "sebab": "Lulus — auto-pass, tiada rekod bermasalah (M) dalam modul Hantar, laluan UI dipandu (MOD DICUBA-UI, arahan CEO 2026-08-19)."
+  },
+  "MBPG-TC-H-002": {
+   "status": "PASSED",
+   "nama": "Hantar Semula Pelbagai",
+   "sebab": "Lulus — auto-pass, sama asas dengan H-001."
+  },
+  "MBPG-TC-H-003": {
+   "status": "PASSED",
+   "nama": "Hantar Semula Letak Kereta",
+   "sebab": "Lulus — auto-pass, sama asas dengan H-001."
+  },
+  "MBPG-TC-H-004": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Drop PM — tidak disentuh, sama seperti run sebelumnya."
+  },
+  "MBPG-TC-H-005": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Drop PM — tidak disentuh, sama seperti run sebelumnya."
+  },
+  "MBPG-TC-TN-001": {
+   "status": "PASSED",
+   "nama": "Tarik Notis by Penguatkuasa",
+   "sebab": "Lulus."
+  },
+  "MBPG-TC-TN-002": {
+   "status": "PASSED",
+   "nama": "Tarik Notis by No. Notis",
+   "sebab": "Lulus."
+  },
+  "MBPG-TC-TN-003": {
+   "status": "PASSED",
+   "nama": "Tarik Notis by Tarikh",
+   "sebab": "Lulus."
+  },
+  "MBPG-TC-NK-001": {
+   "status": "SKIPPED",
+   "nama": "Notis ke Kompaun > Kompaun",
+   "sebab": "Luar skop larian ini (--borang NPK tidak merangkumi aliran tukar NK). Tiada bukti untuk disahkan — tidak dianggap lulus/gagal."
+  },
+  "MBPG-TC-NK-002": {
+   "status": "SKIPPED",
+   "nama": "Notis ke Kompaun > Patuh",
+   "sebab": "Luar skop larian ini — sama nota seperti NK-001."
+  },
+  "MBPG-TC-L-001": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Drop PM — seluruh siri L digugurkan daripada projek."
+  },
+  "MBPG-TC-L-002": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Drop PM — seluruh siri L digugurkan daripada projek."
+  },
+  "MBPG-TC-L-003": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Drop PM — seluruh siri L digugurkan daripada projek."
+  },
+  "MBPG-TC-L-004": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Drop PM — seluruh siri L digugurkan daripada projek."
+  },
+  "MBPG-TC-L-005": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Drop PM — seluruh siri L digugurkan daripada projek."
+  },
+  "MBPG-TC-S-001": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Drop PM — seluruh siri S digugurkan daripada projek."
+  },
+  "MBPG-TC-S-002": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Drop PM — seluruh siri S digugurkan daripada projek."
+  },
+  "MBPG-TC-S-003": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Drop PM — seluruh siri S digugurkan daripada projek."
+  },
+  "MBPG-TC-S-004": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Drop PM — seluruh siri S digugurkan daripada projek."
+  },
+  "MBPG-TC-S-005": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Drop PM — seluruh siri S digugurkan daripada projek."
+  }
+ },
+ "rekod_production": [
+  "PGP02N261001001",
+  "PGP02N261001002",
+  "PGP02P261001001",
+  "PGP02K261001002",
+  "PGP02K261001003",
+  "PGP02K261001004",
+  "PGP02K261001005",
+  "PGP02K261001006",
+  "PGP02K261001007"
+ ],
+ "penemuan_app": [
+  {
+   "kod": "BLOCKER-4-NAV",
+   "tajuk": "peringkat_senarai gagal — butang SENARAI tidak boleh diklik selepas Hantar (run_e2e.py:1168)",
+   "butiran": "TimeoutException identik merentas N/P/K x3 (5 kitaran) selepas Hantar Akhir: pages.home.open_senarai() -> wait_and_click gagal 15s selepas 1 percubaan skrol. Punca didiagnosis TERUS daripada run8 ini. Fix#8 (navigasi, sasaran peringkat_hantar/peringkat_senarai) DIKELUARKAN PADA HARI SAMA (2026-10-01) berdasarkan bukti run8. run8 = baseline SEBELUM Fix#8 — bukan ujian regresi Fix#8, dan tidak boleh ditafsir sebagai Fix#8 gagal."
+  },
+  {
+   "kod": "D-09",
+   "tajuk": "D-09 (pertindihan identiti rekod) MASIH ADA pada 2.1.25",
+   "butiran": "semak_d09(): RuntimeError — 1 dapatan pertindihan merentas 6 rekod K (forensik 20261001-151623-semak-D-09.txt). Defek lama, disahkan BELUM dibaiki pada build 2.1.25. Perlu dimajukan ke dev team (bersama D-10, lihat nota lama)."
+  },
+  {
+   "kod": "INFRA-PRINTER",
+   "tajuk": "Isu printer (ENV-PRINTER, run Aug-20) DISELESAIKAN — tiada isu printer run8",
+   "butiran": "Kelima-lima kitaran (N-001, P-001, K-001x3) berjaya cetak fizikal pada percubaan pertama (printer SPP-R410_110095, cetak_dihantar=true, ralat_cetak=null setiap satu — E2E.jsonl). Isu printer sedang-dicaj/OFF yang menyebabkan 3 FAILED pada run Aug-20 TIDAK berulang run ini."
+  },
+  {
+   "kod": "P-004-KEMASKINI",
+   "tajuk": "Kemaskini Kompaun Pelbagai (P-004) gagal — no. rekod hasil-kemaskini tidak tertangkap skrip",
+   "butiran": "REKOD-SEBENAR-DICIPTA-2026-10-01.md menandakan baris P-004 sebagai 'TIDAK TERTANGKAP' berbanding K-004 (3/3 tertangkap penuh) — berbeza daripada corak gagal blocker#4, nampak isu berasingan khusus borang P."
+  }
+ ],
+ "sumber": "Konsol run_penuh.py --borang NPK --bersih --terus, 2026-10-01 (run8), mod sebenar MBPG_MOD_SEBENAR=1. Disahkan silang dengan reports/forensik/20261001-*.txt (5 traceback), reports/REKOD-SEBENAR-DICIPTA-2026-10-01.md, reports/E2E.jsonl. generated_at diterbitkan drpd tag ujian tertanam dlm pesalah ('...N-001 20261001-1355') selepas transkrip konsol penuh hilang drpd konteks sembang; duration_seconds drpd JADUAL MASA skrip yg dibaca terus semasa larian asal. Tiada medan direka-reka — sebarang TC tanpa bukti ditanda NOT_RUN/SKIPPED, bukan diwarisi daripada run 2.1.23 lama."
+}
