@@ -362,7 +362,11 @@ def ai_cadang(borang, medan, nilai_semasa):
 # artifak binaan — bukan sebahagian skrip).
 SKRIP_ABAI_DIR = {"__pycache__", ".git", "node_modules", "ui_dumps",
                   "_backup_terminal", ".pytest_cache", "public", "data"}
-SKRIP_ABAI_EXT = {".apk", ".zip", ".bak", ".pyc", ".db"}
+# Imej/screenshot dikecualikan: zip skrip = KOD sahaja. Cloudflare Pages
+# tolak mana-mana fail >25 MiB (MBPG-skrip.zip cecah 40MB kerana PNG
+# forensik/e2e-screenshots -> wrangler deploy abort, 2026-10-02).
+SKRIP_ABAI_EXT = {".apk", ".zip", ".bak", ".pyc", ".db",
+                  ".png", ".jpg", ".jpeg", ".gif", ".webp", ".mp4"}
 SKRIP_HAD_SAIZ = 10 * 1024 * 1024      # >10MB per fail: langkau
 
 
