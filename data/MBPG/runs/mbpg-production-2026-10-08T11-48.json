@@ -1,0 +1,298 @@
+{
+ "id": "mbpg-production-2026-10-08T11-48",
+ "pbt": "MBPG",
+ "env": "production",
+ "app_version": "2.1.25",
+ "generated_at": "2026-10-08T11:48:00",
+ "tester": "mrsai",
+ "device_model": "Ulefone Armor 27 (5008TF2010009401)",
+ "duration_seconds": 6216,
+ "summary": {
+  "passed": 20,
+  "failed": 7,
+  "skipped": 16,
+  "lain": 6
+ },
+ "results": {
+  "MBPG-TC-T-001": {
+   "status": "PASSED",
+   "nama": "Tetapan Alamat IP",
+   "sebab": "Lulus — external padan profil; internal kosong (D-02: nota, bukan gagal). 16.3s."
+  },
+  "MBPG-TC-T-002": {
+   "status": "PASSED",
+   "nama": "Tetapan Pelbagai",
+   "sebab": "Lulus — lesen padan profil (baca balik). 7.2s."
+  },
+  "MBPG-TC-T-003": {
+   "status": "PASSED",
+   "nama": "Selaras Pengguna Apps",
+   "sebab": "Lulus. 22.9s."
+  },
+  "MBPG-TC-T-004": {
+   "status": "PASSED",
+   "nama": "Selaras Maklumat Alamat",
+   "sebab": "Lulus. 116.1s. D-01 (defek diketahui): tiada popup hasil dalam tetingkap tunggu."
+  },
+  "MBPG-TC-T-005": {
+   "status": "FAILED",
+   "nama": "Selaras Maklumat Kompaun",
+   "sebab": "GAGAL cubaan 1 (24.4s): AssertionError [_scroll_down] App TERKELUAR dari latar hadapan ('com.android.launcher'). Retry 1x LULUS (26.5s). D-08 — defek app diketahui, kegagalan DIJANGKA."
+  },
+  "MBPG-TC-T-006": {
+   "status": "PASSED",
+   "nama": "Selaras Jenis Kenderaan",
+   "sebab": "Lulus. 23.1s."
+  },
+  "MBPG-TC-T-007": {
+   "status": "PASSED",
+   "nama": "Selaras Warna",
+   "sebab": "Lulus. 22.3s."
+  },
+  "MBPG-TC-T-008": {
+   "status": "SKIPPED",
+   "nama": "Selaras Pelesen",
+   "sebab": "TIDAK DISENTUH — arahan pemilik (T-008 Pelesen: TIDAK DISENTUH)."
+  },
+  "MBPG-TC-T-009": {
+   "status": "PASSED",
+   "nama": "Selaras Barang Sita",
+   "sebab": "Lulus. 23.7s."
+  },
+  "MBPG-TC-T-010": {
+   "status": "PASSED",
+   "nama": "Tetapan Skrin Utama",
+   "sebab": "Lulus. 37.4s."
+  },
+  "MBPG-TC-T-011": {
+   "status": "PASSED",
+   "nama": "Semak Kemaskini",
+   "sebab": "Lulus. 31.0s."
+  },
+  "MBPG-TC-T-012": {
+   "status": "PASSED",
+   "nama": "Remember Me / Login",
+   "sebab": "Lulus — log masuk penuh, skrin utama dicapai."
+  },
+  "MBPG-TC-N-001": {
+   "status": "FAILED",
+   "nama": "Daftar Notis Amaran",
+   "sebab": "GAGAL (405.3s): kamera tidak tertutup — tick diabaikan 3 cubaan walaupun selepas 6 tangkapan. TIADA rekod dicipta untuk borang N."
+  },
+  "MBPG-TC-N-002": {
+   "status": "NOT_RUN",
+   "nama": "Cetak Notis Amaran",
+   "sebab": "Tidak sampai — borang N gagal pada peringkat kamera sebelum cetak."
+  },
+  "MBPG-TC-N-003": {
+   "status": "SKIPPED",
+   "nama": "Lampiran borang N",
+   "sebab": "TIDAK-DITAWARKAN pada MBPG — hanya N-003; P/K/L/S-003 ialah serah, bukan lampiran."
+  },
+  "MBPG-TC-N-004": {
+   "status": "NOT_RUN",
+   "nama": "Kemaskini Notis Amaran",
+   "sebab": "Tidak sampai — tiada rekod N dicipta."
+  },
+  "MBPG-TC-N-005": {
+   "status": "UNSUPPORTED",
+   "nama": "Bookmark borang N",
+   "sebab": "TIDAK-DISOKONG pada build 2.1.25 (popup tiada medan nama/SIMPAN); disahkan had build."
+  },
+  "MBPG-TC-P-001": {
+   "status": "PASSED",
+   "nama": "Daftar Kompaun Pelbagai",
+   "sebab": "Lulus — PGP02P261008015 siri 16, 2026-10-08 10:47."
+  },
+  "MBPG-TC-P-002": {
+   "status": "PASSED",
+   "nama": "Cetak Kompaun Pelbagai",
+   "sebab": "Lulus (12.5s) — cetakan keluar, printer SPP-R410_110095."
+  },
+  "MBPG-TC-P-003": {
+   "status": "FAILED",
+   "nama": "Serah Kompaun Pelbagai",
+   "sebab": "GAGAL (378.7s): tidak dapat kembali ke skrin utama sebelum membuka Hantar (pastikan_di_home)."
+  },
+  "MBPG-TC-P-004": {
+   "status": "FAILED",
+   "nama": "Kemaskini Pelbagai",
+   "sebab": "GAGAL (222.7s): PGP02P261008015 -> None (nombor gantian tidak tertangkap)."
+  },
+  "MBPG-TC-P-005": {
+   "status": "UNSUPPORTED",
+   "nama": "Bookmark borang P",
+   "sebab": "TIDAK-DISOKONG pada build 2.1.25; disahkan had build."
+  },
+  "MBPG-TC-P-006": {
+   "status": "NEEDS_EYE",
+   "nama": "Isu tandatangan",
+   "sebab": "PERLU-MATA — tandatangan pada cetakan PGP02P261008015 perlu disemak fizikal oleh pemilik."
+  },
+  "MBPG-TC-K-001": {
+   "status": "PASSED",
+   "nama": "Daftar Letak Kereta x3",
+   "sebab": "Lulus 3/3 plat (JYX6605, JUA3276, JRT2649). Rekod: PGP02K261008016 (siri 17), K261008018 (siri 19), K261008019 (siri 20)."
+  },
+  "MBPG-TC-K-002": {
+   "status": "PASSED",
+   "nama": "Cetak Letak Kereta",
+   "sebab": "Lulus 3/3 (12.4s / 12.6s / 12.3s) — 3 cetakan keluar, printer SPP-R410_110095."
+  },
+  "MBPG-TC-K-003": {
+   "status": "FAILED",
+   "nama": "Serah Letak Kereta",
+   "sebab": "1/3 lulus. K[1/3] LULUS (235.9s, status baris = ['K','2026-10-08','11:15','H','A','msc']). K[2/3] dan K[3/3] GAGAL — status baris = None."
+  },
+  "MBPG-TC-K-004": {
+   "status": "FAILED",
+   "nama": "Kemaskini Letak Kereta",
+   "sebab": "1/3 lulus. K[1/3] LULUS (259.8s, 016 -> 017). K[2/3] dan K[3/3] TIDAK-DITAWARKAN — rekod tidak dijumpai dalam Senarai."
+  },
+  "MBPG-TC-K-005": {
+   "status": "UNSUPPORTED",
+   "nama": "Bookmark borang K",
+   "sebab": "TIDAK-DISOKONG pada build 2.1.25; disahkan had build."
+  },
+  "MBPG-TC-SK-001": {
+   "status": "FAILED",
+   "nama": "Senarai Kompaun",
+   "sebab": "1/4 lulus. K[1/3] LULUS (25.3s, rekod kelihatan). K[2/3], K[3/3], P GAGAL — rekod tidak kelihatan dalam Senarai (senarai memapar 10 baris sahaja)."
+  },
+  "MBPG-TC-H-001": {
+   "status": "PASSED",
+   "nama": "Hantar Semula Notis",
+   "sebab": "Lulus — 0 rekod, 0 belum naik (auto-pass, laluan UI dipandu)."
+  },
+  "MBPG-TC-H-002": {
+   "status": "PASSED",
+   "nama": "Hantar Semula Pelbagai",
+   "sebab": "Lulus — 2 rekod, 0 belum naik."
+  },
+  "MBPG-TC-H-003": {
+   "status": "PASSED",
+   "nama": "Hantar Semula Letak Kereta",
+   "sebab": "Lulus — 10 rekod, 0 belum naik."
+  },
+  "MBPG-TC-H-004": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Dilangkau — bukan skop MBPG."
+  },
+  "MBPG-TC-H-005": {
+   "status": "SKIPPED",
+   "nama": "Skip mutlak",
+   "sebab": "Dilangkau — bukan skop MBPG."
+  },
+  "MBPG-TC-TN-001": {
+   "status": "PASSED",
+   "nama": "Tarik Notis by Penguatkuasa",
+   "sebab": "Lulus (0 luput) — laluan dipandu."
+  },
+  "MBPG-TC-TN-002": {
+   "status": "PASSED",
+   "nama": "Tarik Notis by No. Notis",
+   "sebab": "Lulus — laluan dipandu; PGP02N261005006 tidak tersenarai (belum luput)."
+  },
+  "MBPG-TC-TN-003": {
+   "status": "PASSED",
+   "nama": "Tarik Notis by Tarikh",
+   "sebab": "Lulus — penapis=False, 0 baris."
+  },
+  "MBPG-TC-NK-001": {
+   "status": "SKIPPED",
+   "nama": "Notis ke Kompaun > Kompaun",
+   "sebab": "Kekal tidak diuji — 0 notis layak (sekatan app, bukan kekurangan skrip)."
+  },
+  "MBPG-TC-NK-002": {
+   "status": "SKIPPED",
+   "nama": "Notis ke Kompaun > Patuh",
+   "sebab": "Kekal tidak diuji — 0 notis layak (sekatan app)."
+  },
+  "MBPG-TC-L-001": {
+   "status": "SKIPPED",
+   "nama": "Lot 1",
+   "sebab": "Dilangkau — bukan skop MBPG."
+  },
+  "MBPG-TC-L-002": {
+   "status": "SKIPPED",
+   "nama": "Lot 2",
+   "sebab": "Dilangkau — bukan skop MBPG."
+  },
+  "MBPG-TC-L-003": {
+   "status": "SKIPPED",
+   "nama": "Lot 3",
+   "sebab": "Dilangkau — bukan skop MBPG."
+  },
+  "MBPG-TC-L-004": {
+   "status": "SKIPPED",
+   "nama": "Lot 4",
+   "sebab": "Dilangkau — bukan skop MBPG."
+  },
+  "MBPG-TC-L-005": {
+   "status": "SKIPPED",
+   "nama": "Lot 5",
+   "sebab": "Dilangkau — bukan skop MBPG."
+  },
+  "MBPG-TC-S-001": {
+   "status": "SKIPPED",
+   "nama": "Sita 1",
+   "sebab": "Dilangkau — bukan skop MBPG."
+  },
+  "MBPG-TC-S-002": {
+   "status": "SKIPPED",
+   "nama": "Sita 2",
+   "sebab": "Dilangkau — bukan skop MBPG."
+  },
+  "MBPG-TC-S-003": {
+   "status": "SKIPPED",
+   "nama": "Sita 3",
+   "sebab": "Dilangkau — bukan skop MBPG."
+  },
+  "MBPG-TC-S-004": {
+   "status": "SKIPPED",
+   "nama": "Sita 4",
+   "sebab": "Dilangkau — bukan skop MBPG."
+  },
+  "MBPG-TC-S-005": {
+   "status": "SKIPPED",
+   "nama": "Sita 5",
+   "sebab": "Dilangkau — bukan skop MBPG."
+  }
+ },
+ "rekod_production": [
+  "PGP02P261008015",
+  "PGP02K261008016",
+  "PGP02K261008017",
+  "PGP02K261008018",
+  "PGP02K261008019"
+ ],
+ "penemuan_app": [
+  {
+   "kod": "FIX12-DISAHKAN",
+   "tajuk": "Fix#12 BERJAYA — 0 timeout \"Element not clickable\" pada semua 4 kitaran",
+   "butiran": "Sesi penuh selesai 103m 36s tanpa satu pun 'Element not clickable after 15s' pada SENARAI — termasuk 4 kitaran penuh (P + K x3). Pembetulan pagar pastikan_di_home() di peringkat_kemaskini() berfungsi seperti direka."
+  },
+  {
+   "kod": "D-09-MYSIKAP",
+   "tajuk": "D-09 MASIH ROSAK — identiti pemilik terdahulu melekat merentas plat berbeza",
+   "butiran": "PGP02K261008016 (JYX6605), K261008017 (JYX6605), K261008018 (JUA3276) berkongsi identiti sama 93********05 pada plat BERBEZA; K261008019 (JRT2649) -> PA*****************AN. Berulang 13/08, 10/09, 13/09, 05/10, 08/10. Rekod K yang dicipta membawa identiti TIDAK BOLEH DIPERCAYAI -> batalkan, jangan serah kepada penguatkuasaan."
+  },
+  {
+   "kod": "KAMERA-TICK",
+   "tajuk": "Kamera borang N: tick tidak menerima tekanan walaupun selepas 6 tangkapan",
+   "butiran": "Tick diabaikan 3 cubaan berturut (selepas tangkapan pengendap 4/6 dan 5/6). Had 6 gambar dicapai, tick tetap tidak menutup kamera. Borang N tidak dapat disiapkan sepenuhnya -> tiada rekod N dicipta dalam run ini. Forensik: reports/forensik/20261008-103929-borang-N.png (skrin: FLASH OFF, X di atas kanan, shutter, tick kanan bawah — tiada popup ralat)."
+  },
+  {
+   "kod": "SENARAI-10-BARIS",
+   "tajuk": "Senarai Kompaun memapar 10 baris sahaja — rekod baharu tidak dapat dicapai",
+   "butiran": "Selepas Semak segar (penapis 2026-10-01..31), senarai memapar 10 baris: PGP02K261005009..014, K261008016, K261008017, P261005008, P261008015. Rekod K261008018 dan K261008019 TIDAK pernah masuk paparan -> kemaskini SKIP + hantar None + SK-001 gagal. Server menerima rekod (cipta LULUS, cetak LULUS) tetapi UI tidak memaparkannya."
+  },
+  {
+   "kod": "NAV-FIX8-LEMAH",
+   "tajuk": "Hantar/Senarai borang P: tidak dapat kembali ke skrin utama (pastikan_di_home gagal)",
+   "butiran": "Selepas 9x tekan BACK berturut, pastikan_di_home() tetap gagal -> hantar GAGAL (378.7s) dan senarai GAGAL (375.0s) untuk PGP02P261008015. Borang K pula berjaya kerana K[1/3] melalui laluan sama. Menunjukkan pemulihan BACK tidak deterministik."
+  }
+ ],
+ "sumber": "Konsol run_penuh.py --borang NPK, 2026-10-08 (run11), MBPG_MOD_SEBENAR=1, MBPG_IZIN_PRODUCTION=1, MBPG_DRY_RUN=1. Transkrip penuh: message.txt 109,633 aksara / 1,754 baris. Disahkan silang dengan reports/REKOD-SEBENAR-DICIPTA-2026-10-08.md, reports/forensik/20261008-*.*, reports/tap_ledger.jsonl (421 tap dinilai, 0 disekat). JUMLAH SESI 103m 36s. 4 cetakan keluar (P-002 1x, K-002 3x). Semua rekod production ialah data ujian: nama pesalah 'UJIAN AUTOMASI E2E', catatan 'AUTOMASI-CLEANUP-PM'."
+}
