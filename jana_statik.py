@@ -100,10 +100,16 @@ def main():
     #    mati.
     SRC_BUKTI = HERE / "bukti"
     if SRC_BUKTI.is_dir():
-        (PUB / "bukti").mkdir(exist_ok=True)
+        # Kosongkan dahulu — kalau tidak, gambar lama yang telah ditukar nama
+        # akan terus hidup dalam public/ dan menyesatkan (fail bertindih).
+        dst = PUB / "bukti"
+        if dst.is_dir():
+            for old in dst.glob("*.png"):
+                old.unlink()
+        dst.mkdir(exist_ok=True)
         n = 0
         for f in sorted(SRC_BUKTI.glob("*.png")):
-            shutil.copy2(f, PUB / "bukti" / f.name)
+            shutil.copy2(f, dst / f.name)
             n += 1
         print(f"[STATIK] bukti/ ({n} gambar)")
     else:
