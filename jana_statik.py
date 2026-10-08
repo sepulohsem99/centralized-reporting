@@ -93,6 +93,23 @@ def main():
     (PUB / "_headers").write_text(
         "/*\n  X-Robots-Tag: noindex\n", encoding="utf-8")
     print("[STATIK] _headers (noindex)")
+
+    # 5) Bukti tangkapan skrin kegagalan — disalin untuk tab Gap Analysis.
+    #    Gambar diambil automasi pada saat peringkat GAGAL; tanpa langkah
+    #    ini ia tinggal di mesin ujian dan tab itu hanya menunjuk laluan
+    #    mati.
+    SRC_BUKTI = HERE / "bukti"
+    if SRC_BUKTI.is_dir():
+        (PUB / "bukti").mkdir(exist_ok=True)
+        n = 0
+        for f in sorted(SRC_BUKTI.glob("*.png")):
+            shutil.copy2(f, PUB / "bukti" / f.name)
+            n += 1
+        print(f"[STATIK] bukti/ ({n} gambar)")
+    else:
+        print("[STATIK] AMARAN: folder bukti/ tiada — tab Gap Analysis "
+              "akan tunjuk 'tiada bukti'")
+
     print("[STATIK] SIAP -> public/  |  seterusnya: publish.bat")
     return 0
 
