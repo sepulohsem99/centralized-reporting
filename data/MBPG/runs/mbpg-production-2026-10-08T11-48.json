@@ -37,7 +37,12 @@
   "MBPG-TC-T-005": {
    "status": "FAILED",
    "nama": "Selaras Maklumat Kompaun",
-   "sebab": "GAGAL cubaan 1 (24.4s): AssertionError [_scroll_down] App TERKELUAR dari latar hadapan ('com.android.launcher'). Retry 1x LULUS (26.5s). D-08 — defek app diketahui, kegagalan DIJANGKA."
+   "sebab": "GAGAL cubaan 1 (24.4s): AssertionError [_scroll_down] App TERKELUAR dari latar hadapan ('com.android.launcher'). Retry 1x LULUS (26.5s). D-08 — defek app diketahui, kegagalan DIJANGKA.",
+   "jenis": "SKRIP",
+   "satu_baris": "Test ini lulus, tetapi perlu cuba 2 kali.",
+   "maksud": "Semasa sync 'Maklumat Kompaun', app terkeluar ke skrin utama telefon. Skrip cuba semula dan berjaya. Tiada masalah pada app.",
+   "kesan": "Tiada. Data berjaya disync.",
+   "tindakan": "Tiada tindakan developer."
   },
   "MBPG-TC-T-006": {
    "status": "PASSED",
@@ -77,7 +82,13 @@
   "MBPG-TC-N-001": {
    "status": "FAILED",
    "nama": "Daftar Notis Amaran",
-   "sebab": "GAGAL (405.3s): kamera tidak tertutup — tick diabaikan 3 cubaan walaupun selepas 6 tangkapan. TIADA rekod dicipta untuk borang N."
+   "sebab": "GAGAL (405.3s): kamera tidak tertutup — tick diabaikan 3 cubaan walaupun selepas 6 tangkapan. TIADA rekod dicipta untuk borang N.",
+   "jenis": "SKRIP",
+   "satu_baris": "Skrip ujian tidak dapat tekan butang 'tick' pada kamera.",
+   "maksud": "Selepas ambil 6 gambar, skrip tekan butang tick untuk tutup kamera, tetapi kamera tidak bertindak balas. Manual tester berjaya lakukannya, jadi ini masalah skrip ujian — bukan app.",
+   "kesan": "Ujian berhenti, jadi tiada Notis Amaran dicipta dalam larian ini.",
+   "tindakan": "Betulkan skrip (sedang dibuat).",
+   "bukti": "bukti/N-001-kamera.png"
   },
   "MBPG-TC-N-002": {
    "status": "NOT_RUN",
@@ -112,12 +123,23 @@
   "MBPG-TC-P-003": {
    "status": "FAILED",
    "nama": "Serah Kompaun Pelbagai",
-   "sebab": "GAGAL (378.7s): tidak dapat kembali ke skrin utama sebelum membuka Hantar (pastikan_di_home)."
+   "sebab": "GAGAL (378.7s): tidak dapat kembali ke skrin utama sebelum membuka Hantar (pastikan_di_home).",
+   "jenis": "SKRIP",
+   "satu_baris": "Skrip tersekat, tidak dapat balik ke menu utama.",
+   "maksud": "Selepas rekod P dicipta, skrip cuba kembali ke skrin utama untuk buka menu 'Hantar'. Ia tekan butang BACK 9 kali tetapi tetap gagal. Manual tester tiada masalah ini.",
+   "kesan": "Ujian 'Hantar' tidak dapat dijalankan untuk borang P.",
+   "tindakan": "Betulkan skrip (sedang dibuat)."
   },
   "MBPG-TC-P-004": {
    "status": "FAILED",
    "nama": "Kemaskini Pelbagai",
-   "sebab": "GAGAL (222.7s): PGP02P261008015 -> None (nombor gantian tidak tertangkap)."
+   "sebab": "GAGAL (222.7s): PGP02P261008015 -> None (nombor gantian tidak tertangkap).",
+   "jenis": "APP + SKRIP",
+   "satu_baris": "Kemaskini rekod P gagal — popup tersekat pada 0%.",
+   "maksud": "Selepas tekan 'MENYERAHKAN', muncul popup 'MEMULAKAN PROSES... 0%' dan terus tersekat. Rekod tidak dikemaskini, jadi tiada nombor baharu dijana. Manual tester juga lapor masalah sama ('props error').",
+   "kesan": "Rekod PGP02P261008015 tidak dikemaskini. Disahkan oleh manual tester.",
+   "tindakan": "Lapor developer — ini masalah app.",
+   "bukti": "bukti/P-004-kemaskini-0pc.png"
   },
   "MBPG-TC-P-005": {
    "status": "UNSUPPORTED",
@@ -142,12 +164,23 @@
   "MBPG-TC-K-003": {
    "status": "FAILED",
    "nama": "Serah Letak Kereta",
-   "sebab": "1/3 lulus. K[1/3] LULUS (235.9s, status baris = ['K','2026-10-08','11:15','H','A','msc']). K[2/3] dan K[3/3] GAGAL — status baris = None."
+   "sebab": "1/3 lulus. K[1/3] LULUS (235.9s, status baris = ['K','2026-10-08','11:15','H','A','msc']). K[2/3] dan K[3/3] GAGAL — status baris = None.",
+   "jenis": "SKRIP",
+   "satu_baris": "2 daripada 3 rekod K tidak dijumpai dalam senarai.",
+   "maksud": "Rekod K dicipta dan dicetak dengan jayanya, tetapi apabila skrip cari rekod itu dalam 'Senarai Kompaun', ia tidak kelihatan. Sebabnya: senarai hanya papar 10 baris dan rekod baharu belum masuk paparan. Manual tester tiada masalah ini.",
+   "kesan": "Ujian 'Serah' tidak dapat disahkan untuk 2 daripada 3 rekod K.",
+   "tindakan": "Betulkan skrip (sedang dibuat).",
+   "bukti": "bukti/K-003-hantar.png"
   },
   "MBPG-TC-K-004": {
    "status": "FAILED",
    "nama": "Kemaskini Letak Kereta",
-   "sebab": "1/3 lulus. K[1/3] LULUS (259.8s, 016 -> 017). K[2/3] dan K[3/3] TIDAK-DITAWARKAN — rekod tidak dijumpai dalam Senarai."
+   "sebab": "1/3 lulus. K[1/3] LULUS (259.8s, 016 -> 017). K[2/3] dan K[3/3] TIDAK-DITAWARKAN — rekod tidak dijumpai dalam Senarai.",
+   "jenis": "APP + SKRIP",
+   "satu_baris": "Kemaskini 2 daripada 3 rekod K tidak dapat dijalankan.",
+   "maksud": "Rekod pertama berjaya (016 bertukar ke 017). Dua rekod seterusnya tidak dapat dicari dalam senarai (had 10 baris), jadi ujian tidak dijalankan. Manual tester pula lapor sebab berbeza: 'KOD AKTA tidak muncul' semasa Kemaskini Letak Kereta.",
+   "kesan": "Rekod 018 dan 019 tidak dikemaskini. Manual tester sahkan ada masalah app — lapor developer.",
+   "tindakan": "Lapor developer (isu KOD AKTA) + betulkan skrip (had senarai)."
   },
   "MBPG-TC-K-005": {
    "status": "UNSUPPORTED",
@@ -157,7 +190,13 @@
   "MBPG-TC-SK-001": {
    "status": "FAILED",
    "nama": "Senarai Kompaun",
-   "sebab": "1/4 lulus. K[1/3] LULUS (25.3s, rekod kelihatan). K[2/3], K[3/3], P GAGAL — rekod tidak kelihatan dalam Senarai (senarai memapar 10 baris sahaja)."
+   "sebab": "1/4 lulus. K[1/3] LULUS (25.3s, rekod kelihatan). K[2/3], K[3/3], P GAGAL — rekod tidak kelihatan dalam Senarai (senarai memapar 10 baris sahaja).",
+   "jenis": "SKRIP",
+   "satu_baris": "3 daripada 4 rekod tidak muncul dalam Senarai Kompaun.",
+   "maksud": "Skrip cuba sahkan rekod muncul dalam senarai, tetapi senarai hanya papar 10 baris. Rekod yang lebih baharu tidak masuk paparan walaupun ia wujud di server. Manual tester tiada masalah ini.",
+   "kesan": "Pengesahan senarai gagal untuk 3 rekod.",
+   "tindakan": "Betulkan skrip (sedang dibuat).",
+   "bukti": "bukti/K-003-hantar.png"
   },
   "MBPG-TC-H-001": {
    "status": "PASSED",
@@ -294,5 +333,7 @@
    "butiran": "Selepas 9x tekan BACK berturut, pastikan_di_home() tetap gagal -> hantar GAGAL (378.7s) dan senarai GAGAL (375.0s) untuk PGP02P261008015. Borang K pula berjaya kerana K[1/3] melalui laluan sama. Menunjukkan pemulihan BACK tidak deterministik."
   }
  ],
- "sumber": "Konsol run_penuh.py --borang NPK, 2026-10-08 (run11), MBPG_MOD_SEBENAR=1, MBPG_IZIN_PRODUCTION=1, MBPG_DRY_RUN=1. Transkrip penuh: message.txt 109,633 aksara / 1,754 baris. Disahkan silang dengan reports/REKOD-SEBENAR-DICIPTA-2026-10-08.md, reports/forensik/20261008-*.*, reports/tap_ledger.jsonl (421 tap dinilai, 0 disekat). JUMLAH SESI 103m 36s. 4 cetakan keluar (P-002 1x, K-002 3x). Semua rekod production ialah data ujian: nama pesalah 'UJIAN AUTOMASI E2E', catatan 'AUTOMASI-CLEANUP-PM'."
+ "sumber": "Konsol run_penuh.py --borang NPK, 2026-10-08 (run11), MBPG_MOD_SEBENAR=1, MBPG_IZIN_PRODUCTION=1, MBPG_DRY_RUN=1. Transkrip penuh: message.txt 109,633 aksara / 1,754 baris. Disahkan silang dengan reports/REKOD-SEBENAR-DICIPTA-2026-10-08.md, reports/forensik/20261008-*.*, reports/tap_ledger.jsonl (421 tap dinilai, 0 disekat). JUMLAH SESI 103m 36s. 4 cetakan keluar (P-002 1x, K-002 3x). Semua rekod production ialah data ujian: nama pesalah 'UJIAN AUTOMASI E2E', catatan 'AUTOMASI-CLEANUP-PM'.",
+ "nota_bahasa": "Setiap baris GAGAL ada penjelasan bahasa mudah: apa yang berlaku, kesannya, dan siapa perlu bertindak. Jenis: APP = masalah aplikasi (lapor developer), SKRIP = masalah skrip ujian (bukan salah app).",
+ "nota_bukti": "K-003 dan SK-001 berkongsi satu gambar kerana skrin semasa gagal memang identik (satu bingkai yang sama). Ia bukan dua bukti berasingan."
 }
