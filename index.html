@@ -268,6 +268,10 @@ function laporanHtml(run){
       ${tr('= masalah skrip ujian, bukan aplikasi','= test script problem, not the app')}
     </div>
     <div class="scroll" id="tbl">${tableHtml(run)}</div>
+    ${(run.nota_bahasa||run.nota_bukti)?`<div style="padding:8px 12px;font-size:.6rem;color:var(--dimmer);border-top:1px solid var(--line)">
+      ${run.nota_bahasa?esc(LANG==='EN'?(run.nota_bahasa_en||run.nota_bahasa):run.nota_bahasa):''}
+      ${run.nota_bukti?`<br>${esc(LANG==='EN'?(run.nota_bukti_en||run.nota_bukti):run.nota_bukti)}`:''}
+    </div>`:''}
   </div>`;
 }
 function renderTableOnly(run){ const t=document.getElementById('tbl'); if(t&&run) t.innerHTML=tableHtml(run); }
@@ -282,17 +286,23 @@ function tableHtml(run){
     <th style="width:96px">Status</th><th style="width:82px">${tr('Jenis','Type')}</th>
     <th>${tr('Apa berlaku','What happened')}</th><th style="width:78px">${tr('Bukti','Evidence')}</th></tr></thead><tbody>
     ${rows.map(([tc,v])=>{const m=stMeta(v.status);
-      const j=v.jenis?`<span class="badge" style="color:${v.jenis.indexOf('APP')>=0?'var(--fail)':'var(--lain)'};background:${v.jenis.indexOf('APP')>=0?'var(--fail-bg)':'var(--lain-bg)'};border-color:currentColor;font-size:.55rem">${esc(v.jenis)}</span>`:'<span style="color:var(--dimmer)">—</span>';
+      const EN=LANG==='EN';
+      const jenis=EN?(v.jenis_en||v.jenis):v.jenis;
+      const satu=EN?(v.satu_baris_en||v.satu_baris):v.satu_baris;
+      const maksud=EN?(v.maksud_en||v.maksud):v.maksud;
+      const kesan=EN?(v.kesan_en||v.kesan):v.kesan;
+      const tindak=EN?(v.tindakan_en||v.tindakan):v.tindakan;
+      const j=jenis?`<span class="badge" style="color:${jenis.indexOf('APP')>=0?'var(--fail)':'var(--lain)'};background:${jenis.indexOf('APP')>=0?'var(--fail-bg)':'var(--lain-bg)'};border-color:currentColor;font-size:.55rem">${esc(jenis)}</span>`:'<span style="color:var(--dimmer)">—</span>';
       const bukti=v.bukti?`<a href="${v.bukti}" target="_blank" rel="noopener"><img src="${v.bukti}" alt="bukti" loading="lazy" style="width:64px;height:auto;border:1px solid var(--line);border-radius:4px;display:block"></a>`:'<span style="color:var(--dimmer);font-size:.6rem">—</span>';
-      // Ayat mudah didahulukan; teks teknikal asal disimpan dalam tooltip.
-      const utama=v.satu_baris?`<b>${esc(v.satu_baris)}</b>`:'';
-      const lanjut=v.maksud?`<div style="margin-top:3px;color:var(--dim)">${esc(v.maksud)}</div>`:'';
-      const kesan=v.kesan?`<div style="margin-top:3px"><span style="color:var(--dimmer)">${tr('Kesan','Impact')}:</span> ${esc(v.kesan)}</div>`:'';
-      const tindak=v.tindakan?`<div style="margin-top:3px"><span style="color:var(--dimmer)">${tr('Tindakan','Action')}:</span> <b>${esc(v.tindakan)}</b></div>`:'';
+      // Ayat mudah didahulukan; teks teknikal asal dikekalkan di bawah.
+      const utama=satu?`<b>${esc(satu)}</b>`:'';
+      const lanjut=maksud?`<div style="margin-top:3px;color:var(--dim)">${esc(maksud)}</div>`:'';
+      const kesanH=kesan?`<div style="margin-top:3px"><span style="color:var(--dimmer)">${tr('Kesan','Impact')}:</span> ${esc(kesan)}</div>`:'';
+      const tindakH=tindak?`<div style="margin-top:3px"><span style="color:var(--dimmer)">${tr('Tindakan','Action')}:</span> <b>${esc(tindak)}</b></div>`:'';
       const tek=v.sebab?`<div style="margin-top:4px;font-size:.58rem;color:var(--dimmer);border-top:1px solid var(--line);padding-top:3px">${tr('Log teknikal','Technical log')}: ${esc(v.sebab)}</div>`:'';
       return `<tr><td class="tc">${tc}</td><td>${esc(v.nama||'—')}</td>
       <td><span class="badge" style="color:${m.c};background:${m.bg};border-color:${m.c}55">${m.label}</span></td>
-      <td>${j}</td><td>${utama||esc(v.sebab||'—')}${lanjut}${kesan}${tindak}${tek}</td><td>${bukti}</td></tr>`;}).join('')}
+      <td>${j}</td><td>${utama||esc(v.sebab||'—')}${lanjut}${kesanH}${tindakH}${tek}</td><td>${bukti}</td></tr>`;}).join('')}
   </tbody></table>`;
 }
 

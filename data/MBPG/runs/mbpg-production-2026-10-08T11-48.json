@@ -38,11 +38,16 @@
    "status": "FAILED",
    "nama": "Selaras Maklumat Kompaun",
    "sebab": "GAGAL cubaan 1 (24.4s): AssertionError [_scroll_down] App TERKELUAR dari latar hadapan ('com.android.launcher'). Retry 1x LULUS (26.5s). D-08 — defek app diketahui, kegagalan DIJANGKA.",
-   "jenis": "SKRIP",
-   "satu_baris": "Test ini lulus, tetapi perlu cuba 2 kali.",
-   "maksud": "Semasa sync 'Maklumat Kompaun', app terkeluar ke skrin utama telefon. Skrip cuba semula dan berjaya. Tiada masalah pada app.",
+   "jenis": "APP",
+   "satu_baris": "App terkeluar sendiri semasa sync — lulus pada percubaan kedua.",
+   "maksud": "Semasa sync 'Maklumat Kompaun', app terkeluar ke skrin utama telefon. Ini defek app yang sudah diketahui (D-08) dan pernah berlaku sebelum ini. Skrip cuba semula dan berjaya.",
    "kesan": "Tiada. Data berjaya disync.",
-   "tindakan": "Tiada tindakan developer."
+   "tindakan": "Tiada tindakan developer.",
+   "satu_baris_en": "The app dropped out during sync — passed on the second attempt.",
+   "maksud_en": "During 'Maklumat Kompaun' sync the app dropped to the phone home screen. This is a known app defect (D-08) seen before. The script retried and succeeded.",
+   "kesan_en": "None. Data synced successfully.",
+   "tindakan_en": "No developer action needed.",
+   "jenis_en": "APP"
   },
   "MBPG-TC-T-006": {
    "status": "PASSED",
@@ -88,7 +93,12 @@
    "maksud": "Selepas ambil 6 gambar, skrip tekan butang tick untuk tutup kamera, tetapi kamera tidak bertindak balas. Manual tester berjaya lakukannya, jadi ini masalah skrip ujian — bukan app.",
    "kesan": "Ujian berhenti, jadi tiada Notis Amaran dicipta dalam larian ini.",
    "tindakan": "Betulkan skrip (sedang dibuat).",
-   "bukti": "bukti/N-001-kamera.png"
+   "bukti": "bukti/N-001-kamera.png",
+   "satu_baris_en": "The test script could not press the camera 'tick' button.",
+   "maksud_en": "After taking all 6 photos, the script pressed the tick button to close the camera, but the camera did not respond. The manual tester did it fine, so this is a test script issue — not the app.",
+   "kesan_en": "The test stopped, so no Notis Amaran was created in this run.",
+   "tindakan_en": "Fix the script (in progress).",
+   "jenis_en": "SCRIPT"
   },
   "MBPG-TC-N-002": {
    "status": "NOT_RUN",
@@ -128,7 +138,12 @@
    "satu_baris": "Skrip tersekat, tidak dapat balik ke menu utama.",
    "maksud": "Selepas rekod P dicipta, skrip cuba kembali ke skrin utama untuk buka menu 'Hantar'. Ia tekan butang BACK 9 kali tetapi tetap gagal. Manual tester tiada masalah ini.",
    "kesan": "Ujian 'Hantar' tidak dapat dijalankan untuk borang P.",
-   "tindakan": "Betulkan skrip (sedang dibuat)."
+   "tindakan": "Betulkan skrip (sedang dibuat).",
+   "satu_baris_en": "The script got stuck and could not return to the main menu.",
+   "maksud_en": "After record P was created, the script tried to go back to the main screen to open 'Hantar'. It pressed BACK 9 times but still failed. The manual tester had no such problem.",
+   "kesan_en": "The 'Hantar' test could not run for form P.",
+   "tindakan_en": "Fix the script (in progress).",
+   "jenis_en": "SCRIPT"
   },
   "MBPG-TC-P-004": {
    "status": "FAILED",
@@ -139,7 +154,12 @@
    "maksud": "Selepas tekan 'MENYERAHKAN', muncul popup 'MEMULAKAN PROSES... 0%' dan terus tersekat. Rekod tidak dikemaskini, jadi tiada nombor baharu dijana. Manual tester juga lapor masalah sama ('props error').",
    "kesan": "Rekod PGP02P261008015 tidak dikemaskini. Disahkan oleh manual tester.",
    "tindakan": "Lapor developer — ini masalah app.",
-   "bukti": "bukti/P-004-kemaskini-0pc.png"
+   "bukti": "bukti/P-004-kemaskini-0pc.png",
+   "satu_baris_en": "Updating record P failed — popup stuck at 0%.",
+   "maksud_en": "After pressing 'MENYERAHKAN', a 'MEMULAKAN PROSES... 0%' popup appeared and stayed stuck. The record was not updated, so no new number was generated. The manual tester reported the same failure ('props error').",
+   "kesan_en": "Record PGP02P261008015 was not updated. Confirmed by the manual tester.",
+   "tindakan_en": "Report to developer — this is an app issue.",
+   "jenis_en": "APP + SCRIPT"
   },
   "MBPG-TC-P-005": {
    "status": "UNSUPPORTED",
@@ -170,7 +190,12 @@
    "maksud": "Rekod K dicipta dan dicetak dengan jayanya, tetapi apabila skrip cari rekod itu dalam 'Senarai Kompaun', ia tidak kelihatan. Sebabnya: senarai hanya papar 10 baris dan rekod baharu belum masuk paparan. Manual tester tiada masalah ini.",
    "kesan": "Ujian 'Serah' tidak dapat disahkan untuk 2 daripada 3 rekod K.",
    "tindakan": "Betulkan skrip (sedang dibuat).",
-   "bukti": "bukti/K-003-hantar.png"
+   "bukti": "bukti/K-003-hantar.png",
+   "satu_baris_en": "2 of 3 records were not found in the list.",
+   "maksud_en": "The records were created and printed successfully, but when the script searched for them in 'Senarai Kompaun' they were not visible. Reason: the list only shows 10 rows and the newest records were not on screen. The manual tester had no such problem.",
+   "kesan_en": "The 'Serah' test could not be verified for 2 of 3 records.",
+   "tindakan_en": "Fix the script (in progress).",
+   "jenis_en": "SCRIPT"
   },
   "MBPG-TC-K-004": {
    "status": "FAILED",
@@ -180,7 +205,12 @@
    "satu_baris": "Kemaskini 2 daripada 3 rekod K tidak dapat dijalankan.",
    "maksud": "Rekod pertama berjaya (016 bertukar ke 017). Dua rekod seterusnya tidak dapat dicari dalam senarai (had 10 baris), jadi ujian tidak dijalankan. Manual tester pula lapor sebab berbeza: 'KOD AKTA tidak muncul' semasa Kemaskini Letak Kereta.",
    "kesan": "Rekod 018 dan 019 tidak dikemaskini. Manual tester sahkan ada masalah app — lapor developer.",
-   "tindakan": "Lapor developer (isu KOD AKTA) + betulkan skrip (had senarai)."
+   "tindakan": "Lapor developer (isu KOD AKTA) + betulkan skrip (had senarai).",
+   "satu_baris_en": "Updating 2 of 3 records could not be run.",
+   "maksud_en": "The first record succeeded (016 changed to 017). The next two could not be found in the list (10-row limit), so the test was not run. The manual tester reported a different cause: 'KOD AKTA did not appear' during Kemaskini Letak Kereta.",
+   "kesan_en": "Records 018 and 019 were not updated. The manual tester confirmed an app problem — report to developer.",
+   "tindakan_en": "Report to developer (KOD AKTA issue) + fix the script (list limit).",
+   "jenis_en": "APP + SCRIPT"
   },
   "MBPG-TC-K-005": {
    "status": "UNSUPPORTED",
@@ -196,7 +226,12 @@
    "maksud": "Skrip cuba sahkan rekod muncul dalam senarai, tetapi senarai hanya papar 10 baris. Rekod yang lebih baharu tidak masuk paparan walaupun ia wujud di server. Manual tester tiada masalah ini.",
    "kesan": "Pengesahan senarai gagal untuk 3 rekod.",
    "tindakan": "Betulkan skrip (sedang dibuat).",
-   "bukti": "bukti/K-003-hantar.png"
+   "bukti": "bukti/K-003-hantar.png",
+   "satu_baris_en": "3 of 4 records did not appear in Senarai Kompaun.",
+   "maksud_en": "The script tried to confirm the records appeared in the list, but the list only shows 10 rows. Newer records were not on screen even though they exist on the server. The manual tester had no such problem.",
+   "kesan_en": "List verification failed for 3 records.",
+   "tindakan_en": "Fix the script (in progress).",
+   "jenis_en": "SCRIPT"
   },
   "MBPG-TC-H-001": {
    "status": "PASSED",
@@ -335,5 +370,7 @@
  ],
  "sumber": "Konsol run_penuh.py --borang NPK, 2026-10-08 (run11), MBPG_MOD_SEBENAR=1, MBPG_IZIN_PRODUCTION=1, MBPG_DRY_RUN=1. Transkrip penuh: message.txt 109,633 aksara / 1,754 baris. Disahkan silang dengan reports/REKOD-SEBENAR-DICIPTA-2026-10-08.md, reports/forensik/20261008-*.*, reports/tap_ledger.jsonl (421 tap dinilai, 0 disekat). JUMLAH SESI 103m 36s. 4 cetakan keluar (P-002 1x, K-002 3x). Semua rekod production ialah data ujian: nama pesalah 'UJIAN AUTOMASI E2E', catatan 'AUTOMASI-CLEANUP-PM'.",
  "nota_bahasa": "Setiap baris GAGAL ada penjelasan bahasa mudah: apa yang berlaku, kesannya, dan siapa perlu bertindak. Jenis: APP = masalah aplikasi (lapor developer), SKRIP = masalah skrip ujian (bukan salah app).",
- "nota_bukti": "K-003 dan SK-001 berkongsi satu gambar kerana skrin semasa gagal memang identik (satu bingkai yang sama). Ia bukan dua bukti berasingan."
+ "nota_bukti": "K-003 dan SK-001 berkongsi satu gambar kerana skrin semasa gagal memang identik (satu bingkai yang sama). Ia bukan dua bukti berasingan.",
+ "nota_bahasa_en": "Every FAILED row has a plain-language explanation: what happened, the impact, and who must act. Type: APP = application problem (report to developer), SCRIPT = test script problem (not an app fault).",
+ "nota_bukti_en": "K-003 and SK-001 share one screenshot because the screen at failure is genuinely identical (a single frame). They are not two separate pieces of evidence."
 }
