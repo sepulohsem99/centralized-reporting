@@ -28,8 +28,26 @@ exec(compile((HERE / "serve.py").read_text(encoding="utf-8"),
 def main():
     PUB.mkdir(exist_ok=True)
 
+    # 0) Rekod production —jana semula dari jsonl (jangan taip tangan).
+    try:
+        ns2 = {"__file__": str(HERE / "jana_rekod.py"), "__name__": "jana_rekod"}
+        exec(compile((HERE / "jana_rekod.py").read_text(encoding="utf-8"),
+                     str(HERE / "jana_rekod.py"), "exec"), ns2)
+        ns2["main"]()  # noqa: E501  (fungsi dari skrip yang diexec)
+    except Exception as e:                                       # noqa: BLE001
+        print(f"[STATIK] AMARAN: jana_rekod.py gagal ({type(e).__name__}: {e})")
+
     # 1) Data run dibakar.
     data = ns["collect"]()
+    # Muatkan rekod production ke dalam DATA (klik tab di papan pemuka).
+    data["rekod"] = {}
+    for pbt in ("MBPG", "MBIP", "MBJB"):
+        f = HERE / "data" / pbt / "rekod.json"
+        if f.is_file():
+            try:
+                data["rekod"][pbt] = json.loads(f.read_text(encoding="utf-8"))
+            except Exception as e:                               # noqa: BLE001
+                print(f"[STATIK] AMARAN: rekod.json {pbt} rosak ({e})")
     html = (HERE / "index.html").read_text(encoding="utf-8")
 
     ganti = [

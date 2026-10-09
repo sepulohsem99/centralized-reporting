@@ -217,10 +217,12 @@ function render(){
     <div class="tab ${sel.tab==='sejarah'?'on':''}" onclick="pickTab('sejarah')">${tr('Sejarah Run','Run History')} (${runs.length})</div>
     <div class="tab ${sel.tab==='ganti'?'on':''}" onclick="pickTab('ganti')">${tr('Ganti Nilai','Replace Values')}</div>
     <div class="tab ${sel.tab==='manual'?'on':''}" onclick="pickTab('manual')">Manual User</div>
+    <div class="tab ${sel.tab==='rekod'?'on':''}" onclick="pickTab('rekod')">${tr('Rekod Production','Production Records')}</div>
     <div class="tab ${sel.tab==='gap'?'on':''}" onclick="pickTab('gap')">Gap Analysis</div>
   </div>`;
   if(sel.tab==='laporan') h+=laporanHtml(run);
   else if(sel.tab==='sejarah') h+=sejarahHtml(runs);
+  else if(sel.tab==='rekod') h+=rekodHtml();
   else if(sel.tab==='ganti') h+=`<div class="panel"><div class="tut" id="gantiWrap"><div class="empty">${tr('memuat...','loading...')}</div></div></div>`;
   else if(sel.tab==='gap') h+=gapHtml();
   else h+=manualHtml(sel.pbt);
@@ -394,6 +396,78 @@ function gapRows(){
    });
 }
 function gapData(){ return sel.pbt==='MBPG' ? GAP_MBPG : (sel.pbt==='MBIP' ? GAP_MBIP : null); }
+
+/* ================= REKOD PRODUCTION (tab baharu 2026-10-09) =================
+   Semua rekod yang dicipta & dihantar ke production MBPG, dikelompokkan
+   mengikut LARIAN. Data dari data/<PBT>/rekod.json (jana_rekod.py).
+   Tujuan: senarai lengkap untuk PM batalkan — bukan satu-satu larian. */
+let SEL_REKOD='SEMUA';
+function rekodData(){ return (DATA.rekod&&DATA.rekod[sel.pbt])||null; }
+function rekodHtml(){
+  const d=rekodData();
+  if(!d) return `<div class="panel"><div class="empty">${tr('Tiada data rekod production untuk PBT ini. Jalankan jana_rekod.py.','No production record data for this PBT. Run jana_rekod.py.')}</div></div>`;
+  const runs=(d.runs||[]);
+  if(!runs.length) return `<div class="panel"><div class="empty">${tr('Tiada rekod','No records')}</div></div>`;
+  let html=`<div class="panel">
+    <div class="tiles">
+      <div class="tile"><div class="n">${d.jumlah_rekod}</div><div class="l">${tr('nombor unik','unique numbers')}</div></div>
+      <div class="tile"><div class="n">${d.jumlah_baris}</div><div class="l">${tr('jumlah baris','total rows')}</div></div>
+      <div class="tile"><div class="n">${d.jumlah_larian}</div><div class="l">${tr('larian','runs')}</div></div>
+      <div class="tile"><div class="n" style="color:var(--fail)">${runs.reduce((a,r)=>a+r.bilangan_cetak,0)}</div><div class="l">${tr('cetakan dihantar','prints sent')}</div></div>
+    </div>
+    <div class="filters">
+      <span class="fchip on" id="chipSemuaRekod" onclick="rekodCopyAll(this)">${tr('SALIN SEMUA NOMBOR','COPY ALL NUMBERS')}</span>
+      <span class="fchip" onclick="rekodDownload()">${tr('MUAT TURUN CSV','DOWNLOAD CSV')}</span>
+      <span style="font-size:.6rem;color:var(--dim)">${tr('Setiap nombor di bawah ialah rekod HIDUP pada production MBPG — berikan senarai ini kepada PM untuk pembatalan melalui portal ePBT.','Every number below is a LIVE record on MBPG production — give this list to the PM for cancellation via the ePBT portal.')}</span>
+    </div>
+    <div class="scroll" id="tblRekod">${rekodTableHtml(runs)}</div>
+    <div style="padding:8px 12px;font-size:.6rem;color:var(--dimmer);border-top:1px solid var(--line)">
+      ${esc(d.nota||'')}<br>
+      ${tr('Dijana','Generated')}: ${esc(d.dijana||'')} · ${tr('Baris tanpa nombor = laluan kemaskini yang tidak menghasilkan nombor gantian (diketahui).','Rows without a number = update paths that produced no replacement number (known).')}
+    </div>
+  </div>`;
+  return html;
+}
+function rekodTableHtml(runs){
+  return `<table><thead><tr>
+    <th style="width:96px">${tr('Larian','Run')}</th><th style="width:120px">${tr('Masa','Time')}</th>
+    <th style="width:104px">No. Rekod</th><th style="width:74px">TC</th>
+    <th style="width:96px">${tr('Jenis','Type')}</th><th style="width:60px">${tr('Cetak','Print')}</th>
+    <th>${tr('Asal / nota','Origin / note')}</th></tr></thead><tbody>
+  ${runs.map(r=>r.rekod.map((x,i)=>`<tr>
+    <td class="tc">${i===0?esc(r.label):''}<div style="font-size:.55rem;color:var(--dimmer)">${i===0?r.bilangan_bernombor+'/'+r.bilangan+' '+tr('bernombor','numbered'):''}</div></td>
+    <td style="font-size:.62rem">${i===0?esc(r.mula):''}</td>
+    <td class="tc">${x.no_rekod?`<b>${esc(x.no_rekod)}</b>`:'<span style="color:var(--dimmer)">(tiada nombor)</span>'}</td>
+    <td style="font-size:.62rem">${esc(x.tc||'—')}</td>
+    <td style="font-size:.62rem">${x.jenis==='Notis'?tr('Notis Amaran','Warning Notice'):tr('Kompaun','Compound')} <span style="color:var(--dimmer)">· ${esc(x.borang||'')}</span></td>
+    <td style="text-align:center">${x.cetak_dihantar?'<span style="color:var(--pass)">✓</span>':'<span style="color:var(--dimmer)">—</span>'}</td>
+    <td style="font-size:.6rem;color:var(--dim)">${esc(x.asal?tr('hasil kemaskini dari ','updated from ')+x.asal:(x.status||''))}</td>
+  </tr>`).join('')).join('')}
+  </tbody></table>`;
+}
+function rekodCopyAll(btn){
+  const d=rekodData(); if(!d) return;
+  const t=(d.semua_nombor||[]).join('\n');
+  const ta=document.createElement('textarea'); ta.value=t;
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand('copy'); btn.textContent=tr('DISALIN ✓','COPIED ✓'); }
+  catch(e){ btn.textContent=tr('GAGAL — guna CSV','FAILED — use CSV'); }
+  setTimeout(()=>{ document.body.removeChild(ta); },100);
+}
+function rekodDownload(){
+  const d=rekodData(); if(!d) return;
+  let csv='no_larian,mula,no_rekod,tc,borang,jenis,masa,status,asal,cetak_dihantar\\n';
+  (d.runs||[]).forEach(r=>r.rekod.forEach(x=>{
+    csv+=[r.no_larian,r.mula,x.no_rekod||'',x.tc||'',x.borang||'',x.jenis||'',
+          x.masa||'',x.status||'',x.asal||'',x.cetak_dihantar?1:0]
+         .map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')+'\\n';
+  }));
+  const b=new Blob([csv],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(b);
+  a.download=`MBPG-rekod-production-${(d.dijana||'').slice(0,10)}.csv`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
 function gapHtml(){
   const d=gapData();
   if(!d) return `<div class="panel"><div class="empty">${tr('Gap Analysis tersedia untuk MBIP dan MBPG. Pilih PBT di atas.','Gap Analysis is available for MBIP and MBPG. Pick a council above.')}</div></div>`;

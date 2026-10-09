@@ -417,6 +417,13 @@ def collect():
                     runs.append(d)
         runs.sort(key=lambda r: str(r.get("generated_at", "")), reverse=True)
         keluar["runs"][kod] = runs
+    # Rekod production — senarai rekod HIDUP untuk pembatalan PM (tab baharu).
+    keluar["rekod"] = {}
+    for p in manifest.get("pbt", []):
+        f = DATA / p.get("kod") / "rekod.json"
+        d = _read(f)
+        if isinstance(d, dict):
+            keluar["rekod"][p.get("kod")] = d
     return keluar
 
 
