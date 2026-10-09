@@ -1,0 +1,162 @@
+{
+ "id": "mbpg-production-2026-10-09T14-12",
+ "pbt": "MBPG",
+ "env": "production",
+ "app_version": "2.1.25",
+ "generated_at": "2026-10-09T14:12:51",
+ "tester": "mrsai",
+ "device_model": "Ulefone Armor 27 (5008TF2010009401)",
+ "duration_seconds": 7342,
+ "summary": {
+  "passed": 20,
+  "failed": 2,
+  "skipped": 0,
+  "lain": 0
+ },
+ "rekod_production": [
+  "PGP02N261009009",
+  "PGP02N261009010",
+  "PGP02N261009011",
+  "PGP02N261009012",
+  "PGP02P261009027",
+  "PGP02K261009028",
+  "PGP02K261009029",
+  "PGP02K261009030",
+  "PGP02K261009031"
+ ],
+ "penemuan_app": [
+  {
+   "kod": "D-09-MYSIKAP",
+   "tajuk": "D-09 mySIKAP identiti melekat merentas plat — MASIH ADA",
+   "jenis": "APP",
+   "butiran": "Disahkan HIDUP pada build 2.1.25 larian ini. 4 rekod K: PGP02K261009028 (JYX6605), ...029 (JUA3276), ...030 (JUA3276), ...031 (JRT2649). Identiti 93********05 muncul pada DUA plat BERBEZA (JUA3276 dan JYX6605). Butiran pemilik TERDAHULU melekat pada rekod seterusnya. PII orang sebenar. Corong: BATALKAN SEMUA, jangan serah kepada penguatkuasaan. Forensik: reports/forensik/20261009-160155-semak-D-09.*"
+  },
+  {
+   "kod": "D-12-SENARAI-HAD-10",
+   "tajuk": "Senarai Kompaun: had 10 baris keras, no pagination/skrol/susunan/carian",
+   "jenis": "APP",
+   "butiran": "`pagination-container` KOSONG; jadual tiada scrollable; 3 header clickable tapi tap tidak menyusun; panel carian menerima teks tetapi DIABAIKAN. Kesan larian ini: kemaskini K[1/3] dan K[3/3] 'TIDAK-DITAWARKAN — rekod tidak dijumpai dalam Senarai'; hantar K[2/3]/K[3/3] 'status baris = None'. Nota: skrin Hantar Kompaun ADA pagination ('Rows per page', '1-1 of 1') — jadi ini ketidakseragaman app, bukan kekangan platform."
+  },
+  {
+   "kod": "D-13-KEMASKINI-BEKU",
+   "tajuk": "Kemaskini borang P: popup proses BEKU pada 0%",
+   "jenis": "APP",
+   "butiran": "Kemaskini PGP02P261009027: popup kemajuan tersekat 0% dan tidak pernah habis. Modal tersekat — 8x BACK gagal, app perlu relaunch (FIX#14 recovery). Rekod tidak berkemaskini. Julat baru: sebelum ini kemaskini gagal kerana kalendar julat (Fix#21, skrip) — kini ia gagal kerana app beku (bukan skrip)."
+  }
+ ],
+ "sumber": "Konsol run_penuh.py --borang NPK, 2026-10-09 (14:12:51 -> 16:15:14), MBPG_MOD_SEBENAR=1, MBPG_IZIN_PRODUCTION=1, MBPG_DRY_RUN=1. Log: reports/log/run-20261009-141246.log (+ .json). 22 peringkat: 20 LULUS / 2 GAGAL, TANPA HENTI AWAL. [CORONG] 499 tap dinilai, 0 disekat — Fix#22 (dialog hasil Hantar Gambar) berjaya; run pertama sampai HABIS dengan borang P & K. 5 cetakan keluar printer SPP-R410_110095 (N, P, K x3) — disahkan mata pemilik.",
+ "nota_bahasa": "Larian penuh PERTAMA yang selesai hujung-ke-hujung. Fix#21 (kalendar julat) dan Fix#22 (dialog Hantar Gambar) berjaya: borang N kini LULUS PENUH termasuk peringkat `hantar` yang sebelum ini membunuh setiap run. Borang P dan K juga berjalan. 5 kertas tercetak. 2 kegagalan yang tinggal KEDUA-DUANYA bukan skrip: D-09 (identiti mySIKAP melekat merentas plat — PII orang sebenar) dan T-005 (D-08, app keluar latar, retry LULUS). Selebihnya kegagalan sub-peringkat berpunca D-12 (had 10 baris) dan D-13 (kemaskini P beku).",
+ "nota_bukti": "reports/log/run-20261009-141246.log; reports/REKOD-SEBENAR-DICIPTA-2026-10-09.md; reports/e2e-screenshots/; reports/forensik/20261009-160155-semak-D-09.*; docs/D-12-SENARAI-HAD-10-BARIS.md; reports/tap_ledger.jsonl.",
+ "results": {
+  "gerbang siri": {
+   "status": "LULUS",
+   "tempoh_s": 0,
+   "nota": "kaunter selamat (97 nombor diketahui)"
+  },
+  "sesi": {
+   "status": "LULUS",
+   "tempoh_s": 96.1,
+   "nota": "sesi + login + mod sebenar HIDUP"
+  },
+  "tetapan T-001": {
+   "status": "LULUS",
+   "tempoh_s": 15.4,
+   "nota": "external padan profil; internal kosong (D-02 — nota, bukan gagal)"
+  },
+  "tetapan T-002": {
+   "status": "LULUS",
+   "tempoh_s": 7.0,
+   "nota": "lesen padan profil (baca balik)"
+  },
+  "selaras T-003": {
+   "status": "LULUS",
+   "tempoh_s": 24.0,
+   "nota": "Selaras Pengguna Apps"
+  },
+  "selaras T-004": {
+   "status": "LULUS",
+   "tempoh_s": 117.3,
+   "nota": "Selaras Maklumat Alamat"
+  },
+  "selaras T-005": {
+   "status": "GAGAL",
+   "tempoh_s": 22.3,
+   "nota": "AssertionError: [_scroll_down] App TERKELUAR dari latar hadapan (package semasa 'com.android.lau"
+  },
+  "selaras T-005 (retry)": {
+   "status": "LULUS",
+   "tempoh_s": 25.0,
+   "nota": "Selaras Maklumat Kompaun"
+  },
+  "selaras T-006": {
+   "status": "LULUS",
+   "tempoh_s": 22.8,
+   "nota": "Selaras Maklumat Jenis Kenderaan"
+  },
+  "selaras T-007": {
+   "status": "LULUS",
+   "tempoh_s": 23.1,
+   "nota": "Selaras Maklumat Warna"
+  },
+  "selaras T-009": {
+   "status": "LULUS",
+   "tempoh_s": 22.9,
+   "nota": "Selaras Maklumat Barang Sita"
+  },
+  "tetapan T-010": {
+   "status": "LULUS",
+   "tempoh_s": 39.2,
+   "nota": "Tetapan Skrin Utama"
+  },
+  "tetapan T-011": {
+   "status": "LULUS",
+   "tempoh_s": 31.9,
+   "nota": "Semak Kemaskini"
+  },
+  "selaras": {
+   "status": "LULUS",
+   "tempoh_s": 456.6,
+   "nota": "10 lulus, 0 gagal daripada 6 modul selaras + T-010/T-011 (T-008 TIDAK disentuh)"
+  },
+  "gerbang kod kompaun": {
+   "status": "LULUS",
+   "tempoh_s": 0,
+   "nota": "9 baris kod kompaun dalam DB peranti"
+  },
+  "borang N": {
+   "status": "LULUS",
+   "tempoh_s": 1085.5,
+   "nota": "{'tag': 'N-001', 'borang': 'N', 'no_rekod': 'PGP02N261009011', 'no_siri': 12, 'masa': '2026-10-09 14:31:26', 'pesalah': "
+  },
+  "borang P": {
+   "status": "LULUS",
+   "tempoh_s": 1731.2,
+   "nota": "{'tag': 'P-001', 'borang': 'P', 'no_rekod': 'PGP02P261009027', 'no_siri': 28, 'masa': '2026-10-09 14:48:21', 'pesalah': "
+  },
+  "borang K [1/3] JYX6605": {
+   "status": "LULUS",
+   "tempoh_s": 940.6,
+   "nota": "{'tag': 'K-001', 'borang': 'K', 'no_rekod': 'PGP02K261009028', 'no_siri': 29, 'masa': '2026-10-09 15:19:23', 'pesalah': "
+  },
+  "borang K [2/3] JUA3276": {
+   "status": "LULUS",
+   "tempoh_s": 1220.1,
+   "nota": "{'tag': 'K-001', 'borang': 'K', 'no_rekod': 'PGP02K261009029', 'no_siri': 30, 'masa': '2026-10-09 15:35:15', 'pesalah': "
+  },
+  "borang K [3/3] JRT2649": {
+   "status": "LULUS",
+   "tempoh_s": 999.8,
+   "nota": "{'tag': 'K-001', 'borang': 'K', 'no_rekod': 'PGP02K261009031', 'no_siri': 32, 'masa': '2026-10-09 15:55:36', 'pesalah': "
+  },
+  "semak D-09": {
+   "status": "GAGAL",
+   "tempoh_s": 0.2,
+   "nota": "RuntimeError: D-09 MASIH ADA pada build ini - 1 dapatan merentas 4 rekod K. Lihat output di atas."
+  },
+  "menu": {
+   "status": "LULUS",
+   "tempoh_s": 795.9,
+   "nota": "3 lulus, 0 gagal — senarai={'baris_dipapar': 9, 'dijumpai': ['P; hantar={'sebelum': {'H-001': {'jumlah': 6, '; tarik={'s"
+  }
+ }
+}
