@@ -4,6 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Centralized Reporting — AI Centric Testing</title>
+<script>
+/* Tema dipasang SEBELUM cat pertama supaya tiada kelipan gelap->cerah
+   (atau sebaliknya) apabila halaman dimuat semula. TEMA-01. */
+(function(){try{var t=localStorage.getItem('tema');if(t==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();
+</script>
 <style>
 :root{
   --bg:#0f1117; --panel:#141824; --panel2:#181e2e; --line:#232a3b; --line2:#2d3748;
@@ -14,11 +19,27 @@
   --lain:#f59e0b; --lain-bg:#331c04;
   --info:#3b82f6; --info-bg:#0d1f38;
   --cyan:#0ea5e9; --cyan-bg:#123047;
+  --head1:#1a1f2e; --head2:#1e2640; --bg-rgb:15,17,23;
+}
+/* >>> TEMA CERAH — toggle di header (TEMA-01). <<<
+   Semua warna melalui pemboleh ubah :root, jadi tema terang cukup
+   menakrif semula pemboleh ubah itu; tiada satu pun komponen perlu
+   tahu tema sedang aktif. */
+html[data-theme="light"]{
+  --bg:#f4f6fb; --panel:#ffffff; --panel2:#eef1f8; --line:#d7dced; --line2:#c3cadf;
+  --ink:#151a26; --dim:#5a6478; --dimmer:#8b93a8;
+  --pass:#15803d; --pass-bg:#dcfce7;
+  --fail:#b91c1c; --fail-bg:#fee2e2;
+  --skip:#4b5563; --skip-bg:#e5e7eb;
+  --lain:#b45309; --lain-bg:#fef3c7;
+  --info:#1d4ed8; --info-bg:#dbeafe;
+  --cyan:#0369a1; --cyan-bg:#e0f2fe;
+  --head1:#ffffff; --head2:#eef2fb; --bg-rgb:244,246,251;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--ink);font-family:'Segoe UI',Arial,sans-serif;font-size:13px;height:100vh;display:flex;flex-direction:column;overflow:hidden}
 .header{height:44px;flex:none;display:flex;align-items:center;gap:14px;padding:0 16px;
-  background:linear-gradient(135deg,#1a1f2e,#1e2640);border-bottom:1px solid var(--line)}
+  background:linear-gradient(135deg,var(--head1),var(--head2));border-bottom:1px solid var(--line)}
 .header .logo{font-weight:600;letter-spacing:2.5px;font-size:.8rem}
 .header .logo span{color:#a78bfa}
 .header .sub{font-size:.6rem;color:var(--dim);letter-spacing:1.4px;text-transform:uppercase}
@@ -140,7 +161,7 @@ td.tc{font-family:Consolas,monospace;font-size:.66rem;color:var(--ink);white-spa
 <div class="header">
   <div class="logo">CENTRALIZED REPORTING <span>◉</span></div>
   <div class="sub">AI Centric Testing · Semua PBT</div>
-  <div class="right" style="display:flex;gap:8px;align-items:center"><span class="chip" id="langsw" onclick="toggleLang()" style="cursor:pointer;user-select:none" title="Bahasa / Language">BM | EN</span><span class="chip live" id="feed">LIVE</span></div>
+  <div class="right" style="display:flex;gap:8px;align-items:center"><span class="chip" id="themesw" onclick="toggleTema()" style="cursor:pointer;user-select:none" title="Tema cerah / gelap">☀</span><span class="chip" id="langsw" onclick="toggleLang()" style="cursor:pointer;user-select:none" title="Bahasa / Language">BM | EN</span><span class="chip live" id="feed">LIVE</span></div>
 </div>
 <div class="main">
   <div class="side" id="side">
@@ -159,6 +180,21 @@ td.tc{font-family:Consolas,monospace;font-size:.66rem;color:var(--ink);white-spa
 let LANG=(()=>{try{return localStorage.getItem('lang')||'EN'}catch(e){return 'EN'}})();
 function tr(bm,en){return LANG==='EN'?en:bm;}
 function toggleLang(){LANG=LANG==='BM'?'EN':'BM';try{localStorage.setItem('lang',LANG)}catch(e){};render();}
+
+/* >>> TEMA-01: toggle tema cerah / gelap. <<<
+   Pilihan disimpan dalam localStorage. Skrip langit (di <head>) sudah
+   menggunakan pilihan itu SEBELUM cat pertama, jadi tiada kelipan
+   putih/malam apabila halaman dimuat semula. */
+function setTema(t){
+  document.documentElement.setAttribute('data-theme', t);
+  try{ localStorage.setItem('tema', t); }catch(e){}
+  const tsw=document.getElementById('themesw');
+  if(tsw) tsw.innerHTML = (t==='light')?'☾':'☀';
+}
+function toggleTema(){
+  const now=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';
+  setTema(now);
+}
 const ST = {
   PASSED:{c:'var(--pass)',bg:'var(--pass-bg)',label:'PASSED'},
   FAILED:{c:'var(--fail)',bg:'var(--fail-bg)',label:'FAILED'},
@@ -202,6 +238,8 @@ function pickFilter(f){ sel.filter=f; render(); }
 function render(){
   const lsw=document.getElementById('langsw');
   if(lsw) lsw.innerHTML= LANG==='BM'?'<b style="color:var(--ink)">BM</b> · EN':'BM · <b style="color:var(--ink)">EN</b>';
+  const tsw=document.getElementById('themesw');
+  if(tsw) tsw.innerHTML= (document.documentElement.getAttribute('data-theme')==='light')?'☾':'☀';
   renderSide();
   const c=document.getElementById('content');
   if(sel.pbt==='TUTORIALS'){ c.innerHTML=tutHtml(); return; }
@@ -210,7 +248,7 @@ function render(){
   const p=(DATA.manifest.pbt||[]).find(x=>x.kod===sel.pbt)||{};
   let h=`<div class="pbthead"><h1 style="color:${p.warna||'var(--ink)'}">${sel.pbt}</h1>
     <span class="meta">${p.nama||''}</span>
-    ${run?`<span class="meta">v${run.app_version||'?'} · ${run.env||''} · ${run.device_model||''} · ${fmtDT(run.generated_at)} · ${fmtDur(run.duration_seconds)} · tester ${run.tester||'?'}</span>`:''}
+    ${run?`<span class="meta">v${run.app_version||'?'} · ${run.env||''} · ${run.device_model||''} · ${fmtMasa(run.generated_at)} · ${fmtDur(run.duration_seconds)} · tester ${run.tester||'?'}</span>`:''}
   </div>
   <div class="tabs">
     <div class="tab ${sel.tab==='laporan'?'on':''}" onclick="pickTab('laporan')">${tr('Laporan','Report')}</div>
@@ -300,6 +338,8 @@ function laporanHtml(run){
       ${tr('= masalah skrip ujian, bukan aplikasi','= test script problem, not the app')}
     </div>
     <div class="scroll" id="tbl">${tableHtml(run)}</div>
+    ${ringkasPadanan(run)}
+    ${galeriBukti(run)}
     ${String(run.id||'').endsWith('T14-12')?`<div style="padding:8px 12px;font-size:.6rem;color:var(--dim);border-top:1px solid var(--line);background:var(--fail-bg)">
       <b>${tr('Semakan 2026-10-09 (Fix#24)','Revision 2026-10-09 (Fix#24)')}:</b>
       ${tr('Laporan asal kata "borang P: LULUS" — itu SALAH dan pemilik nampak sendiri kemaskini P beku pada 0%. Puncanya SKRIP: induk menelan kegagalan anak. Selepas Fix#24, borang P dan K[2/3] ialah GAGAL-BERSEBAB dengan 3 dan 2 anak GAGAL di dalamnya (kemaskini beku, hantar StaleElement/tak jumpai rekod, senarai tak jumpai rekod). Larian tetap diteruskan; hanya verdik kini jujur.',
@@ -317,6 +357,85 @@ function laporanHtml(run){
   </div>`;
 }
 function renderTableOnly(run){ const t=document.getElementById('tbl'); if(t&&run) t.innerHTML=tableHtml(run); }
+
+/* ================= RINGKAS PADANAN + GALERI BUKTI =================
+   TAMBAH 2026-10-09 (TEMA-02): pemilik dua kali kata dia TAK NAMPAK
+   screenshot dan TAK NAMPAK padanan. Sebabnya: kedua-duanya hanya
+   hidup di dalam tab yang perlu diklik ('Human Match', 'Gap
+   Analysis'). Jadual 48 baris penuh menolak mereka jauh ke bawah
+   lipatan. Jadi ringkasan padanan + galeri gambar dipasang TERUS di
+   bawah jadual utama, tanpa perlu klik apa-apa. */
+
+/* Gambar bukti untuk larian ini: baca dari padanan_human[].bukti, dan
+   juga dari senarai `bukti[]` kalau jana_*.py menambahnya kemudian. */
+function senaraiBukti(run){
+  const out=[], nampak=new Set();
+  const tolak=(src,kapsyen)=>{
+    if(!src||nampak.has(src)) return;           // buang duplikat (hash-audit)
+    nampak.add(src); out.push({src,kapsyen:kapsyen||''});
+  };
+  // 1) bukti yang ditanda pada baris padanan
+  for(const x of ((run&&run.padanan_human)||[])){
+    if(x.bukti) tolak(x.bukti, [x.tc_human, x.apa_human].filter(Boolean).join(' — '));
+  }
+  // 2) senarai bukti bebas (kalau ada) — kapsyen eksplisit
+  for(const b of ((run&&run.bukti)||[])){
+    if(typeof b==='string'){ tolak(b,''); continue; }
+    const k = LANG==='EN' ? (b.kapsyen_en||b.kapsyen||'') : (b.kapsyen||b.kapsyen_en||'');
+    tolak(b.src||b.fail||b.fajl, k);
+  }
+  // 3) bukti larian lama yang sudah ada dalam bukti/ (nama mengandungi tarikh)
+  if(run&&run.tarikh){
+    const t=String(run.tarikh).replace(/-/g,'');
+    for(const f of (run._failGaleri||[])) if(String(f).includes(t)) tolak('bukti/'+f,'');
+  }
+  return out;
+}
+
+function ringkasPadanan(run){
+  const p=(run&&run.padanan_human)||[];
+  if(!p.length) return '';
+  const bil={}; for(const x of p) bil[x.verdict]=(bil[x.verdict]||0)+1;
+  const nPadan=bil['PADAN']||0, nFail=p.filter(x=>x.human==='Fail').length;
+  const warkah=[...new Set(p.map(x=>x.verdict))];
+  return `<div style="border-top:1px solid var(--line);padding:10px 13px;background:var(--panel2)">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <b style="font-size:.78rem">${tr('Padanan dengan laporan human tester (V2.1.25)','Match against the human tester report (V2.1.25)')}</b>
+      <span class="badge" style="color:var(--fail);background:var(--fail-bg);border-color:var(--fail)">
+        ${tr('laporan human','human report')}: ${nFail} Fail</span>
+      <span class="badge" style="color:var(--fail);background:var(--fail-bg);border-color:var(--fail)">
+        ${tr('automasi','automation')}: ${p.filter(x=>x.auto==='GAGAL').length} GAGAL</span>
+      <span class="badge" style="color:${nPadan?'var(--pass)':'var(--fail)'};background:${nPadan?'var(--pass-bg)':'var(--fail-bg)'};border-color:currentColor">
+        ${tr('padan penuh','full match')}: ${nPadan}</span>
+      <span style="margin-left:auto;font-size:.6rem"><a href="#" onclick="pickTab('padanan');return false" style="color:var(--info)">${tr('lihat padanan penuh →','see full match →')}</a></span>
+    </div>
+    <div style="margin-top:7px;display:flex;gap:6px;flex-wrap:wrap;font-size:.58rem">
+      ${warkah.map(k=>`<span class="badge" style="color:${pv(k).c};background:${pv(k).bg};border-color:${pv(k).c}55">${esc(k)}: ${bil[k]}</span>`).join('')}
+    </div>
+    <div style="margin-top:6px;font-size:.62rem;color:var(--dim);line-height:1.5">
+      ${tr('Jawapan jujur: TIDAK padan sepenuhnya. Hanya '+nPadan+' padan penuh. 3 daripada 5 GAGAL automasi ialah bug SKRIP (penapis tarikh separuh), bukan app — jadi automasi gagal lebih awal dan tidak sempat menguji langkah yang human uji.',
+           'Honest answer: NOT a full match. Only '+nPadan+' matches fully. 3 of the 5 automation FAILs were SCRIPT bugs (half date filter), not the app — so automation failed earlier and never reached the steps the human tested.')}
+    </div>
+  </div>`;
+}
+
+function galeriBukti(run){
+  const b=senaraiBukti(run);
+  if(!b.length) return '';
+  return `<div style="border-top:1px solid var(--line);padding:10px 13px">
+    <b style="font-size:.78rem">${tr('Bukti bergambar','Screenshot evidence')} <span style="color:var(--dim);font-weight:400">(${b.length})</span></b>
+    <span style="font-size:.58rem;color:var(--dimmer);margin-left:6px">${tr('klik untuk besarkan','click to enlarge')}</span>
+    <div style="margin-top:8px;display:flex;gap:10px;flex-wrap:wrap">
+      ${b.map(x=>`<figure style="margin:0;width:186px">
+        <img src="${x.src}" alt="${esc(x.kapsyen)}" loading="lazy"
+             onclick="bukaBukti(this.src)"
+             title="${tr('Klik untuk besarkan','Click to enlarge')}"
+             style="width:186px;height:auto;border:1px solid var(--line);border-radius:6px;display:block;cursor:zoom-in;background:var(--panel2)">
+        <figcaption style="font-size:.55rem;color:var(--dim);margin-top:4px;line-height:1.35">${esc(x.kapsyen||'')}</figcaption>
+      </figure>`).join('')}
+    </div>
+  </div>`;
+}
 
 /* PADANAN human vs automasi — FIX#24(b)
    Pemilik tanya: "5 failed ni match tak dengan human tester report?"
@@ -904,7 +1023,27 @@ function manualHtml(pbt){
 }
 
 function fmtDT(s){ if(!s) return '—'; return String(s).replace('T',' ').slice(0,16); }
-function fmtDur(x){ if(x==null) return '—'; const m=Math.floor(x/60), s=Math.round(x%60); return m+'m '+s+'s'; }
+/* >>> TEMA-01: masa dalam JAM + MINIT. <<<
+   Sebelum ini ia cetak '125m 29s' — susah dibaca bila larian 2 jam.
+   Ditukar kepada '2j 5m'; saat hanya muncul untuk tempoh < 1 minit
+   atau sebagai baki tepat kalau kurang daripada 10 saat. */
+function fmtDur(x){
+  if(x==null) return '—';
+  x=Math.round(x);
+  const j=Math.floor(x/3600), m=Math.floor((x%3600)/60), s=x%60;
+  if(j>0) return j+'j '+m+'m';
+  if(m>0) return m+'m '+(s?s+'s':'');
+  return s+'s';
+}
+/* Tarikh + masa penuh untuk pengepala larian: '09/10/2026 14:12'. */
+function fmtMasa(s){
+  if(!s) return '—';
+  const t=String(s).replace('T',' ').slice(0,16);   // 'YYYY-MM-DD HH:MM'
+  const m=t.match(/^(\d{4})-(\d{2})-(\d{2})[ T]?(\d{2}:\d{2})?/);
+  if(!m) return t;
+  const [,Y,M,D,H]=m;
+  return `${D}/${M}/${Y}${H?' '+H:''}`;
+}
 function esc(x){ return String(x??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
 /* ---- Lightbox bukti (tambah 2026-10-08) ---- */

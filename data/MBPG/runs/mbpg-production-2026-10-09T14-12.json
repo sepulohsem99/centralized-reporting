@@ -600,5 +600,45 @@
    "bukti": "bukti/mbpg-17-senarai-berjaya-tarikh-akhir.jpg"
   }
  ],
- "padanan_nota": "Padanan ini dijawab secara jujur, termasuk di mana padanan TIDAK wujud. Daripada 8 Fail laporan human (V2.1.25), hanya 1 padan penuh dengan automasi (P-004), 2 sebahagian (H-002/H-003), 1 automasi buta (N-004), 1 tercanggah dalam laporan human sendiri (P-002), 1 tak boleh dibanding kerana automasi gagal lebih awal (K-004, punca SKRIP), dan 2 di luar skop automasi (H-005, L-002). Automasi pula menemui 2 defek yang human tidak uji: D-09 (PII mySIKAP) dan D-12 (had 10 baris Senarai)."
+ "padanan_nota": "Padanan ini dijawab secara jujur, termasuk di mana padanan TIDAK wujud. Daripada 8 Fail laporan human (V2.1.25), hanya 1 padan penuh dengan automasi (P-004), 2 sebahagian (H-002/H-003), 1 automasi buta (N-004), 1 tercanggah dalam laporan human sendiri (P-002), 1 tak boleh dibanding kerana automasi gagal lebih awal (K-004, punca SKRIP), dan 2 di luar skop automasi (H-005, L-002). Automasi pula menemui 2 defek yang human tidak uji: D-09 (PII mySIKAP) dan D-12 (had 10 baris Senarai).",
+ "bukti": [
+  {
+   "src": "bukti/mbpg-17-P004-kemaskini-beku-0pc.jpg",
+   "kapsyen": "P-004 kemaskini: popup 'MEMULAKAN PROSES...' beku pada 0%, 4/6 gambar. Modal tak boleh ditutup — D-13 (APP).",
+   "kapsyen_en": "P-004 kemaskini: 'MEMULAKAN PROSES...' popup frozen at 0%, 4/6 photos. Modal cannot be dismissed — D-13 (APP).",
+   "jenis": "APP"
+  },
+  {
+   "src": "bukti/mbpg-17-kalendar-masih-terbuka.jpg",
+   "kapsyen": "Senarai: kalendar julat masih terbuka — 9 Okt disorot SEPARUH pil (bulat kiri, rata kanan) = julat menunggu tarikh AKHIR. Ini punca SKRIP bagi 3 GAGAL (Fix#25).",
+   "kapsyen_en": "Senarai: range calendar still open — Oct 9 highlighted as a HALF pill (round left, flat right) = range awaiting its END date. This is the SCRIPT cause of 3 FAILs (Fix#25).",
+   "jenis": "SKRIP"
+  },
+  {
+   "src": "bukti/mbpg-17-senarai-kosong-tarikh-akhir.jpg",
+   "kapsyen": "Senarai selepas penapis separuh: 'Tarikh Mula = 2026-10-09', 'Tarikh Akhir' KOSONG, 0 baris. Bukti ia penapis separuh — BUKAN had 10 baris D-12.",
+   "kapsyen_en": "Senarai after the half filter: 'Tarikh Mula = 2026-10-09', 'Tarikh Akhir' EMPTY, 0 rows. Proof it is a half filter — NOT the D-12 10-row cap.",
+   "jenis": "SKRIP"
+  },
+  {
+   "src": "bukti/mbpg-17-senarai-berjaya-tarikh-akhir.jpg",
+   "kapsyen": "KAWALAN — lawatan yang berjaya: julat lengkap '2026-10-09 - 2026-10-10' -> 6 baris (PGP02N261009009..012, P261009027, K261009028). Bukti penapis yang betul berfungsi.",
+   "kapsyen_en": "CONTROL — a successful visit: full range '2026-10-09 - 2026-10-10' -> 6 rows (PGP02N261009009..012, P261009027, K261009028). Proof a correct filter works.",
+   "jenis": "BUKTI"
+  },
+  {
+   "src": "bukti/mbpg-17-T005-d08-app-keluar-latar.jpg",
+   "kapsyen": "T-005: skrin utama Android (app drawer) — app IES TERKELUAR ke latar semasa selaras. Percubaan 2 LULUS. D-08 (APP, berselang).",
+   "kapsyen_en": "T-005: Android home/app drawer — the IES app went to background mid-sync. Attempt 2 PASSED. D-08 (APP, intermittent).",
+   "jenis": "APP"
+  },
+  {
+   "src": "bukti/mbpg-17-N001-serah-berjaya.jpg",
+   "kapsyen": "KAWALAN — N-001 Serah: dialog 'CETAK NOTIS AMARAN ?' No Notis PGP02N261009011. Cetakan disahkan sampai ke printer.",
+   "kapsyen_en": "CONTROL — N-001 Serah: 'CETAK NOTIS AMARAN ?' dialog, notice PGP02N261009011. Print confirmed to reach the printer.",
+   "jenis": "BUKTI"
+  }
+ ],
+ "bukti_nota": "6 tangkapan unik selepas hash-audit (duplikat dibuang), setiap satu disemak mata. 4 baris padanan tiada gambar: laluan tak diuji atau lulus tanpa tangkapan — sengaja dibiarkan kosong, tidak direka.",
+ "bukti_nota_en": "6 unique captures after hash-audit (duplicates dropped), each visually checked. 4 match rows have no image: untested paths or passes with no capture — deliberately left blank, not invented."
 }
