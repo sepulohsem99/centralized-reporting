@@ -1,9 +1,9 @@
 {
  "pbt": "MBPG",
- "dijana": "2026-10-09 22:13",
- "jumlah_rekod": 104,
- "jumlah_baris": 115,
- "jumlah_larian": 17,
+ "dijana": "2026-10-09 23:29",
+ "jumlah_rekod": 108,
+ "jumlah_baris": 119,
+ "jumlah_larian": 18,
  "nota": "Setiap rekod di bawah ialah rekod HIDUP pada production MBPG (113.211.155.174). Semua ialah data ujian: nama pesalah bermula 'UJIAN AUTOMASI E2E' dan catatan membawa 'AUTOMASI-CLEANUP-PM'. Baris tanpa nombor = laluan kemaskini yang tidak menghasilkan nombor gantian (diketahui). Pembatalan melalui portal ePBT oleh PM — automasi TIDAK memadam apa-apa.",
  "runs": [
   {
@@ -1618,6 +1618,68 @@
      "printer": "SPP-R410_110095"
     }
    ]
+  },
+  {
+   "no_larian": 18,
+   "label": "Larian #18",
+   "mula": "2026-10-09 22:39",
+   "tamat": "2026-10-09 23:16",
+   "tarikh": "2026-10-09",
+   "bilangan": 4,
+   "bilangan_bernombor": 4,
+   "bilangan_cetak": 3,
+   "no_rekod": [
+    "PGP02N261009013",
+    "PGP02N261009014",
+    "PGP02P261009032",
+    "PGP02K261009033"
+   ],
+   "rekod": [
+    {
+     "no_rekod": "PGP02N261009013",
+     "tc": "N-001",
+     "borang": "N",
+     "jenis": "Notis",
+     "masa": "2026-10-09 22:39:34",
+     "status": "baru",
+     "asal": "",
+     "cetak_dihantar": true,
+     "printer": "SPP-R410_110095"
+    },
+    {
+     "no_rekod": "PGP02N261009014",
+     "tc": "N-004",
+     "borang": "N",
+     "jenis": "Notis",
+     "masa": "2026-10-09 22:44:08",
+     "status": "hasil-kemaskini",
+     "asal": "PGP02N261009013",
+     "cetak_dihantar": false,
+     "printer": ""
+    },
+    {
+     "no_rekod": "PGP02P261009032",
+     "tc": "P-001",
+     "borang": "P",
+     "jenis": "Kompaun",
+     "masa": "2026-10-09 22:59:32",
+     "status": "baru",
+     "asal": "",
+     "cetak_dihantar": true,
+     "printer": "SPP-R410_110095"
+    },
+    {
+     "no_rekod": "PGP02K261009033",
+     "tc": "K-001",
+     "borang": "K",
+     "jenis": "Kompaun",
+     "masa": "2026-10-09 23:16:47",
+     "status": "baru",
+     "asal": "",
+     "cetak_dihantar": true,
+     "printer": "SPP-R410_110095"
+    }
+   ]
   }
  ],
  "semua_nombor": [
@@ -1674,6 +1736,7 @@
   "PGP02K261009029",
   "PGP02K261009030",
   "PGP02K261009031",
+  "PGP02K261009033",
   "PGP02N260817008",
   "PGP02N260818001",
   "PGP02N260819002",
@@ -1702,6 +1765,8 @@
   "PGP02N261009010",
   "PGP02N261009011",
   "PGP02N261009012",
+  "PGP02N261009013",
+  "PGP02N261009014",
   "PGP02P260818001",
   "PGP02P260818002",
   "PGP02P260818003",
@@ -1724,6 +1789,7 @@
   "PGP02P261008015",
   "PGP02P261008020",
   "PGP02P261008023",
-  "PGP02P261009027"
+  "PGP02P261009027",
+  "PGP02P261009032"
  ]
 }

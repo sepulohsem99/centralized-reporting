@@ -1,0 +1,811 @@
+{
+ "id": "mbpg-production-2026-10-09T22-20",
+ "pbt": "MBPG",
+ "env": "PRODUCTION",
+ "app_version": "2.1.25",
+ "generated_at": "2026-10-09T22:20:46",
+ "tester": "automasi",
+ "device_model": "Ulefone Armor 27",
+ "duration_seconds": 3390.9,
+ "summary": {
+  "passed": 18,
+  "failed": 5,
+  "skipped": 19,
+  "lain": 9
+ },
+ "rekod_production": [
+  "PGP02N261009013",
+  "PGP02N261009014",
+  "PGP02P261009032",
+  "PGP02K261009033"
+ ],
+ "penemuan_app": [
+  {
+   "kod": "D-12",
+   "tajuk": "Senarai Kompaun memapar 10 baris sahaja, tiada jalan ke 11+",
+   "jenis": "APP",
+   "butiran": "Senarai Kompaun memapar HANYA 10 baris pertama dan TIADA jalan ke baris 11+ (pagination wujud dalam XML tetapi KOSONG; carian diabaikan). Bukti bersemuka: dump selepas Semak menunjukkan 10 baris berakhir pada PGP02N261009013 walaupun penapis julat lengkap '2026-10-09 - 2026-10-10'. Rekod baharu (014 / 032) jatuh di kedudukan 11+, jadi ia TIDAK PERNAH dapat dicapai. Ini defek APP (D-12), bukan lagi bug penapis tarikh — Fix#25/#28 BERJAYA (medan Akhir dibaca balik '2026-10-10' 5 kali)."
+  },
+  {
+   "kod": "D-14",
+   "tajuk": "Alert 'Beberapa gambar tidak berjaya di muatnaik' menyekat skrol",
+   "jenis": "APP",
+   "butiran": "App memulangkan 'Ralat | Beberapa gambar tidak berjaya di muatnaik' dan alert itu kekal terbuka. Skrol seterusnya disekat oleh alert, jadi skrip tidak dapat meneruskan dan tamat dengan TimeoutException 15s."
+  },
+  {
+   "kod": "D-15",
+   "tajuk": "Dialog 'STATUS SIMPANAN / MASA TAMAT' selepas cetakan K",
+   "jenis": "APP+SKRIP",
+   "butiran": "Selepas cetakan K berjaya, app memapar 'MASA TAMAT (15s). DATA TELAH DISIMPAN SECARA LOKAL.' dengan butang OK tunggal. Cetakan tetap keluar tetapi mesej mendakwa simpanan LOKAL. Corong membatalkan run kerana OK ini belum dibenarkan."
+  },
+  {
+   "kod": "D-08",
+   "tajuk": "App keluar latar hadapan semasa selaras",
+   "jenis": "APP",
+   "butiran": "T-005 percubaan 1 gagal (com.android.launcher); retry berjaya. Berulang merentas larian."
+  }
+ ],
+ "sumber": "Konsol run_penuh.py --borang NPK, 2026-10-09 (14:12:51 -> 16:15:14), MBPG_MOD_SEBENAR=1, MBPG_IZIN_PRODUCTION=1, MBPG_DRY_RUN=1. Log: reports/log/run-20261009-141246.log (+ .json). 22 peringkat: 20 LULUS / 2 GAGAL, TANPA HENTI AWAL. [CORONG] 499 tap dinilai, 0 disekat — Fix#22 (dialog hasil Hantar Gambar) berjaya; run pertama sampai HABIS dengan borang P & K. 5 cetakan keluar printer SPP-R410_110095 (N, P, K x3) — disahkan mata pemilik.",
+ "nota_bahasa": "Setiap baris ada penjelasan bahasa mudah: apa yang berlaku, kesannya, dan siapa perlu bertindak. 'Jenis' beritahu sama ada masalah APP (lapor developer) atau SKRIP (masalah skrip ujian). Dua penemuan besar larian ini: (1) Fix#25/#28 pada penapis tarikh BERJAYA — medan Tarikh Akhir kini dibaca balik '2026-10-10' lima kali; kegagalan Senarai yang tinggal ialah had 10 baris D-12 (APP). (2) Corong kita sendiri membatalkan run pada borang K kerana dialog 'STATUS SIMPANAN' yang belum dibenarkan — ini SKRIP dan menunggu keputusan pemilik.",
+ "nota_bukti": "Tangkapan diletakkan pada barisnya sendiri dalam kolum 'Bukti'. Satu pasangan didapati DUPLIKAT (sha256 sama) — skrin Senarai identik untuk N dan P — jadi ia dipaparkan SEKALI sahaja. Tiada gambar direka atau dikitar semula sebagai peristiwa berasingan. Tangkapan berkenaan 10 baris disemak mata: baris terakhir PGP02N261009013, tiada kawalan pagination.",
+ "results": {
+  "MBPG-TC-T-001": {
+   "status": "PASSED",
+   "nama": "Tetapan Alamat IP",
+   "satu_baris": "Lulus separa — IP external padan profil; IP internal kosong (D-02).",
+   "maksud": "IP external padan profil production. IP internal dibaca balik kosong, seperti dilaporkan sebelum ini (D-02). Ini nota kosmetik, bukan gagal.",
+   "kesan": "Skrip tidak boleh mengesahkan IP internal — app sendiri tidak menyimpannya.",
+   "tindakan": "Tiada tindakan segera. D-02 kekal terbuka (kosmetik).",
+   "jenis": "APP",
+   "kitaran": ""
+  },
+  "MBPG-TC-T-002": {
+   "status": "PASSED",
+   "nama": "Tetapan Pelbagai",
+   "satu_baris": "Lesen app padan profil (disahkan baca balik).",
+   "maksud": "Skrip membaca semula nilai lesen dalam Tetapan dan membandingkan dengan profil; ia padan.",
+   "kesan": "Tiada.",
+   "tindakan": "Tiada tindakan.",
+   "jenis": "APP",
+   "kitaran": ""
+  },
+  "MBPG-TC-T-003": {
+   "status": "PASSED",
+   "nama": "Selaras Pengguna Apps",
+   "satu_baris": "Lulus — Selaras Pengguna Apps.",
+   "maksud": "Skrip membuka Menu Selaras, menekan 'Selaras Pengguna Apps', dan popup hasil 'Berjaya — Data Disimpan' muncul serta ditutup.",
+   "kesan": "Tiada.",
+   "tindakan": "Tiada tindakan.",
+   "jenis": "APP",
+   "kitaran": ""
+  },
+  "MBPG-TC-T-004": {
+   "status": "PASSED",
+   "nama": "Selaras Maklumat Alamat",
+   "satu_baris": "Lulus — Selaras Maklumat Alamat.",
+   "maksud": "Skrip membuka Menu Selaras, menekan 'Selaras Maklumat Alamat', dan popup hasil 'Berjaya — Data Disimpan' muncul serta ditutup.",
+   "kesan": "Tiada.",
+   "tindakan": "Tiada tindakan.",
+   "jenis": "APP",
+   "kitaran": ""
+  },
+  "MBPG-TC-T-005": {
+   "status": "PASSED",
+   "nama": "Selaras Maklumat Kompaun",
+   "satu_baris": "Percubaan 1 GAGAL (app terkeluar sendiri, D-08); retry BERJAYA dalam 27.2s.",
+   "maksud": "Percubaan 1 gagal selepas 24.4s: AssertionError [_scroll_down] 'App TERKELUAR dari latar hadapan' (package semasa com.android.launcher). Skrip cuba semula dan percubaan 2 BERJAYA.",
+   "kesan": "Tiada kehilangan data — sync percubaan 2 lengkap.",
+   "tindakan": "Tiada tindakan developer untuk TC ini; ia lulus melalui retry. D-08 dipantau berasingan (berulang merentas larian).",
+   "jenis": "APP",
+   "kitaran": "Berulang (D-08) — PUNCA SAMA setiap kali: app keluar latar hadapan semasa selaras. Dikira SATU masalah, bukan dua."
+  },
+  "MBPG-TC-T-006": {
+   "status": "PASSED",
+   "nama": "Selaras Maklumat Jenis Kenderaan",
+   "satu_baris": "Lulus — Selaras Maklumat Jenis Kenderaan.",
+   "maksud": "Skrip membuka Menu Selaras, menekan 'Selaras Maklumat Jenis Kenderaan', dan popup hasil 'Berjaya — Data Disimpan' muncul serta ditutup.",
+   "kesan": "Tiada.",
+   "tindakan": "Tiada tindakan.",
+   "jenis": "APP",
+   "kitaran": ""
+  },
+  "MBPG-TC-T-007": {
+   "status": "PASSED",
+   "nama": "Selaras Maklumat Warna",
+   "satu_baris": "Lulus — Selaras Maklumat Warna.",
+   "maksud": "Skrip membuka Menu Selaras, menekan 'Selaras Maklumat Warna', dan popup hasil 'Berjaya — Data Disimpan' muncul serta ditutup.",
+   "kesan": "Tiada.",
+   "tindakan": "Tiada tindakan.",
+   "jenis": "APP",
+   "kitaran": ""
+  },
+  "MBPG-TC-T-008": {
+   "status": "SKIPPED",
+   "nama": "Selaras Maklumat Pelesen",
+   "satu_baris": "TIDAK DISENTUH — larangan mutlak.",
+   "maksud": "Selaras Maklumat Pelesen dikecualikan sepenuhnya pada tiga lapisan (peringkat tap, bukan sekadar dilangkau). Sync mengambil masa 3-4 jam dan menyentuh 52,317 rekod.",
+   "kesan": "Tiada — memang dikecualikan.",
+   "tindakan": "Tiada tindakan. Perlu kebenaran bertulis pemilik untuk mengubahnya.",
+   "jenis": "APP",
+   "kitaran": ""
+  },
+  "MBPG-TC-T-009": {
+   "status": "PASSED",
+   "nama": "Selaras Maklumat Barang Sita",
+   "satu_baris": "Lulus — Selaras Maklumat Barang Sita.",
+   "maksud": "Skrip membuka Menu Selaras, menekan 'Selaras Maklumat Barang Sita', dan popup hasil 'Berjaya — Data Disimpan' muncul serta ditutup.",
+   "kesan": "Tiada.",
+   "tindakan": "Tiada tindakan.",
+   "jenis": "APP",
+   "kitaran": ""
+  },
+  "MBPG-TC-T-010": {
+   "status": "PASSED",
+   "nama": "Tetapan Skrin Utama",
+   "satu_baris": "Lulus — Tetapan Skrin Utama.",
+   "maksud": "Skrip membuka tetapan skrin utama dan mengesahkannya.",
+   "kesan": "Tiada.",
+   "tindakan": "Tiada tindakan.",
+   "jenis": "APP",
+   "kitaran": ""
+  },
+  "MBPG-TC-T-011": {
+   "status": "PASSED",
+   "nama": "Semak Kemaskini",
+   "satu_baris": "Lulus — Semak Kemaskini.",
+   "maksud": "Skrip membuka 'Semak Kemaskini' dan tiada ralat teknikal dilaporkan.",
+   "kesan": "Tiada.",
+   "tindakan": "Tiada tindakan.",
+   "jenis": "APP",
+   "kitaran": ""
+  },
+  "MBPG-TC-T-012": {
+   "status": "PASSED",
+   "nama": "Remember Me / Login",
+   "satu_baris": "Log masuk 'msc' berjaya; medan kata laluan disahkan tidak kosong sebelum LOGIN.",
+   "maksud": "Skrip mengisi username/password, mengesahkan medan kata laluan dipapar '•••••' (bukti ia benar-benar diisi), menekan LOGIN dan mencapai skrin utama.",
+   "kesan": "Tiada.",
+   "tindakan": "Tiada tindakan.",
+   "jenis": "APP",
+   "kitaran": ""
+  },
+  "MBPG-TC-N-001": {
+   "status": "PASSED",
+   "nama": "Daftar Notis Amaran",
+   "satu_baris": "Rekod PGP02N261009013 dicipta; borang N selesai sehingga hantar.",
+   "maksud": "Borang diisi automasi, ditandatangan, dihantar, dan nombor rekod diperoleh daripada popup app.",
+   "kesan": "Rekod production dicipta (data ujian) — perlu pembatalan PM.",
+   "tindakan": "PM batalkan rekod ujian melalui portal ePBT.",
+   "jenis": "APP",
+   "kitaran": ""
+  },
+  "MBPG-TC-N-002": {
+   "status": "PASSED",
+   "nama": "Daftar Notis Amaran > Cetak",
+   "satu_baris": "Cetakan keluar pada printer SPP-R410_110095 (13.1s).",
+   "maksud": "Skrip menekan CETAK; app menutup popup selepas menghantar ke printer (13.1s). Pemilik mengesahkan 3 keping kertas keluar pada larian ini.",
+   "kesan": "Kertas keluar. Kandungan kertas TIDAK dapat diperiksa oleh skrip.",
+   "tindakan": "Pemilik perlu semak kertas fizikal — tandatangan, kod akta, dan sama ada identiti pesalah betul. Skrip hanya membuktikan popup ditutup.",
+   "jenis": "APP",
+   "kitaran": ""
+  },
+  "MBPG-TC-N-003": {
+   "status": "FAILED",
+   "nama": "Serah Notis Amaran",
+   "satu_baris": "Hantar tersekat: alert gambar gagal kekal terbuka, skrol disekat.",
+   "maksud": "Selepas 'Hantar Gambar', app memulangkan alert 'Ralat | Beberapa gambar tidak berjaya di muatnaik.' Alert itu KEKAL TERBUKA. Peralihan ke tab Data Ralat kemudian cuba menatal, tetapi skrol disekat oleh alert dan tamat dengan TimeoutException selepas 177.9s.",
+   "kesan": "Serahan notis TIDAK dapat disahkan. Gambar tidak lengkap naik ke server.",
+   "tindakan": "LAPOR DEVELOPER (APP): muat naik gambar gagal dan alert tidak boleh ditutup oleh aliran seterusnya. Skrip kini MELAPORKAN alert ini sebagai GAGAL (Fix#29) — sebelum ini ia ditelan.",
+   "jenis": "APP",
+   "kitaran": "PUNCA SAMA untuk borang N dan P di larian ini — dikira SATU masalah.",
+   "bukti": "bukti/mbpg-18-N003-hantar-gambar-ralat.jpg",
+   "bukti_kapsyen": "Alert 'Ralat | Beberapa gambar tidak berjaya di muatnaik' kekal terbuka dan menyekat skrol seterusnya."
+  },
+  "MBPG-TC-N-004": {
+   "status": "PASSED",
+   "nama": "Kemaskini Notis Amaran",
+   "satu_baris": "Kemaskini berjaya — rekod berubah 013 -> 014.",
+   "maksud": "Skrip membuka rekod PGP02N261009013, mengemaskini, dan nombor rekod bertukar kepada PGP02N261009014.",
+   "kesan": "Tiada.",
+   "tindakan": "Tiada tindakan.",
+   "jenis": "APP",
+   "kitaran": ""
+  },
+  "MBPG-TC-N-005": {
+   "status": "SKIPPED",
+   "nama": "Bookmark borang N",
+   "satu_baris": "Build ini tiada UI untuk membuat bookmark baharu.",
+   "maksud": "Popup 'Pilihan Kegemaran' hanya ada HAPUS/PILIH dan 'NO BOOKMARK FOUND' — tiada medan nama dan tiada butang SIMPAN.",
+   "kesan": "TC bookmark tidak boleh diuji langsung pada build 2.1.25 (D-04).",
+   "tindakan": "Developer: sediakan UI cipta bookmark, atau PM sahkan TC ini dikeluarkan daripada skop.",
+   "jenis": "APP",
+   "kitaran": "Berulang setiap larian; PUNCA SAMA (had build)."
+  },
+  "MBPG-TC-P-001": {
+   "status": "PASSED",
+   "nama": "Daftar Kompaun Pelbagai",
+   "satu_baris": "Rekod PGP02P261009032 dicipta.",
+   "maksud": "Borang pelbagai diisi dan dihantar; nombor rekod diperoleh daripada popup app.",
+   "kesan": "Rekod production dicipta (data ujian) — perlu pembatalan PM.",
+   "tindakan": "PM batalkan rekod ujian melalui portal ePBT.",
+   "jenis": "APP",
+   "kitaran": ""
+  },
+  "MBPG-TC-P-002": {
+   "status": "PASSED",
+   "nama": "Daftar Kompaun Pelbagai > Cetak",
+   "satu_baris": "Cetakan keluar pada printer SPP-R410_110095 (12.8s).",
+   "maksud": "Skrip menekan CETAK; app menutup popup selepas menghantar ke printer (12.8s). Pemilik mengesahkan 3 keping kertas keluar pada larian ini.",
+   "kesan": "Kertas keluar. Kandungan kertas TIDAK dapat diperiksa oleh skrip.",
+   "tindakan": "Pemilik perlu semak kertas fizikal — tandatangan, kod akta, dan sama ada identiti pesalah betul. Skrip hanya membuktikan popup ditutup.",
+   "jenis": "APP",
+   "kitaran": ""
+  },
+  "MBPG-TC-P-003": {
+   "status": "FAILED",
+   "nama": "Serah Kompaun Pelbagai",
+   "satu_baris": "Hantar tersekat dengan TimeoutException selepas 132.4s (skrol dihalang).",
+   "maksud": "Selepas Hantar Data + Hantar Gambar, peralihan ke Data Ralat gagal melengkapkan skrol — 'swipe DIHANTAR tetapi ANJAKAN 0px' (borang tidak bergerak), kemudian TimeoutException selepas 132.4s.",
+   "kesan": "Serahan kompaun pelbagai TIDAK dapat disahkan oleh skrip.",
+   "tindakan": "Sahkan semula pada larian seterusnya. Jika berulang, siasat sama ada alert gambar (Fix#29) memainkan peranan. Sebahagian APP (gambar gagal naik), sebahagian SKRIP (skrol tidak pulih).",
+   "jenis": "APP+SKRIP",
+   "kitaran": "Kelas 'skrol tersekat' — berkait dengan alert gambar.",
+   "bukti": "bukti/mbpg-18-P003-hantar-timeout.jpg",
+   "bukti_kapsyen": "Skrin pada masa TimeoutException selepas Hantar."
+  },
+  "MBPG-TC-P-004": {
+   "status": "NOT_RUN",
+   "nama": "Kemaskini Kompaun Pelbagai",
+   "satu_baris": "TIDAK DAPAT DIJALANKAN — rekod PGP02P261009032 tidak kelihatan dalam Senarai.",
+   "maksud": "Skrip mencari rekod PGP02P261009032 dalam Senarai (penapis julat lengkap '2026-10-09 - 2026-10-10') dan ia tidak kelihatan — 10 baris berakhir pada PGP02N261009013. Rekod baharu berada di kedudukan 11+.",
+   "kesan": "Kemaskini borang P tidak dapat diuji pada larian ini. Ini BUKAN bukti app tolak kemaskini.",
+   "tindakan": "Tidak boleh dibanding dengan laporan human (yang gagal pada 'props error'). Perlu retest apabila D-12 dibaiki atau senarai harian dikurangkan <10.",
+   "jenis": "APP",
+   "kitaran": "Senarai Kompaun memapar HANYA 10 baris pertama dan TIADA jalan ke baris 11+ (pagination wujud dalam XML tetapi KOSONG; carian diabaikan). Bukti bersemuka: dump selepas Semak menunjukkan 10 baris berakhir pada PGP02N261009013 walaupun penapis julat lengkap '2026-10-09 - 2026-10-10'. Rekod baharu (014 / 032) jatuh di kedudukan 11+, jadi ia TIDAK PERNAH dapat dicapai. Ini defek APP (D-12), bukan lagi bug penapis tarikh — Fix#25/#28 BERJAYA (medan Akhir dibaca balik '2026-10-10' 5 kali).",
+   "bukti": "bukti/mbpg-18-N003-senarai-10-baris.jpg",
+   "bukti_kapsyen": "Senarai memapar 10 baris sahaja (berakhir PGP02N261009013) walaupun penapis julat lengkap — rekod baharu tak dapat dicapai."
+  },
+  "MBPG-TC-P-005": {
+   "status": "SKIPPED",
+   "nama": "Bookmark borang P",
+   "satu_baris": "Build ini tiada UI untuk membuat bookmark baharu.",
+   "maksud": "Popup 'Pilihan Kegemaran' hanya ada HAPUS/PILIH dan 'NO BOOKMARK FOUND' — tiada medan nama dan tiada butang SIMPAN.",
+   "kesan": "TC bookmark tidak boleh diuji langsung pada build 2.1.25 (D-04).",
+   "tindakan": "Developer: sediakan UI cipta bookmark, atau PM sahkan TC ini dikeluarkan daripada skop.",
+   "jenis": "APP",
+   "kitaran": "Berulang setiap larian; PUNCA SAMA (had build)."
+  },
+  "MBPG-TC-K-001": {
+   "status": "PASSED",
+   "nama": "Daftar Kompaun Letak Kereta",
+   "satu_baris": "Rekod PGP02K261009033 dicipta (plat JYX6605).",
+   "maksud": "Borang letak kereta diisi dan dihantar; nombor rekod PGP02K261009033 diperoleh daripada popup app.",
+   "kesan": "Rekod production dicipta (data ujian) — perlu pembatalan PM.",
+   "tindakan": "PM batalkan rekod ujian. NOTA: identiti pesalah pada K tidak boleh dipercayai (D-09).",
+   "jenis": "APP",
+   "kitaran": ""
+  },
+  "MBPG-TC-K-002": {
+   "status": "PASSED",
+   "nama": "Daftar Kompaun Letak Kereta > Cetak",
+   "satu_baris": "Cetakan keluar (11.9s) — tetapi rekod disimpan LOKAL.",
+   "maksud": "Skrip menekan CETAK; popup ditutup selepas 11.9s dan 1 keping kertas keluar. TETAPI app kemudian memapar dialog 'STATUS SIMPANAN | MASA TAMAT (15s). DATA TELAH DISIMPAN SECARA LOKAL.'",
+   "kesan": "Cetakan berjaya secara fizikal. Persoalan terbuka: adakah rekod ini sampai ke server, atau tersimpan lokal sahaja?",
+   "tindakan": "LAPOR DEVELOPER untuk pengesahan: kenapa mesej 'MASA TAMAT / DISIMPAN SECARA LOKAL' muncul selepas cetakan berjaya pada borang K.",
+   "jenis": "APP+SKRIP",
+   "kitaran": "Baru dikesan larian ini. Hanya berlaku pada K-002 — N-002 dan P-002 tidak menunjukkan dialog ini.",
+   "bukti": "bukti/mbpg-18-K002-status-simpanan-tamat.jpg",
+   "bukti_kapsyen": "Dialog selepas cetakan K berjaya: 'MASA TAMAT (15s). DATA TELAH DISIMPAN SECARA LOKAL.' dengan butang OK tunggal."
+  },
+  "MBPG-TC-K-003": {
+   "status": "FAILED",
+   "nama": "Serah Kompaun Letak Kereta",
+   "satu_baris": "Tidak diuji — run dibatalkan sebelum sampai ke sini.",
+   "maksud": "Larian berhenti pada K [1/3] peringkat kemaskini. Serah K tidak pernah dijalankan pada larian ini.",
+   "kesan": "Serah K tidak dapat disahkan.",
+   "tindakan": "Jalankan semula selepas abort dibaiki.",
+   "jenis": "APP",
+   "kitaran": ""
+  },
+  "MBPG-TC-K-004": {
+   "status": "NOT_RUN",
+   "nama": "Kemaskini Kompaun Letak Kereta",
+   "satu_baris": "TIDAK DAPAT DIJALANKAN — run dibatalkan pada K [1/3].",
+   "maksud": "Larian berhenti pada peringkat kemaskini K [1/3] (lihat HASIL-K-ABORT). K [2/3] dan K [3/3] tidak pernah dijalankan.",
+   "kesan": "Kemaskini borang K tidak diuji pada larian ini.",
+   "tindakan": "Jalankan semula selepas DryRunViolation dibaiki.",
+   "jenis": "APP",
+   "kitaran": ""
+  },
+  "MBPG-TC-K-005": {
+   "status": "SKIPPED",
+   "nama": "Bookmark borang K",
+   "satu_baris": "Build ini tiada UI untuk membuat bookmark baharu.",
+   "maksud": "Popup 'Pilihan Kegemaran' hanya ada HAPUS/PILIH dan 'NO BOOKMARK FOUND' — tiada medan nama dan tiada butang SIMPAN.",
+   "kesan": "TC bookmark tidak boleh diuji langsung pada build 2.1.25 (D-04).",
+   "tindakan": "Developer: sediakan UI cipta bookmark, atau PM sahkan TC ini dikeluarkan daripada skop.",
+   "jenis": "APP",
+   "kitaran": "Berulang setiap larian; PUNCA SAMA (had build)."
+  },
+  "MBPG-TC-P-006": {
+   "status": "NEEDS_EYE",
+   "nama": "Isu berkenaan tandatangan",
+   "satu_baris": "Tandatangan pada cetakan mesti disemak mata — skrip tidak boleh menilainya.",
+   "maksud": "Skrip hanya membuktikan popup cetak ditutup. Ia tidak boleh membaca kertas yang keluar, jadi isu tandatangan kekal keputusan manusia.",
+   "kesan": "Verdik TC ini kekal terbuka sehingga pemilik semak kertas fizikal.",
+   "tindakan": "Pemilik: semak tandatangan pada 3 keping cetakan larian ini.",
+   "jenis": "APP",
+   "kitaran": "Berulang setiap larian (jujur: skrip tidak boleh menutupnya)."
+  },
+  "HASIL-D-09": {
+   "status": "SKIPPED",
+   "nama": "D-09 mySIKAP — identiti melekat merentas plat",
+   "satu_baris": "TIDAK SEMPAT DISEMAK — run dibatalkan pada K [1/3] sebelum peringkat semak D-09.",
+   "maksud": "Larian sebelumnya (17, 2026-10-09 14:12) mengesahkan D-09 MASIH ADA pada build 2.1.25: rekod K berkongsi identiti pemilik yang sama walaupun plat berbeza. Larian ini berhenti awal, jadi D-09 tidak disemak semula.",
+   "kesan": "Status D-09 tidak berubah daripada larian 17 — masih terbuka dan belum disahkan pada larian ini.",
+   "tindakan": "JANGAN SERAH rekod K daripada larian 17. Batalkan kesemuanya. Sahkan semula D-09 pada larian seterusnya.",
+   "jenis": "APP",
+   "kitaran": "Menghalang pengesahan: abort awal bermakna D-09 tidak sempat disemak pada larian ini."
+  },
+  "HASIL-K-ABORT": {
+   "status": "FAILED",
+   "nama": "Borang K dibatalkan oleh corong (DryRunViolation)",
+   "satu_baris": "Corong kita sendiri membunuh run: dialog app 'STATUS SIMPANAN … MASA TAMAT' mempunyai butang OK yang belum dibenarkan.",
+   "maksud": "Selepas cetakan K berjaya, app memapar dialog 'STATUS SIMPANAN | MASA TAMAT (15s). DATA TELAH DISIMPAN SECARA LOKAL.' dengan satu butang OK. Corong (guard) menganggap mana-mana butang OK yang tidak tersenarai sebagai trip-wire dan membatalkan seluruh run — jadi K [2/3] dan K [3/3] tidak pernah dijalankan.",
+   "kesan": "Larian berhenti pada 3390.9s selepas K [1/3]. Borang K [2/3] dan [3/3] tidak diuji. Run TIDAK tamat seperti dirancang.",
+   "tindakan": "KEPUTUSAN PEMILIK diperlukan: benarkan dialog 'STATUS SIMPANAN' ini dalam senarai putih (ia dialog HASIL, sudah tamat, satu butang, tiada perkataan domain rekod). Corong tidak akan diubah tanpa kebenaran bertulis.",
+   "jenis": "SKRIP",
+   "kitar": "Corong berfungsi seperti direka — ia bukan bug corong. Isu ialah dialog app ini tidak pernah dilihat sebelum ini, jadi ia belum dibenarkan.",
+   "bukti": "bukti/mbpg-18-K-dryrun-abort.jpg",
+   "bukti_kapsyen": "Dialog 'STATUS SIMPANAN' yang mencetuskan trip-wire OK dan membatalkan run."
+  },
+  "MBPG-TC-SK-001": {
+   "status": "FAILED",
+   "nama": "Senarai Kompaun",
+   "satu_baris": "Rekod dicari tidak dapat dicapai — Senarai memapar 10 baris sahaja (D-12). Penapis tarikh SUDAH BETUL.",
+   "maksud": "Fix#25/#28 BERJAYA: log menunjukkan medan tarikh dibaca balik dengan lengkap — 'Mula=2026-10-09 Akhir=2026-10-10' — lima kali. Namun rekod baharu tetap tidak dijumpai kerana Senarai memapar hanya 10 baris pertama dan tiada jalan ke baris 11+.",
+   "kesan": "Rekod baharu tidak dapat disahkan melalui Senarai walaupun ia wujud. Ini kini TERBUKTI isu APP (D-12), bukan lagi bug skrip.",
+   "tindakan": "LAPOR DEVELOPER (APP): Senarai perlu pagination berfungsi atau carian yang benar-benar menapis. Tiada tindakan skrip lanjut untuk isu ini.",
+   "jenis": "APP",
+   "kitaran": "Senarai Kompaun memapar HANYA 10 baris pertama dan TIADA jalan ke baris 11+ (pagination wujud dalam XML tetapi KOSONG; carian diabaikan). Bukti bersemuka: dump selepas Semak menunjukkan 10 baris berakhir pada PGP02N261009013 walaupun penapis julat lengkap '2026-10-09 - 2026-10-10'. Rekod baharu (014 / 032) jatuh di kedudukan 11+, jadi ia TIDAK PERNAH dapat dicapai. Ini defek APP (D-12), bukan lagi bug penapis tarikh — Fix#25/#28 BERJAYA (medan Akhir dibaca balik '2026-10-10' 5 kali).",
+   "bukti": "bukti/mbpg-18-N003-senarai-10-baris.jpg",
+   "bukti_kapsyen": "10 baris sahaja walaupun penapis julat lengkap disahkan — rekod baharu (…013+) tidak masuk paparan."
+  },
+  "MBPG-TC-H-001": {
+   "status": "NOT_RUN",
+   "nama": "Hantar Semula Notis Amaran",
+   "satu_baris": "TIDAK DIJALANKAN — run dibatalkan sebelum peringkat menu.",
+   "maksud": "Peringkat menu (Hantar Semula / Senarai / Tarik) hanya berjalan selepas SEMUA borang selesai. Larian ini berhenti pada borang K [1/3].",
+   "kesan": "Laluan hantar-semula tidak diuji pada larian ini. Nota: pada larian 17, dua rekod N kekal 'M' selepas hantar semula (Fix#30/#31 kini melaporkannya sebagai GAGAL).",
+   "tindakan": "Jalankan semula selepas abort dibaiki.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-H-002": {
+   "status": "NOT_RUN",
+   "nama": "Hantar Semula Kompaun Pelbagai",
+   "satu_baris": "TIDAK DIJALANKAN — run dibatalkan sebelum peringkat menu.",
+   "maksud": "Peringkat menu (Hantar Semula / Senarai / Tarik) hanya berjalan selepas SEMUA borang selesai. Larian ini berhenti pada borang K [1/3].",
+   "kesan": "Laluan hantar-semula tidak diuji pada larian ini. Nota: pada larian 17, dua rekod N kekal 'M' selepas hantar semula (Fix#30/#31 kini melaporkannya sebagai GAGAL).",
+   "tindakan": "Jalankan semula selepas abort dibaiki.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-H-003": {
+   "status": "NOT_RUN",
+   "nama": "Hantar Semula Kompaun Letak Kereta",
+   "satu_baris": "TIDAK DIJALANKAN — run dibatalkan sebelum peringkat menu.",
+   "maksud": "Peringkat menu (Hantar Semula / Senarai / Tarik) hanya berjalan selepas SEMUA borang selesai. Larian ini berhenti pada borang K [1/3].",
+   "kesan": "Laluan hantar-semula tidak diuji pada larian ini. Nota: pada larian 17, dua rekod N kekal 'M' selepas hantar semula (Fix#30/#31 kini melaporkannya sebagai GAGAL).",
+   "tindakan": "Jalankan semula selepas abort dibaiki.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-H-004": {
+   "status": "SKIPPED",
+   "nama": "Hantar Semula Kompaun Lesen",
+   "satu_baris": "SKIP mutlak — di luar skop automation MBPG.",
+   "maksud": "Siri L (Lesen) dan S (Sitaan) di luar skop automation MBPG.",
+   "kesan": "Tidak diuji.",
+   "tindakan": "Tiada.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-H-005": {
+   "status": "SKIPPED",
+   "nama": "Hantar Semula Kompaun Sitaan",
+   "satu_baris": "SKIP mutlak — di luar skop automation MBPG.",
+   "maksud": "Siri L (Lesen) dan S (Sitaan) di luar skop automation MBPG.",
+   "kesan": "Tidak diuji.",
+   "tindakan": "Tiada.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-TN-001": {
+   "status": "NOT_RUN",
+   "nama": "Tarik Notis by Penguatkuasa",
+   "satu_baris": "TIDAK DIJALANKAN — run dibatalkan sebelum peringkat menu.",
+   "maksud": "Peringkat menu dijalankan selepas semua borang selesai.",
+   "kesan": "Tidak diuji pada larian ini.",
+   "tindakan": "Jalankan semula selepas abort dibaiki.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-TN-002": {
+   "status": "NOT_RUN",
+   "nama": "Tarik Notis by No. Notis",
+   "satu_baris": "TIDAK DIJALANKAN — run dibatalkan sebelum peringkat menu.",
+   "maksud": "Peringkat menu dijalankan selepas semua borang selesai.",
+   "kesan": "Tidak diuji pada larian ini.",
+   "tindakan": "Jalankan semula selepas abort dibaiki.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-TN-003": {
+   "status": "NOT_RUN",
+   "nama": "Tarik Notis by Tarikh",
+   "satu_baris": "TIDAK DIJALANKAN — run dibatalkan sebelum peringkat menu.",
+   "maksud": "Peringkat menu dijalankan selepas semua borang selesai.",
+   "kesan": "Tidak diuji pada larian ini.",
+   "tindakan": "Jalankan semula selepas abort dibaiki.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-NK-001": {
+   "status": "SKIPPED",
+   "nama": "Notis ke Kompaun > Kompaun",
+   "satu_baris": "SKIP — notis belum luput (layak 23/10).",
+   "maksud": "Notis bertempoh 14 hari; layak ditukar pada 2026-10-23. Skrin Notis Kompaun TIDAK disentuh (D-07).",
+   "kesan": "Tidak diuji pada larian ini.",
+   "tindakan": "Uji semula selepas 2026-10-23.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-NK-002": {
+   "status": "SKIPPED",
+   "nama": "Notis ke Kompaun > Patuh",
+   "satu_baris": "SKIP — notis belum luput (layak 23/10).",
+   "maksud": "Notis bertempoh 14 hari; layak ditukar pada 2026-10-23. Skrin Notis Kompaun TIDAK disentuh (D-07).",
+   "kesan": "Tidak diuji pada larian ini.",
+   "tindakan": "Uji semula selepas 2026-10-23.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-L-001": {
+   "status": "SKIPPED",
+   "nama": "Lot 1",
+   "satu_baris": "SKIP mutlak — di luar skop.",
+   "maksud": "Siri L (Lesen) di luar skop automation MBPG.",
+   "kesan": "Tidak diuji.",
+   "tindakan": "Tiada.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-L-002": {
+   "status": "SKIPPED",
+   "nama": "Lot 2",
+   "satu_baris": "SKIP mutlak — di luar skop.",
+   "maksud": "Siri L (Lesen) di luar skop automation MBPG.",
+   "kesan": "Tidak diuji.",
+   "tindakan": "Tiada.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-L-003": {
+   "status": "SKIPPED",
+   "nama": "Lot 3",
+   "satu_baris": "SKIP mutlak — di luar skop.",
+   "maksud": "Siri L (Lesen) di luar skop automation MBPG.",
+   "kesan": "Tidak diuji.",
+   "tindakan": "Tiada.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-L-004": {
+   "status": "SKIPPED",
+   "nama": "Lot 4",
+   "satu_baris": "SKIP mutlak — di luar skop.",
+   "maksud": "Siri L (Lesen) di luar skop automation MBPG.",
+   "kesan": "Tidak diuji.",
+   "tindakan": "Tiada.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-L-005": {
+   "status": "SKIPPED",
+   "nama": "Lot 5",
+   "satu_baris": "SKIP mutlak — di luar skop.",
+   "maksud": "Siri L (Lesen) di luar skop automation MBPG.",
+   "kesan": "Tidak diuji.",
+   "tindakan": "Tiada.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-S-001": {
+   "status": "SKIPPED",
+   "nama": "Sita 1",
+   "satu_baris": "SKIP mutlak — di luar skop.",
+   "maksud": "Siri S (Sitaan) di luar skop automation MBPG.",
+   "kesan": "Tidak diuji.",
+   "tindakan": "Tiada.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-S-002": {
+   "status": "SKIPPED",
+   "nama": "Sita 2",
+   "satu_baris": "SKIP mutlak — di luar skop.",
+   "maksud": "Siri S (Sitaan) di luar skop automation MBPG.",
+   "kesan": "Tidak diuji.",
+   "tindakan": "Tiada.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-S-003": {
+   "status": "SKIPPED",
+   "nama": "Sita 3",
+   "satu_baris": "SKIP mutlak — di luar skop.",
+   "maksud": "Siri S (Sitaan) di luar skop automation MBPG.",
+   "kesan": "Tidak diuji.",
+   "tindakan": "Tiada.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-S-004": {
+   "status": "SKIPPED",
+   "nama": "Sita 4",
+   "satu_baris": "SKIP mutlak — di luar skop.",
+   "maksud": "Siri S (Sitaan) di luar skop automation MBPG.",
+   "kesan": "Tidak diuji.",
+   "tindakan": "Tiada.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-S-005": {
+   "status": "SKIPPED",
+   "nama": "Sita 5",
+   "satu_baris": "SKIP mutlak — di luar skop.",
+   "maksud": "Siri S (Sitaan) di luar skop automation MBPG.",
+   "kesan": "Tidak diuji.",
+   "tindakan": "Tiada.",
+   "jenis": "APP"
+  }
+ },
+ "anak": [
+  {
+   "peringkat": "cipta",
+   "induk": "MBPG-TC-N-001",
+   "status": "LULUS",
+   "tempoh_s": 182.2,
+   "nota": "no_rekod=PGP02N261009013",
+   "induk_skrip": "borang N"
+  },
+  {
+   "peringkat": "cetak",
+   "induk": "MBPG-TC-N-002",
+   "status": "LULUS",
+   "tempoh_s": 13.1,
+   "nota": "printer SPP-R410_110095",
+   "induk_skrip": "borang N"
+  },
+  {
+   "peringkat": "kemaskini",
+   "induk": "MBPG-TC-N-004",
+   "status": "LULUS",
+   "tempoh_s": 260.5,
+   "nota": "PGP02N261009013 -> PGP02N261009014",
+   "induk_skrip": "borang N"
+  },
+  {
+   "peringkat": "hantar",
+   "induk": "MBPG-TC-N-003",
+   "status": "GAGAL",
+   "tempoh_s": 177.9,
+   "nota": "TimeoutException 15s — skrol disekat alert 'Beberapa gambar tidak berjaya di muatnaik'",
+   "induk_skrip": "borang N"
+  },
+  {
+   "peringkat": "senarai",
+   "induk": "MBPG-TC-SK-001",
+   "status": "GAGAL",
+   "tempoh_s": 226.4,
+   "nota": "PGP02N261009014 tidak kelihatan — Senarai 10 baris (D-12)",
+   "induk_skrip": "borang N"
+  },
+  {
+   "peringkat": "lampiran N-003",
+   "induk": "MBPG-TC-N-003",
+   "status": "GAGAL",
+   "tempoh_s": 47.0,
+   "nota": "popup rekod tidak terbuka — rekod tiada paparan",
+   "induk_skrip": "borang N"
+  },
+  {
+   "peringkat": "bookmark N-005",
+   "induk": "MBPG-TC-N-005",
+   "status": "TIDAK-DISOKONG",
+   "tempoh_s": 370.9,
+   "nota": "tiada UI cipta bookmark pada build ini (D-04)",
+   "induk_skrip": "borang N"
+  },
+  {
+   "peringkat": "cipta",
+   "induk": "MBPG-TC-P-001",
+   "status": "LULUS",
+   "tempoh_s": 151.8,
+   "nota": "no_rekod=PGP02P261009032",
+   "induk_skrip": "borang P"
+  },
+  {
+   "peringkat": "cetak",
+   "induk": "MBPG-TC-P-002",
+   "status": "LULUS",
+   "tempoh_s": 12.8,
+   "nota": "printer SPP-R410_110095",
+   "induk_skrip": "borang P"
+  },
+  {
+   "peringkat": "kemaskini",
+   "induk": "MBPG-TC-P-004",
+   "status": "TIDAK-DITAWARKAN",
+   "tempoh_s": 93.4,
+   "nota": "PGP02P261009032 tidak dijumpai (10 baris, D-12)",
+   "induk_skrip": "borang P"
+  },
+  {
+   "peringkat": "hantar",
+   "induk": "MBPG-TC-P-003",
+   "status": "GAGAL",
+   "tempoh_s": 132.4,
+   "nota": "TimeoutException — ANJAKAN 0px, borang tidak bergerak",
+   "induk_skrip": "borang P"
+  },
+  {
+   "peringkat": "senarai",
+   "induk": "MBPG-TC-SK-001",
+   "status": "GAGAL",
+   "tempoh_s": 184.3,
+   "nota": "PGP02P261009032 tidak kelihatan (D-12)",
+   "induk_skrip": "borang P"
+  },
+  {
+   "peringkat": "bookmark P-005",
+   "induk": "MBPG-TC-P-005",
+   "status": "TIDAK-DISOKONG",
+   "tempoh_s": 318.0,
+   "nota": "tiada UI cipta bookmark (D-04)",
+   "induk_skrip": "borang P"
+  },
+  {
+   "peringkat": "cipta",
+   "induk": "MBPG-TC-K-001",
+   "status": "LULUS",
+   "tempoh_s": 93.3,
+   "nota": "no_rekod=PGP02K261009033",
+   "induk_skrip": "borang K [1/3] JYX6605"
+  },
+  {
+   "peringkat": "cetak",
+   "induk": "MBPG-TC-K-002",
+   "status": "LULUS",
+   "tempoh_s": 11.9,
+   "nota": "printer SPP-R410_110095 — tetapi app papar 'MASA TAMAT (15s). DATA TELAH DISIMPAN SECARA LOKAL.'",
+   "induk_skrip": "borang K [1/3] JYX6605"
+  },
+  {
+   "peringkat": "kemaskini",
+   "induk": "HASIL-K-ABORT",
+   "status": "GAGAL",
+   "tempoh_s": 16.5,
+   "nota": "DryRunViolation — trip-wire OK pada dialog 'STATUS SIMPANAN | MASA TAMAT (15s)'",
+   "induk_skrip": "borang K [1/3] JYX6605"
+  }
+ ],
+ "padanan_human": [
+  {
+   "tc_human": "MBPG-TC-P-004",
+   "human": "Fail",
+   "apa_human": "props error; KOD AKTA tidak sepadan; kemaskini tak boleh submit",
+   "tc_auto": "borang P → kemaskini",
+   "auto": "GAGAL",
+   "apa_auto": "popup 'MEMULAKAN PROSES...' BEKU pada 0%; modal tersekat, 8x BACK gagal",
+   "verdict": "PADAN",
+   "jenis": "APP",
+   "nota": "Punca SAMA. Manual nampak props error; automasi nampak popup beku 0%. Dua-dua = kemaskini P tidak boleh selesai (D-13).",
+   "bukti": "bukti/mbpg-17-P004-kemaskini-beku-0pc.jpg"
+  },
+  {
+   "tc_human": "MBPG-TC-K-004",
+   "human": "Fail",
+   "apa_human": "KOD AKTA tidak muncul semasa KEMASKINI KOMPAUN LETAK KERETA",
+   "tc_auto": "borang K [1/3] → kemaskini",
+   "auto": "TIDAK-DITAWARKAN",
+   "apa_auto": "rekod PGP02K261009028 tidak dijumpai dalam Senarai — borang Kemaskini TIDAK PERNAH dibuka",
+   "verdict": "TAK BOLEH BANDING",
+   "jenis": "SKRIP",
+   "nota": "Automasi gagal LEBIH AWAL daripada manual, jadi ia tidak pernah sampai ke langkah yang manual uji. Puncanya BUKAN app — ia bug skrip (penapis julat). Lihat penemuan D-14: 3 daripada 5 GAGAL automasi ialah bug skrip sendiri.",
+   "bukti": "bukti/mbpg-17-senarai-kosong-tarikh-akhir.jpg"
+  },
+  {
+   "tc_human": "MBPG-TC-H-002",
+   "human": "Fail",
+   "apa_human": "'props error' kadangkala keluar selepas Hantar Data Kompaun Pelbagai",
+   "tc_auto": "borang P → hantar",
+   "auto": "GAGAL",
+   "apa_auto": "StaleElementReferenceException + rekod tak dijumpai dalam Senarai",
+   "verdict": "SEBAGIAN",
+   "jenis": "APP+SKRIP",
+   "nota": "Kedua-duanya GAGAL pada Hantar P, tetapi sebabnya BERBEZA. Manual: props error (APP). Automasi: penapis tarikh tak termaktub (SKRIP). Automasi belum buktikan props error itu — ia tersekat sebelum sempat melihatnya.",
+   "bukti": "bukti/mbpg-17-kalendar-masih-terbuka.jpg"
+  },
+  {
+   "tc_human": "MBPG-TC-H-003",
+   "human": "Fail",
+   "apa_human": "LOKASI KESALAHAN tidak disimpan semasa DAFTAR KERETA (nampak di Hantar Data)",
+   "tc_auto": "borang K [2/3]+[3/3] → hantar",
+   "auto": "GAGAL",
+   "apa_auto": "status baris = None; rekod tak dijumpai dalam Senarai",
+   "verdict": "SEBAGIAN",
+   "jenis": "APP+SKRIP",
+   "nota": "Sama seperti H-002: dua-dua GAGAL, punca berbeza. Defek manual (LOKASI KESALAHAN hilang) TIDAK diuji automasi — ia gagal pada langkah Senarai dahulu (SKRIP).",
+   "bukti": "bukti/mbpg-17-senarai-kosong-tarikh-akhir.jpg"
+  },
+  {
+   "tc_human": "MBPG-TC-N-004",
+   "human": "Fail",
+   "apa_human": "Kemaskini Notis Amaran tidak boleh simpan ke 'H' — rekod tinggal 'T' (tempatan) selepas Kemaskini, walaupun boleh dihantar semula.",
+   "tc_auto": "borang N → kemaskini",
+   "auto": "LULUS",
+   "apa_auto": "Skrip lulus kerana nombor gantian wujud (PGP02N261009011 -> ...012), TANPA membaca token status baris.",
+   "verdict": "PADAN (selepas Fix#30)",
+   "jenis": "APP+SKRIP",
+   "nota": "APP: menyimpan 'T'/'M' dan bukan 'H' semasa Kemaskini (dapatan app, disahkan tester). SKRIP: skrip lama hanya semak nombor gantian, tidak semak token — ditutup oleh Fix#30 pada peringkat hantar + menu, jadi larian seterusnya akan menangkapnya.",
+   "bukti": null
+  },
+  {
+   "tc_human": "MBPG-TC-P-002",
+   "human": "Fail",
+   "apa_human": "Baris ditanda Fail, TETAPI sel 'Actual Results' sendiri berbunyi: 'User able to successfully print to a connected printer.'",
+   "tc_auto": "borang P → cetak",
+   "auto": "LULUS",
+   "apa_auto": "Skrip mencetak pada SPP-R410_110095 dalam 12.5s — LULUS, sepadan dengan sel Actual Results.",
+   "verdict": "BERCANGGAH (HUMAN)",
+   "jenis": "APP",
+   "nota": "Baris ringkas menanda Fail manakala butiran TC sendiri mengatakan cetakan BERJAYA. Automasi bersetuju dengan butiran, bukan dengan tag Fail. Perlu pengesahan manusia sebelum dihantar ke pembangun.",
+   "bukti": "bukti/mbpg-17-N001-serah-berjaya.jpg"
+  },
+  {
+   "tc_human": "MBPG-TC-H-005",
+   "human": "Fail",
+   "apa_human": "Hantar Semula Sitaan: Status Hantar='M', Status='A', masuk DATA RALAT",
+   "tc_auto": "—",
+   "auto": "TAK DIUJI",
+   "apa_auto": "siri Sitaan (S) di luar skop automasi (borang N/P/K sahaja)",
+   "verdict": "TAK DIUJI",
+   "jenis": "SKRIP",
+   "nota": "Perlu tambah borang Sitaan ke skop sebelum TC ini boleh disahkan automasi.",
+   "bukti": null
+  },
+  {
+   "tc_human": "MBPG-TC-L-002",
+   "human": "Fail",
+   "apa_human": "butiran cetakan masuk baris baharu",
+   "tc_auto": "—",
+   "auto": "TAK DIUJI",
+   "apa_auto": "siri Lesen (L) di luar skop automasi",
+   "verdict": "TAK DIUJI",
+   "jenis": "SKRIP",
+   "nota": "Sama seperti H-005 — di luar skop.",
+   "bukti": null
+  },
+  {
+   "tc_human": "— (tiada dalam laporan human)",
+   "human": "—",
+   "apa_human": "tidak diuji oleh human",
+   "tc_auto": "semak D-09",
+   "auto": "GAGAL",
+   "apa_auto": "mySIKAP: identiti 93********05 muncul pada DUA plat BERBEZA (JYX6605 + JUA3276) merentas 4 rekod K — PII orang sebenar",
+   "verdict": "HANYA AUTOMASI",
+   "jenis": "APP",
+   "nota": "KRITIKAL. Laporan human tidak menguji pertukaran plat. Corong: BATALKAN SEMUA rekod K, jangan serah kepada penguatkuasaan.",
+   "bukti": null
+  },
+  {
+   "tc_human": "MBPG-TC-SK-001",
+   "human": "Pass",
+   "apa_human": "No Kompaun dipapar mengikut urutan",
+   "tc_auto": "senarai (SK-001)",
+   "auto": "GAGAL",
+   "apa_auto": "Senarai had 10 baris keras; pagination-container KOSONG; carian diabaikan",
+   "verdict": "HANYA AUTOMASI",
+   "jenis": "APP",
+   "nota": "D-12. Human nampak 'Pass' kerana hanya ada <10 rekod pada satu masa; automasi cipta >10 sehari jadi had itu mendedahkan diri.",
+   "bukti": "bukti/mbpg-17-senarai-berjaya-tarikh-akhir.jpg"
+  }
+ ],
+ "padanan_nota": "Padanan ini dijawab secara jujur, termasuk di mana padanan TIDAK wujud. Daripada 8 Fail laporan human (V2.1.25), hanya 1 padan penuh dengan automasi (P-004), 2 sebahagian (H-002/H-003), 1 automasi buta (N-004), 1 tercanggah dalam laporan human sendiri (P-002), 1 tak boleh dibanding kerana automasi gagal lebih awal (K-004, punca SKRIP), dan 2 di luar skop automasi (H-005, L-002). Automasi pula menemui 2 defek yang human tidak uji: D-09 (PII mySIKAP) dan D-12 (had 10 baris Senarai).",
+ "bukti_nota": "Tangkapan ada pada BARISnya sendiri dalam kolum Bukti jadual. Setiap satu disemak mata dan di-hash; tiada gambar direka. Baris tanpa tangkapan kekal —.",
+ "nota_bukti_en": "Captures are placed on their own row in the 'Evidence' column. Each was visually checked and hashed; no image is invented or recycled as a separate event. Rows without a capture stay '—'.",
+ "bilangan_tc": 51
+}
