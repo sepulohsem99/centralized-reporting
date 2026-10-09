@@ -339,7 +339,6 @@ function laporanHtml(run){
     </div>
     <div class="scroll" id="tbl">${tableHtml(run)}</div>
     ${ringkasPadanan(run)}
-    ${galeriBukti(run)}
     ${String(run.id||'').endsWith('T14-12')?`<div style="padding:8px 12px;font-size:.6rem;color:var(--dim);border-top:1px solid var(--line);background:var(--fail-bg)">
       <b>${tr('Semakan 2026-10-09 (Fix#24)','Revision 2026-10-09 (Fix#24)')}:</b>
       ${tr('Laporan asal kata "borang P: LULUS" — itu SALAH dan pemilik nampak sendiri kemaskini P beku pada 0%. Puncanya SKRIP: induk menelan kegagalan anak. Selepas Fix#24, borang P dan K[2/3] ialah GAGAL-BERSEBAB dengan 3 dan 2 anak GAGAL di dalamnya (kemaskini beku, hantar StaleElement/tak jumpai rekod, senarai tak jumpai rekod). Larian tetap diteruskan; hanya verdik kini jujur.',
@@ -358,39 +357,15 @@ function laporanHtml(run){
 }
 function renderTableOnly(run){ const t=document.getElementById('tbl'); if(t&&run) t.innerHTML=tableHtml(run); }
 
-/* ================= RINGKAS PADANAN + GALERI BUKTI =================
-   TAMBAH 2026-10-09 (TEMA-02): pemilik dua kali kata dia TAK NAMPAK
-   screenshot dan TAK NAMPAK padanan. Sebabnya: kedua-duanya hanya
-   hidup di dalam tab yang perlu diklik ('Human Match', 'Gap
-   Analysis'). Jadual 48 baris penuh menolak mereka jauh ke bawah
-   lipatan. Jadi ringkasan padanan + galeri gambar dipasang TERUS di
-   bawah jadual utama, tanpa perlu klik apa-apa. */
+/* ================= RINGKAS PADANAN (tambah 2026-10-09) =================
+   Pemilik dua kali kata dia TAK NAMPAK padanan: ia hanya hidup di dalam
+   tab 'Human Match' yang perlu diklik, dan jadual 48 baris menolaknya
+   jauh ke bawah lipatan. Jadi ringkasan ini dipasang TERUS di bawah
+   jadual Laporan; butiran penuh kekal dalam tab itu.
 
-/* Gambar bukti untuk larian ini: baca dari padanan_human[].bukti, dan
-   juga dari senarai `bukti[]` kalau jana_*.py menambahnya kemudian. */
-function senaraiBukti(run){
-  const out=[], nampak=new Set();
-  const tolak=(src,kapsyen)=>{
-    if(!src||nampak.has(src)) return;           // buang duplikat (hash-audit)
-    nampak.add(src); out.push({src,kapsyen:kapsyen||''});
-  };
-  // 1) bukti yang ditanda pada baris padanan
-  for(const x of ((run&&run.padanan_human)||[])){
-    if(x.bukti) tolak(x.bukti, [x.tc_human, x.apa_human].filter(Boolean).join(' — '));
-  }
-  // 2) senarai bukti bebas (kalau ada) — kapsyen eksplisit
-  for(const b of ((run&&run.bukti)||[])){
-    if(typeof b==='string'){ tolak(b,''); continue; }
-    const k = LANG==='EN' ? (b.kapsyen_en||b.kapsyen||'') : (b.kapsyen||b.kapsyen_en||'');
-    tolak(b.src||b.fail||b.fajl, k);
-  }
-  // 3) bukti larian lama yang sudah ada dalam bukti/ (nama mengandungi tarikh)
-  if(run&&run.tarikh){
-    const t=String(run.tarikh).replace(/-/g,'');
-    for(const f of (run._failGaleri||[])) if(String(f).includes(t)) tolak('bukti/'+f,'');
-  }
-  return out;
-}
+   Tangkapan TIDAK lagi dalam galeri berasingan — pemilik mahu ia pada
+   'kolum asal evidence', jadi ia kini ditulis pada BARISnya sendiri
+   dalam jadual (results[k].bukti, dipasang oleh pasang_bukti_kolum.py). */
 
 function ringkasPadanan(run){
   const p=(run&&run.padanan_human)||[];
@@ -415,24 +390,6 @@ function ringkasPadanan(run){
     <div style="margin-top:6px;font-size:.62rem;color:var(--dim);line-height:1.5">
       ${tr('Jawapan jujur: TIDAK padan sepenuhnya. Hanya '+nPadan+' padan penuh. 3 daripada 5 GAGAL automasi ialah bug SKRIP (penapis tarikh separuh), bukan app — jadi automasi gagal lebih awal dan tidak sempat menguji langkah yang human uji.',
            'Honest answer: NOT a full match. Only '+nPadan+' matches fully. 3 of the 5 automation FAILs were SCRIPT bugs (half date filter), not the app — so automation failed earlier and never reached the steps the human tested.')}
-    </div>
-  </div>`;
-}
-
-function galeriBukti(run){
-  const b=senaraiBukti(run);
-  if(!b.length) return '';
-  return `<div style="border-top:1px solid var(--line);padding:10px 13px">
-    <b style="font-size:.78rem">${tr('Bukti bergambar','Screenshot evidence')} <span style="color:var(--dim);font-weight:400">(${b.length})</span></b>
-    <span style="font-size:.58rem;color:var(--dimmer);margin-left:6px">${tr('klik untuk besarkan','click to enlarge')}</span>
-    <div style="margin-top:8px;display:flex;gap:10px;flex-wrap:wrap">
-      ${b.map(x=>`<figure style="margin:0;width:186px">
-        <img src="${x.src}" alt="${esc(x.kapsyen)}" loading="lazy"
-             onclick="bukaBukti(this.src)"
-             title="${tr('Klik untuk besarkan','Click to enlarge')}"
-             style="width:186px;height:auto;border:1px solid var(--line);border-radius:6px;display:block;cursor:zoom-in;background:var(--panel2)">
-        <figcaption style="font-size:.55rem;color:var(--dim);margin-top:4px;line-height:1.35">${esc(x.kapsyen||'')}</figcaption>
-      </figure>`).join('')}
     </div>
   </div>`;
 }
@@ -524,7 +481,7 @@ function tableHtml(run){
   };
   return `<table><thead><tr><th style="width:120px">TC</th><th style="width:190px">${tr('Nama','Name')}</th>
     <th style="width:96px">Status</th><th style="width:82px">${tr('Jenis','Type')}</th>
-    <th>${tr('Apa berlaku','What happened')}</th><th style="width:78px">${tr('Bukti','Evidence')}</th></tr></thead><tbody>
+    <th>${tr('Apa berlaku','What happened')}</th><th style="width:118px">${tr('Bukti','Evidence')}</th></tr></thead><tbody>
     ${rows.map(([tc,v])=>{const m=stMeta(v.status);
       const EN=LANG==='EN';
       const jenis=EN?(v.jenis_en||v.jenis):v.jenis;
@@ -533,7 +490,8 @@ function tableHtml(run){
       const kesan=EN?(v.kesan_en||v.kesan):v.kesan;
       const tindak=EN?(v.tindakan_en||v.tindakan):v.tindakan;
       const j=jenis?`<span class="badge" style="color:${jenis.indexOf('APP')>=0?'var(--fail)':'var(--lain)'};background:${jenis.indexOf('APP')>=0?'var(--fail-bg)':'var(--lain-bg)'};border-color:currentColor;font-size:.55rem">${esc(jenis)}</span>`:'<span style="color:var(--dimmer)">—</span>';
-      const bukti=v.bukti?`<img src="${v.bukti}" alt="bukti" loading="lazy" onclick="bukaBukti(this.src)" title="${tr('Klik untuk besarkan','Click to enlarge')}" style="width:64px;height:auto;border:1px solid var(--line);border-radius:4px;display:block;cursor:zoom-in">`:'<span style="color:var(--dimmer);font-size:.6rem">—</span>';
+      const kapBukti=EN?(v.bukti_kapsyen_en||v.bukti_kapsyen):v.bukti_kapsyen;
+      const bukti=v.bukti?`<img src="${v.bukti}" alt="bukti" loading="lazy" onclick="bukaBukti(this.src)" title="${tr('Klik untuk besarkan','Click to enlarge')}" style="width:104px;height:auto;border:1px solid var(--line);border-radius:4px;display:block;cursor:zoom-in">${kapBukti?`<div style="margin-top:3px;font-size:.52rem;color:var(--dim);line-height:1.3">${esc(kapBukti)}</div>`:''}`:'<span style="color:var(--dimmer);font-size:.6rem">—</span>';
       // Ayat mudah didahulukan; teks teknikal asal dikekalkan di bawah.
       const utama=satu?`<b>${esc(satu)}</b>`:'';
       const lanjut=maksud?`<div style="margin-top:3px;color:var(--dim)">${esc(maksud)}</div>`:'';

@@ -48,7 +48,7 @@
  ],
  "sumber": "Konsol run_penuh.py --borang NPK, 2026-10-09 (14:12:51 -> 16:15:14), MBPG_MOD_SEBENAR=1, MBPG_IZIN_PRODUCTION=1, MBPG_DRY_RUN=1. Log: reports/log/run-20261009-141246.log (+ .json). 22 peringkat: 20 LULUS / 2 GAGAL, TANPA HENTI AWAL. [CORONG] 499 tap dinilai, 0 disekat — Fix#22 (dialog hasil Hantar Gambar) berjaya; run pertama sampai HABIS dengan borang P & K. 5 cetakan keluar printer SPP-R410_110095 (N, P, K x3) — disahkan mata pemilik.",
  "nota_bahasa": "Larian penuh PERTAMA yang selesai hujung-ke-hujung. Fix#21 (kalendar julat) dan Fix#22 (dialog Hantar Gambar) berjaya; 5 kertas tercetak. REVISI Fix#24: sub-peringkat kini DIKIRA. Borang P dan K[2/3] bukan lagi 'LULUS' — di dalamnya ada kemaskini yang beku pada 0%, hantar StaleElement, dan senarai yang tidak menjumpai rekod. Punca kekaburan laporan lama ialah skrip (induk menelan kegagalan anak), bukan app.",
- "nota_bukti": "reports/log/run-20261009-141246.log; reports/REKOD-SEBENAR-DICIPTA-2026-10-09.md; reports/e2e-screenshots/; reports/forensik/20261009-160155-semak-D-09.*; docs/D-12-SENARAI-HAD-10-BARIS.md; reports/tap_ledger.jsonl.",
+ "nota_bukti": "Tangkapan diletakkan pada barisnya sendiri dalam kolum 'Bukti'. Setiap satu disemak mata dan di-hash; tiada gambar direka atau dikitar semula sebagai peristiwa berasingan. Baris tanpa tangkapan kekal '—'.",
  "results": {
   "gerbang siri": {
    "status": "LULUS",
@@ -83,7 +83,10 @@
   "selaras T-005": {
    "status": "GAGAL",
    "tempoh_s": 22.3,
-   "nota": "AssertionError: [_scroll_down] App TERKELUAR dari latar hadapan (package semasa 'com.android.lau"
+   "nota": "AssertionError: [_scroll_down] App TERKELUAR dari latar hadapan (package semasa 'com.android.lau",
+   "bukti": "bukti/mbpg-17-T005-d08-app-keluar-latar.jpg",
+   "bukti_kapsyen": "App IES terkeluar ke latar (app drawer) semasa selaras — D-08, app. Percubaan 2 LULUS.",
+   "bukti_kapsyen_en": "IES app dropped to background (app drawer) mid-sync — D-08, app. Attempt 2 PASSED."
   },
   "selaras T-005 (retry)": {
    "status": "LULUS",
@@ -128,32 +131,50 @@
   "borang N": {
    "status": "LULUS",
    "tempoh_s": 1085.5,
-   "nota": "{'tag': 'N-001', 'borang': 'N', 'no_rekod': 'PGP02N261009011', 'no_siri': 12, 'masa': '2026-10-09 14:31:26', 'pesalah': "
+   "nota": "{'tag': 'N-001', 'borang': 'N', 'no_rekod': 'PGP02N261009011', 'no_siri': 12, 'masa': '2026-10-09 14:31:26', 'pesalah': ",
+   "bukti": "bukti/mbpg-17-N001-serah-berjaya.jpg",
+   "bukti_kapsyen": "Dialog \"CETAK NOTIS AMARAN ?\" No Notis PGP02N261009011 — cetakan dihantar ke printer.",
+   "bukti_kapsyen_en": "\"CETAK NOTIS AMARAN ?\" dialog, notice PGP02N261009011 — print sent to the printer."
   },
   "borang P": {
    "status": "GAGAL-BERSEBASTIAN",
    "tempoh_s": 1731.2,
-   "nota": "induk LULUS tetapi 3 anak GAGAL: kemaskini, hantar, senarai — {'tag': 'P-001', 'borang': 'P', 'no_rekod': 'PGP02P261009027', 'no_siri': 28, 'masa': '202"
+   "nota": "induk LULUS tetapi 3 anak GAGAL: kemaskini, hantar, senarai — {'tag': 'P-001', 'borang': 'P', 'no_rekod': 'PGP02P261009027', 'no_siri': 28, 'masa': '202",
+   "bukti": "bukti/mbpg-17-P004-kemaskini-beku-0pc.jpg",
+   "bukti_kapsyen": "Kemaskini P: popup \"MEMULAKAN PROSES...\" beku pada 0% (4/6 gambar) — D-13, app.",
+   "bukti_kapsyen_en": "Kemaskini P: \"MEMULAKAN PROSES...\" popup frozen at 0% (4/6 photos) — D-13, app."
   },
   "borang K [1/3] JYX6605": {
    "status": "LULUS",
    "tempoh_s": 940.6,
-   "nota": "{'tag': 'K-001', 'borang': 'K', 'no_rekod': 'PGP02K261009028', 'no_siri': 29, 'masa': '2026-10-09 15:19:23', 'pesalah': "
+   "nota": "{'tag': 'K-001', 'borang': 'K', 'no_rekod': 'PGP02K261009028', 'no_siri': 29, 'masa': '2026-10-09 15:19:23', 'pesalah': ",
+   "bukti": "bukti/mbpg-17-senarai-berjaya-tarikh-akhir.jpg",
+   "bukti_kapsyen": "Baris ini LULUS. Julat penuh 2026-10-09 - 2026-10-10 -> 6 baris; rekod PGP02K261009028 dijumpai (hantar H). Menjadi kawalan yang sah.",
+   "bukti_kapsyen_en": "This row PASSED. Full range 2026-10-09 - 2026-10-10 -> 6 rows; record PGP02K261009028 found (hantar H). A valid control."
   },
   "borang K [2/3] JUA3276": {
    "status": "GAGAL-BERSEBASTIAN",
    "tempoh_s": 1220.1,
-   "nota": "induk LULUS tetapi 2 anak GAGAL: hantar, senarai — {'tag': 'K-001', 'borang': 'K', 'no_rekod': 'PGP02K261009029', 'no_siri': 30, 'masa': '202"
+   "nota": "induk LULUS tetapi 2 anak GAGAL: hantar, senarai — {'tag': 'K-001', 'borang': 'K', 'no_rekod': 'PGP02K261009029', 'no_siri': 30, 'masa': '202",
+   "bukti": "bukti/mbpg-17-senarai-kosong-tarikh-akhir.jpg",
+   "bukti_kapsyen": "Hantar + senarai GAGAL: 'Tarikh Akhir' KOSONG, 0 baris — penapis separuh (bug skrip, Fix#25), bukan D-12.",
+   "bukti_kapsyen_en": "Hantar + senarai FAILED: 'Tarikh Akhir' EMPTY, 0 rows — half filter (script bug, Fix#25), not D-12."
   },
   "borang K [3/3] JRT2649": {
    "status": "GAGAL-BERSEBASTIAN",
    "tempoh_s": 999.8,
-   "nota": "induk LULUS tetapi 2 anak GAGAL: hantar, senarai — {'tag': 'K-001', 'borang': 'K', 'no_rekod': 'PGP02K261009031', 'no_siri': 32, 'masa': '202"
+   "nota": "induk LULUS tetapi 2 anak GAGAL: hantar, senarai — {'tag': 'K-001', 'borang': 'K', 'no_rekod': 'PGP02K261009031', 'no_siri': 32, 'masa': '202",
+   "bukti": "bukti/mbpg-17-kalendar-masih-terbuka.jpg",
+   "bukti_kapsyen": "Gagal sama seperti [2/3] (punca sama, bingkai berbeza): kalendar julat tidak tertutup; 9 Okt separuh pil = julat tunggu tarikh akhir.",
+   "bukti_kapsyen_en": "Same failure as [2/3] (same root cause, different frame): range calendar not closing; Oct 9 a half pill = range awaiting its end date."
   },
   "semak D-09": {
    "status": "GAGAL",
    "tempoh_s": 0.2,
-   "nota": "RuntimeError: D-09 MASIH ADA pada build ini - 1 dapatan merentas 4 rekod K. Lihat output di atas."
+   "nota": "RuntimeError: D-09 MASIH ADA pada build ini - 1 dapatan merentas 4 rekod K. Lihat output di atas.",
+   "bukti": "bukti/mbpg-17-D09-semak-halt.jpg",
+   "bukti_kapsyen": "Skrin semasa semak D-09 dihentikan: Senarai kosong (Tarikh Akhir kosong). Bukti PII sebenar ialah dump rekod (93********05 pada JYX6605 + JUA3276) — BUKAN gambar ini.",
+   "bukti_kapsyen_en": "Screen when the D-09 check halted: empty Senarai (no end date). The real PII evidence is the record dump (93********05 on JYX6605 + JUA3276) — NOT this image."
   },
   "menu": {
    "status": "LULUS",
@@ -601,44 +622,6 @@
   }
  ],
  "padanan_nota": "Padanan ini dijawab secara jujur, termasuk di mana padanan TIDAK wujud. Daripada 8 Fail laporan human (V2.1.25), hanya 1 padan penuh dengan automasi (P-004), 2 sebahagian (H-002/H-003), 1 automasi buta (N-004), 1 tercanggah dalam laporan human sendiri (P-002), 1 tak boleh dibanding kerana automasi gagal lebih awal (K-004, punca SKRIP), dan 2 di luar skop automasi (H-005, L-002). Automasi pula menemui 2 defek yang human tidak uji: D-09 (PII mySIKAP) dan D-12 (had 10 baris Senarai).",
- "bukti": [
-  {
-   "src": "bukti/mbpg-17-P004-kemaskini-beku-0pc.jpg",
-   "kapsyen": "P-004 kemaskini: popup 'MEMULAKAN PROSES...' beku pada 0%, 4/6 gambar. Modal tak boleh ditutup — D-13 (APP).",
-   "kapsyen_en": "P-004 kemaskini: 'MEMULAKAN PROSES...' popup frozen at 0%, 4/6 photos. Modal cannot be dismissed — D-13 (APP).",
-   "jenis": "APP"
-  },
-  {
-   "src": "bukti/mbpg-17-kalendar-masih-terbuka.jpg",
-   "kapsyen": "Senarai: kalendar julat masih terbuka — 9 Okt disorot SEPARUH pil (bulat kiri, rata kanan) = julat menunggu tarikh AKHIR. Ini punca SKRIP bagi 3 GAGAL (Fix#25).",
-   "kapsyen_en": "Senarai: range calendar still open — Oct 9 highlighted as a HALF pill (round left, flat right) = range awaiting its END date. This is the SCRIPT cause of 3 FAILs (Fix#25).",
-   "jenis": "SKRIP"
-  },
-  {
-   "src": "bukti/mbpg-17-senarai-kosong-tarikh-akhir.jpg",
-   "kapsyen": "Senarai selepas penapis separuh: 'Tarikh Mula = 2026-10-09', 'Tarikh Akhir' KOSONG, 0 baris. Bukti ia penapis separuh — BUKAN had 10 baris D-12.",
-   "kapsyen_en": "Senarai after the half filter: 'Tarikh Mula = 2026-10-09', 'Tarikh Akhir' EMPTY, 0 rows. Proof it is a half filter — NOT the D-12 10-row cap.",
-   "jenis": "SKRIP"
-  },
-  {
-   "src": "bukti/mbpg-17-senarai-berjaya-tarikh-akhir.jpg",
-   "kapsyen": "KAWALAN — lawatan yang berjaya: julat lengkap '2026-10-09 - 2026-10-10' -> 6 baris (PGP02N261009009..012, P261009027, K261009028). Bukti penapis yang betul berfungsi.",
-   "kapsyen_en": "CONTROL — a successful visit: full range '2026-10-09 - 2026-10-10' -> 6 rows (PGP02N261009009..012, P261009027, K261009028). Proof a correct filter works.",
-   "jenis": "BUKTI"
-  },
-  {
-   "src": "bukti/mbpg-17-T005-d08-app-keluar-latar.jpg",
-   "kapsyen": "T-005: skrin utama Android (app drawer) — app IES TERKELUAR ke latar semasa selaras. Percubaan 2 LULUS. D-08 (APP, berselang).",
-   "kapsyen_en": "T-005: Android home/app drawer — the IES app went to background mid-sync. Attempt 2 PASSED. D-08 (APP, intermittent).",
-   "jenis": "APP"
-  },
-  {
-   "src": "bukti/mbpg-17-N001-serah-berjaya.jpg",
-   "kapsyen": "KAWALAN — N-001 Serah: dialog 'CETAK NOTIS AMARAN ?' No Notis PGP02N261009011. Cetakan disahkan sampai ke printer.",
-   "kapsyen_en": "CONTROL — N-001 Serah: 'CETAK NOTIS AMARAN ?' dialog, notice PGP02N261009011. Print confirmed to reach the printer.",
-   "jenis": "BUKTI"
-  }
- ],
- "bukti_nota": "6 tangkapan unik selepas hash-audit (duplikat dibuang), setiap satu disemak mata. 4 baris padanan tiada gambar: laluan tak diuji atau lulus tanpa tangkapan — sengaja dibiarkan kosong, tidak direka.",
- "bukti_nota_en": "6 unique captures after hash-audit (duplicates dropped), each visually checked. 4 match rows have no image: untested paths or passes with no capture — deliberately left blank, not invented."
+ "bukti_nota": "Tangkapan ada pada BARISnya sendiri dalam kolum Bukti jadual. Setiap satu disemak mata dan di-hash; tiada gambar direka. Baris tanpa tangkapan kekal —.",
+ "nota_bukti_en": "Captures are placed on their own row in the 'Evidence' column. Each was visually checked and hashed; no image is invented or recycled as a separate event. Rows without a capture stay '—'."
 }
