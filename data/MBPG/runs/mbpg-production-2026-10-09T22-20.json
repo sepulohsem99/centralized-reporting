@@ -46,7 +46,7 @@
   }
  ],
  "sumber": "Konsol run_penuh.py --borang NPK, 2026-10-09 (14:12:51 -> 16:15:14), MBPG_MOD_SEBENAR=1, MBPG_IZIN_PRODUCTION=1, MBPG_DRY_RUN=1. Log: reports/log/run-20261009-141246.log (+ .json). 22 peringkat: 20 LULUS / 2 GAGAL, TANPA HENTI AWAL. [CORONG] 499 tap dinilai, 0 disekat — Fix#22 (dialog hasil Hantar Gambar) berjaya; run pertama sampai HABIS dengan borang P & K. 5 cetakan keluar printer SPP-R410_110095 (N, P, K x3) — disahkan mata pemilik.",
- "nota_bahasa": "Setiap baris ada penjelasan bahasa mudah: apa yang berlaku, kesannya, dan siapa perlu bertindak. 'Jenis' beritahu sama ada masalah APP (lapor developer) atau SKRIP (masalah skrip ujian). Dua penemuan besar larian ini: (1) Fix#25/#28 pada penapis tarikh BERJAYA — medan Tarikh Akhir kini dibaca balik '2026-10-10' lima kali; kegagalan Senarai yang tinggal ialah had 10 baris D-12 (APP). (2) Corong kita sendiri membatalkan run pada borang K kerana dialog 'STATUS SIMPANAN' yang belum dibenarkan — ini SKRIP dan menunggu keputusan pemilik.",
+ "nota_bahasa": "Setiap baris ada penjelasan bahasa mudah: apa yang berlaku, kesannya, dan siapa perlu bertindak. 'Jenis' beritahu sama ada masalah APP (lapor developer) atau SKRIP (masalah skrip ujian). Dua penemuan besar larian ini: (1) Fix#25/#28 pada penapis tarikh BERJAYA — medan Tarikh Akhir kini dibaca balik '2026-10-10' lima kali; kegagalan Senarai yang tinggal ialah had 10 baris D-12 (APP). (2) Corong membatalkan run pada dialog 'STATUS SIMPANAN' yang belum dibenarkan — pemilik SUDAH MELULUSKAN pembenarannya (commit e1d432c), jadi larian seterusnya tidak akan berhenti di situ.",
  "nota_bukti": "Tangkapan diletakkan pada barisnya sendiri dalam kolum 'Bukti'. Satu pasangan didapati DUPLIKAT (sha256 sama) — skrin Senarai identik untuk N dan P — jadi ia dipaparkan SEKALI sahaja. Tiada gambar direka atau dikitar semula sebagai peristiwa berasingan. Tangkapan berkenaan 10 baris disemak mata: baris terakhir PGP02N261009013, tiada kawalan pagination.",
  "results": {
   "MBPG-TC-T-001": {
@@ -350,14 +350,15 @@
   "HASIL-K-ABORT": {
    "status": "FAILED",
    "nama": "Borang K dibatalkan oleh corong (DryRunViolation)",
-   "satu_baris": "Corong kita sendiri membunuh run: dialog app 'STATUS SIMPANAN … MASA TAMAT' mempunyai butang OK yang belum dibenarkan.",
+   "satu_baris": "Corong membatalkan run pada dialog app 'STATUS SIMPANAN' — SUDAH DIBENARKAN oleh pemilik 2026-10-09.",
    "maksud": "Selepas cetakan K berjaya, app memapar dialog 'STATUS SIMPANAN | MASA TAMAT (15s). DATA TELAH DISIMPAN SECARA LOKAL.' dengan satu butang OK. Corong (guard) menganggap mana-mana butang OK yang tidak tersenarai sebagai trip-wire dan membatalkan seluruh run — jadi K [2/3] dan K [3/3] tidak pernah dijalankan.",
-   "kesan": "Larian berhenti pada 3390.9s selepas K [1/3]. Borang K [2/3] dan [3/3] tidak diuji. Run TIDAK tamat seperti dirancang.",
-   "tindakan": "KEPUTUSAN PEMILIK diperlukan: benarkan dialog 'STATUS SIMPANAN' ini dalam senarai putih (ia dialog HASIL, sudah tamat, satu butang, tiada perkataan domain rekod). Corong tidak akan diubah tanpa kebenaran bertulis.",
+   "kesan": "Larian 18 berhenti pada 3390.9s selepas K [1/3]. K [2/3], K [3/3], semak D-09 dan seluruh peringkat menu TIDAK diuji pada larian ini.",
+   "tindakan": "SELESAI: pemilik meluluskan penambahan dialog 'STATUS SIMPANAN | MASA TAMAT' ke ALERT_INFO_TEPAT (commit e1d432c, gate 977/4). Larian seterusnya tidak akan berhenti di sini. Verdik larian 18 kekal sebagai rekod sejarah.",
    "jenis": "SKRIP",
    "kitar": "Corong berfungsi seperti direka — ia bukan bug corong. Isu ialah dialog app ini tidak pernah dilihat sebelum ini, jadi ia belum dibenarkan.",
    "bukti": "bukti/mbpg-18-K-dryrun-abort.jpg",
-   "bukti_kapsyen": "Dialog 'STATUS SIMPANAN' yang mencetuskan trip-wire OK dan membatalkan run."
+   "bukti_kapsyen": "Dialog 'STATUS SIMPANAN' yang mencetuskan trip-wire OK dan membatalkan run.",
+   "kitaran": "PUNCA SAMA kelas 'dialog HASIL baharu': corong bukan rosak — dialog ini cuma belum pernah dilihat, jadi ia belum dibenarkan. Kini dibenarkan dengan sauh bentuk-penuh."
   },
   "MBPG-TC-SK-001": {
    "status": "FAILED",
@@ -678,7 +679,7 @@
    "induk": "HASIL-K-ABORT",
    "status": "GAGAL",
    "tempoh_s": 16.5,
-   "nota": "DryRunViolation — trip-wire OK pada dialog 'STATUS SIMPANAN | MASA TAMAT (15s)'",
+   "nota": "DryRunViolation — trip-wire OK pada dialog 'STATUS SIMPANAN | MASA TAMAT (15s)'. SUDAH DIBENARKAN (commit e1d432c).",
    "induk_skrip": "borang K [1/3] JYX6605"
   }
  ],
