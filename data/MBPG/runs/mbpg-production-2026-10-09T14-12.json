@@ -1108,25 +1108,25 @@
   {
    "tc_human": "MBPG-TC-N-004",
    "human": "Fail",
-   "apa_human": "KEMASKINI NOTIS tidak simpan ke H — ia simpan 'T' (boleh hantar semula)",
+   "apa_human": "Kemaskini Notis Amaran tidak boleh simpan ke 'H' — rekod tinggal 'T' (tempatan) selepas Kemaskini, walaupun boleh dihantar semula.",
    "tc_auto": "borang N → kemaskini",
    "auto": "LULUS",
-   "apa_auto": "PGP02N261009011 -> PGP02N261009012 (nombor gantian diperoleh)",
-   "verdict": "AUTOMASI BUTA",
-   "jenis": "SKRIP",
-   "nota": "Automasi cuma semak nombor gantian wujud; ia TIDAK semak huruf status (T vs H). Jadi ia lulus walaupun defek sebenar ada. Ini had skrip yang diketahui — jenis sama seperti H-002/H-003.",
+   "apa_auto": "Skrip lulus kerana nombor gantian wujud (PGP02N261009011 -> ...012), TANPA membaca token status baris.",
+   "verdict": "PADAN (selepas Fix#30)",
+   "jenis": "APP+SKRIP",
+   "nota": "APP: menyimpan 'T'/'M' dan bukan 'H' semasa Kemaskini (dapatan app, disahkan tester). SKRIP: skrip lama hanya semak nombor gantian, tidak semak token — ditutup oleh Fix#30 pada peringkat hantar + menu, jadi larian seterusnya akan menangkapnya.",
    "bukti": null
   },
   {
    "tc_human": "MBPG-TC-P-002",
    "human": "Fail",
-   "apa_human": "Status = Fail, TETAPI Actual Results tulis 'User able to successfully print to a connected printer' — bercanggah",
+   "apa_human": "Baris ditanda Fail, TETAPI sel 'Actual Results' sendiri berbunyi: 'User able to successfully print to a connected printer.'",
    "tc_auto": "borang P → cetak",
    "auto": "LULUS",
-   "apa_auto": "printer SPP-R410_110095, 12.7s, popup CETAK tertutup",
+   "apa_auto": "Skrip mencetak pada SPP-R410_110095 dalam 12.5s — LULUS, sepadan dengan sel Actual Results.",
    "verdict": "BERCANGGAH (HUMAN)",
    "jenis": "APP",
-   "nota": "Laporan human bercanggah dengan dirinya sendiri. Automasi + bukti cetakan menyokong LULUS. Perlu human sahkan semula status TC ini.",
+   "nota": "Baris ringkas menanda Fail manakala butiran TC sendiri mengatakan cetakan BERJAYA. Automasi bersetuju dengan butiran, bukan dengan tag Fail. Perlu pengesahan manusia sebelum dihantar ke pembangun.",
    "bukti": "bukti/mbpg-17-N001-serah-berjaya.jpg"
   },
   {
