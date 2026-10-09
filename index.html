@@ -286,11 +286,11 @@ function laporanHtml(run){
       ${tr('= masalah skrip ujian, bukan aplikasi','= test script problem, not the app')}
     </div>
     <div class="scroll" id="tbl">${tableHtml(run)}</div>
-    <div style="padding:8px 12px;font-size:.6rem;color:var(--dim);border-top:1px solid var(--line);background:var(--skip-bg)">
+    ${String(run.id||'').endsWith('T11-48')?`<div style="padding:8px 12px;font-size:.6rem;color:var(--dim);border-top:1px solid var(--line);background:var(--skip-bg)">
       <b>${tr('Semakan 2026-10-08','Revision 2026-10-08')}:</b>
       ${tr('T-005 dikeluarkan daripada GAGAL — percubaan 1 gagal (D-08), percubaan 2 LULUS, jadi keputusan akhir LULUS. K-004 ditanda PERLU RETEST kerana automasi dan manual menguji langkah berbeza. Jumlah GAGAL: 7 -> 5 (+1 perlu retest).',
            'T-005 removed from FAILED — attempt 1 failed (D-08), attempt 2 PASSED, so the final result is PASSED. K-004 marked NEEDS RETEST because automation and manual exercised different steps. FAILED count: 7 -> 5 (+1 needs retest).')}
-    </div>
+    </div>`:''}
     ${(run.nota_bahasa||run.nota_bukti)?`<div style="padding:8px 12px;font-size:.6rem;color:var(--dimmer);border-top:1px solid var(--line)">
       ${run.nota_bahasa?esc(LANG==='EN'?(run.nota_bahasa_en||run.nota_bahasa):run.nota_bahasa):''}
       ${run.nota_bukti?`<br>${esc(LANG==='EN'?(run.nota_bukti_en||run.nota_bukti):run.nota_bukti)}`:''}
