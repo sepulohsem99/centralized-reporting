@@ -8,10 +8,10 @@
  "device_model": "Ulefone Armor 27 (5008TF2010009401)",
  "duration_seconds": 7342,
  "summary": {
-  "passed": 17,
-  "failed": 5,
-  "skipped": 0,
-  "lain": 0,
+  "passed": 25,
+  "failed": 6,
+  "skipped": 18,
+  "lain": 1,
   "anak": 45,
   "anak_gagal": 7
  },
@@ -47,456 +47,1013 @@
   }
  ],
  "sumber": "Konsol run_penuh.py --borang NPK, 2026-10-09 (14:12:51 -> 16:15:14), MBPG_MOD_SEBENAR=1, MBPG_IZIN_PRODUCTION=1, MBPG_DRY_RUN=1. Log: reports/log/run-20261009-141246.log (+ .json). 22 peringkat: 20 LULUS / 2 GAGAL, TANPA HENTI AWAL. [CORONG] 499 tap dinilai, 0 disekat — Fix#22 (dialog hasil Hantar Gambar) berjaya; run pertama sampai HABIS dengan borang P & K. 5 cetakan keluar printer SPP-R410_110095 (N, P, K x3) — disahkan mata pemilik.",
- "nota_bahasa": "Larian penuh PERTAMA yang selesai hujung-ke-hujung. Fix#21 (kalendar julat) dan Fix#22 (dialog Hantar Gambar) berjaya; 5 kertas tercetak. REVISI Fix#24: sub-peringkat kini DIKIRA. Borang P dan K[2/3] bukan lagi 'LULUS' — di dalamnya ada kemaskini yang beku pada 0%, hantar StaleElement, dan senarai yang tidak menjumpai rekod. Punca kekaburan laporan lama ialah skrip (induk menelan kegagalan anak), bukan app.",
+ "nota_bahasa": "Setiap baris GAGAL ada penjelasan bahasa mudah: apa yang berlaku, kesannya, dan siapa perlu bertindak. Jenis: APP = masalah aplikasi (lapor developer), SKRIP = masalah skrip ujian (bukan salah app). Medan 'Kitaran' menyatakan sama ada kegagalan berulang dan sama ada puncanya SAMA — supaya satu punca yang menghasilkan banyak TC dikira sebagai SATU masalah. Tiga GAGAL borang K/P pada larian ini berkongsi SATU punca skrip (Fix#25).",
  "nota_bukti": "Tangkapan diletakkan pada barisnya sendiri dalam kolum 'Bukti'. Setiap satu disemak mata dan di-hash; tiada gambar direka atau dikitar semula sebagai peristiwa berasingan. Baris tanpa tangkapan kekal '—'.",
  "results": {
-  "gerbang siri": {
-   "status": "LULUS",
-   "tempoh_s": 0,
-   "nota": "kaunter selamat (97 nombor diketahui)"
+  "MBPG-TC-T-001": {
+   "status": "PASSED",
+   "nama": "Tetapan Alamat IP",
+   "satu_baris": "Lulus separa — IP external padan profil; IP internal kosong (D-02).",
+   "maksud": "IP external () padan dengan profil production. IP internal dibaca balik kosong, seperti dilaporkan sebelum ini (D-02). Ini nota, bukan kegagalan: TC hanya menuntut padanan profil bagi IP yang dipakai app.",
+   "kesan": "Skrip tidak boleh mengesahkan IP internal — kerana app sendiri tidak menyimpannya. Ambilan data tidak terjejas (laluan guna IP external).",
+   "tindakan": "Tiada tindakan segera. D-02 kekal terbuka (kosmetik).",
+   "jenis": "APP",
+   "kitaran": "",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
   },
-  "sesi": {
-   "status": "LULUS",
-   "tempoh_s": 96.1,
-   "nota": "sesi + login + mod sebenar HIDUP"
+  "MBPG-TC-T-002": {
+   "status": "PASSED",
+   "nama": "Tetapan Pelbagai",
+   "satu_baris": "Lesen app padan profil (disahkan baca balik).",
+   "maksud": "Skrip membaca semula nilai lesen dalam Tetapan dan membandingkan dengan profil; ia padan.",
+   "kesan": "Tiada.",
+   "tindakan": "Tiada tindakan.",
+   "jenis": "APP",
+   "kitaran": "",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
   },
-  "tetapan T-001": {
-   "status": "LULUS",
-   "tempoh_s": 15.4,
-   "nota": "external padan profil; internal kosong (D-02 — nota, bukan gagal)"
+  "MBPG-TC-T-003": {
+   "status": "PASSED",
+   "nama": "Selaras Pengguna Apps",
+   "satu_baris": "Lulus — Selaras Pengguna Apps.",
+   "maksud": "Skrip membuka Menu Selaras, menekan 'Selaras Pengguna Apps', dan popup hasil 'Berjaya — Data Disimpan' muncul serta ditutup.",
+   "kesan": "Tiada.",
+   "tindakan": "Tiada tindakan.",
+   "jenis": "APP",
+   "kitaran": "",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
   },
-  "tetapan T-002": {
-   "status": "LULUS",
-   "tempoh_s": 7.0,
-   "nota": "lesen padan profil (baca balik)"
+  "MBPG-TC-T-004": {
+   "status": "PASSED",
+   "nama": "Selaras Maklumat Alamat",
+   "satu_baris": "Lulus — Selaras Maklumat Alamat.",
+   "maksud": "Skrip membuka Menu Selaras, menekan 'Selaras Maklumat Alamat', dan popup hasil 'Berjaya — Data Disimpan' muncul serta ditutup.",
+   "kesan": "Tiada.",
+   "tindakan": "Tiada tindakan.",
+   "jenis": "APP",
+   "kitaran": "",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
   },
-  "selaras T-003": {
-   "status": "LULUS",
-   "tempoh_s": 24.0,
-   "nota": "Selaras Pengguna Apps"
+  "MBPG-TC-T-005": {
+   "status": "PASSED",
+   "nama": "Selaras Maklumat Kompaun",
+   "satu_baris": "Sesi selaras ini BERJAYA pada percubaan kedua (percubaan 1 app terkeluar sendiri).",
+   "maksud": "Percubaan 1 GAGAL selepas 22.3s: AssertionError [_scroll_down] 'App TERKELUAR dari latar hadapan' (package semasa com.android.launcher) — app IES terkeluar ke pelancar telefon semasa sync. Skrip cuba semula (retry 1x) dan percubaan 2 BERJAYA (25.0s) dengan popup 'Data Kompaun Berjaya Disimpan'.",
+   "kesan": "Tiada kehilangan data — sync percubaan 2 lengkap. Jadual kod kompaun (kritikal untuk borang K) kekal betul.",
+   "tindakan": "Tiada tindakan developer untuk TC ini; ia lulus. D-08 dipantau berasingan.",
+   "jenis": "APP",
+   "kitaran": "Berulang merentas larian (D-08) — PUNCA SAMA setiap kali (app keluar latar hadapan).",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": "Recurring across runs (D-08) — SAME cause every time (app leaves the foreground).",
+   "bukti": "bukti/mbpg-17-T005-d08-app-keluar-latar.jpg"
   },
-  "selaras T-004": {
-   "status": "LULUS",
-   "tempoh_s": 117.3,
-   "nota": "Selaras Maklumat Alamat"
+  "MBPG-TC-T-006": {
+   "status": "PASSED",
+   "nama": "Selaras Maklumat Jenis Kenderaan",
+   "satu_baris": "Lulus — Selaras Maklumat Jenis Kenderaan.",
+   "maksud": "Skrip membuka Menu Selaras, menekan 'Selaras Maklumat Jenis Kenderaan', dan popup hasil 'Berjaya — Data Disimpan' muncul serta ditutup.",
+   "kesan": "Tiada.",
+   "tindakan": "Tiada tindakan.",
+   "jenis": "APP",
+   "kitaran": "",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
   },
-  "selaras T-005": {
-   "status": "GAGAL",
-   "tempoh_s": 22.3,
-   "nota": "AssertionError: [_scroll_down] App TERKELUAR dari latar hadapan (package semasa 'com.android.lau",
-   "bukti": "bukti/mbpg-17-T005-d08-app-keluar-latar.jpg",
-   "bukti_kapsyen": "App IES terkeluar ke latar (app drawer) semasa selaras — D-08, app. Percubaan 2 LULUS.",
-   "bukti_kapsyen_en": "IES app dropped to background (app drawer) mid-sync — D-08, app. Attempt 2 PASSED."
+  "MBPG-TC-T-007": {
+   "status": "PASSED",
+   "nama": "Selaras Maklumat Warna",
+   "satu_baris": "Lulus — Selaras Maklumat Warna.",
+   "maksud": "Skrip membuka Menu Selaras, menekan 'Selaras Maklumat Warna', dan popup hasil 'Berjaya — Data Disimpan' muncul serta ditutup.",
+   "kesan": "Tiada.",
+   "tindakan": "Tiada tindakan.",
+   "jenis": "APP",
+   "kitaran": "",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
   },
-  "selaras T-005 (retry)": {
-   "status": "LULUS",
-   "tempoh_s": 25.0,
-   "nota": "Selaras Maklumat Kompaun"
+  "MBPG-TC-T-008": {
+   "status": "SKIPPED",
+   "nama": "Selaras Maklumat Pelesen",
+   "satu_baris": "TIDAK DISENTUH — larangan mutlak.",
+   "maksud": "Selaras Maklumat Pelesen dikecualikan sepenuhnya pada tiga lapisan (peringkat tap, bukan sekadar dilangkau). Sync mengambil masa 3-4 jam dan menyentuh 52,317 rekod.",
+   "kesan": "Tiada — memang dikecualikan.",
+   "tindakan": "Tiada tindakan. Perlu kebenaran bertulis pemilik untuk mengubah pengecualian ini.",
+   "jenis": "APP",
+   "kitaran": "",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
   },
-  "selaras T-006": {
-   "status": "LULUS",
-   "tempoh_s": 22.8,
-   "nota": "Selaras Maklumat Jenis Kenderaan"
+  "MBPG-TC-T-009": {
+   "status": "PASSED",
+   "nama": "Selaras Maklumat Barang Sita",
+   "satu_baris": "Lulus — Selaras Maklumat Barang Sita.",
+   "maksud": "Skrip membuka Menu Selaras, menekan 'Selaras Maklumat Barang Sita', dan popup hasil 'Berjaya — Data Disimpan' muncul serta ditutup.",
+   "kesan": "Tiada.",
+   "tindakan": "Tiada tindakan.",
+   "jenis": "APP",
+   "kitaran": "",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
   },
-  "selaras T-007": {
-   "status": "LULUS",
-   "tempoh_s": 23.1,
-   "nota": "Selaras Maklumat Warna"
+  "MBPG-TC-T-010": {
+   "status": "PASSED",
+   "nama": "Tetapan Skrin Utama",
+   "satu_baris": "Lulus — Tetapan Skrin Utama.",
+   "maksud": "Skrip membuka tetapan skrin utama dan mengesahkannya.",
+   "kesan": "Tiada.",
+   "tindakan": "Tiada tindakan.",
+   "jenis": "APP",
+   "kitaran": "",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
   },
-  "selaras T-009": {
-   "status": "LULUS",
-   "tempoh_s": 22.9,
-   "nota": "Selaras Maklumat Barang Sita"
+  "MBPG-TC-T-011": {
+   "status": "PASSED",
+   "nama": "Semak Kemaskini",
+   "satu_baris": "Lulus — Semak Kemaskini.",
+   "maksud": "Skrip membuka 'Semak Kemaskini' dan tiada ralat teknikal dilaporkan.",
+   "kesan": "Tiada.",
+   "tindakan": "Tiada tindakan.",
+   "jenis": "APP",
+   "kitaran": "",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
   },
-  "tetapan T-010": {
-   "status": "LULUS",
-   "tempoh_s": 39.2,
-   "nota": "Tetapan Skrin Utama"
+  "MBPG-TC-T-012": {
+   "status": "PASSED",
+   "nama": "Remember Me / Login",
+   "satu_baris": "Log masuk berjaya sebagai 'msc' dan skrin utama dicapai.",
+   "maksud": "Skrip mengisi username/password, mengesahkan medan kata laluan tidak kosong (dipapar '•••••') sebelum menekan LOGIN, dan mencapai skrin utama.",
+   "kesan": "Tiada.",
+   "tindakan": "Tiada tindakan.",
+   "jenis": "APP",
+   "kitaran": "",
+   "satu_baris_en": "Logged in successfully as 'msc' and reached the home screen.",
+   "maksud_en": "The script filled username/password, confirmed the password field was not empty (showed '•••••') before pressing LOGIN, and reached the home screen.",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
   },
-  "tetapan T-011": {
-   "status": "LULUS",
-   "tempoh_s": 31.9,
-   "nota": "Semak Kemaskini"
+  "MBPG-TC-N-001": {
+   "status": "PASSED",
+   "nama": "Daftar Notis Amaran",
+   "satu_baris": "Rekod dicipta dan dihantar; nombor rekod diterima daripada popup app.",
+   "maksud": "Borang diisi automasi, dihantar (Hantar Data + Hantar Gambar OK), dan nombor rekod diperoleh daripada popup app. Disahkan popup cetak membawa nombor rekod.",
+   "kesan": "Rekod production dicipta (data ujian) — perlu pembatalan PM.",
+   "tindakan": "PM batalkan rekod ujian melalui portal ePBT. Nota: identiti pesalah pada K TIDAK boleh dipercayai (lihat D-09).",
+   "jenis": "APP",
+   "kitaran": "",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": "",
+   "bukti": "bukti/mbpg-17-N001-serah-berjaya.jpg"
   },
-  "selaras": {
-   "status": "LULUS",
-   "tempoh_s": 456.6,
-   "nota": "10 lulus, 0 gagal daripada 6 modul selaras + T-010/T-011 (T-008 TIDAK disentuh)"
+  "MBPG-TC-N-002": {
+   "status": "PASSED",
+   "nama": "Daftar Notis Amaran > Cetak",
+   "satu_baris": "Cetakan dihantar ke printer Bluetooth dan popup cetak ditutup.",
+   "maksud": "Skrip menekan CETAK pada popup pengesahan; app menutup popup selepas menghantar ke printer SPP-R410_110095 (12.3s).",
+   "kesan": "Kertas keluar (N/P 1x, K 3x). Kandungan kertas TIDAK dapat diperiksa oleh skrip.",
+   "tindakan": "Pemilik perlu semak kertas secara fizikal — tandatangan, kod akta, dan sama ada identiti pesalah betul. Skrip hanya membuktikan popup ditutup.",
+   "jenis": "APP",
+   "kitaran": "",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
   },
-  "gerbang kod kompaun": {
-   "status": "LULUS",
-   "tempoh_s": 0,
-   "nota": "9 baris kod kompaun dalam DB peranti"
+  "MBPG-TC-N-003": {
+   "status": "PASSED",
+   "nama": "Serah Notis Amaran",
+   "satu_baris": "Serahan berjaya dan disahkan dalam Senarai.",
+   "maksud": "Hantar Data + Hantar Gambar berjaya; baris Senarai PGP02N261009012 menunjukkan status 'M' (menunggu naik) pada 14:34.",
+   "kesan": "Tiada.",
+   "tindakan": "Tiada tindakan.",
+   "jenis": "APP",
+   "kitaran": "",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
   },
-  "borang N": {
-   "status": "LULUS",
-   "tempoh_s": 1085.5,
-   "nota": "{'tag': 'N-001', 'borang': 'N', 'no_rekod': 'PGP02N261009011', 'no_siri': 12, 'masa': '2026-10-09 14:31:26', 'pesalah': ",
-   "bukti": "bukti/mbpg-17-N001-serah-berjaya.jpg",
-   "bukti_kapsyen": "Dialog \"CETAK NOTIS AMARAN ?\" No Notis PGP02N261009011 — cetakan dihantar ke printer.",
-   "bukti_kapsyen_en": "\"CETAK NOTIS AMARAN ?\" dialog, notice PGP02N261009011 — print sent to the printer."
+  "MBPG-TC-N-004": {
+   "status": "PASSED",
+   "nama": "Kemaskini Notis Amaran",
+   "satu_baris": "Kemaskini berjaya — rekod berubah 011 -> 012.",
+   "maksud": "Skrip membuka rekod PGP02N261009011 dalam Senarai, mengemaskini, dan nombor rekod bertukar kepada PGP02N261009012.",
+   "kesan": "Tiada.",
+   "tindakan": "Tiada tindakan.",
+   "jenis": "APP",
+   "kitaran": "",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
   },
-  "borang P": {
-   "status": "GAGAL-BERSEBASTIAN",
-   "tempoh_s": 1731.2,
-   "nota": "induk LULUS tetapi 3 anak GAGAL: kemaskini, hantar, senarai — {'tag': 'P-001', 'borang': 'P', 'no_rekod': 'PGP02P261009027', 'no_siri': 28, 'masa': '202",
-   "bukti": "bukti/mbpg-17-P004-kemaskini-beku-0pc.jpg",
-   "bukti_kapsyen": "Kemaskini P: popup \"MEMULAKAN PROSES...\" beku pada 0% (4/6 gambar) — D-13, app.",
-   "bukti_kapsyen_en": "Kemaskini P: \"MEMULAKAN PROSES...\" popup frozen at 0% (4/6 photos) — D-13, app."
+  "MBPG-TC-N-005": {
+   "status": "SKIPPED",
+   "nama": "Bookmark borang N",
+   "satu_baris": "Build ini tiada UI untuk membuat bookmark baharu.",
+   "maksud": "Popup 'Pilihan Kegemaran' hanya ada HAPUS/PILIH dan 'NO BOOKMARK FOUND' — tiada medan nama dan tiada butang SIMPAN.",
+   "kesan": "TC bookmark tidak boleh diuji langsung pada build 2.1.25 (D-04).",
+   "tindakan": "Developer: sediakan UI cipta bookmark, atau PM sahkan TC ini dikeluarkan daripada skop.",
+   "jenis": "APP",
+   "kitaran": "Berulang setiap larian; PUNCA SAMA (had build)."
   },
-  "borang K [1/3] JYX6605": {
-   "status": "LULUS",
-   "tempoh_s": 940.6,
-   "nota": "{'tag': 'K-001', 'borang': 'K', 'no_rekod': 'PGP02K261009028', 'no_siri': 29, 'masa': '2026-10-09 15:19:23', 'pesalah': ",
-   "bukti": "bukti/mbpg-17-senarai-berjaya-tarikh-akhir.jpg",
-   "bukti_kapsyen": "Baris ini LULUS. Julat penuh 2026-10-09 - 2026-10-10 -> 6 baris; rekod PGP02K261009028 dijumpai (hantar H). Menjadi kawalan yang sah.",
-   "bukti_kapsyen_en": "This row PASSED. Full range 2026-10-09 - 2026-10-10 -> 6 rows; record PGP02K261009028 found (hantar H). A valid control."
+  "MBPG-TC-P-001": {
+   "status": "PASSED",
+   "nama": "Daftar Kompaun Pelbagai",
+   "satu_baris": "Rekod dicipta dan dihantar; nombor rekod diterima daripada popup app.",
+   "maksud": "Borang diisi automasi, dihantar (Hantar Data + Hantar Gambar OK), dan nombor rekod diperoleh daripada popup app. Disahkan popup cetak membawa nombor rekod.",
+   "kesan": "Rekod production dicipta (data ujian) — perlu pembatalan PM.",
+   "tindakan": "PM batalkan rekod ujian melalui portal ePBT. Nota: identiti pesalah pada K TIDAK boleh dipercayai (lihat D-09).",
+   "jenis": "APP",
+   "kitaran": "",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
   },
-  "borang K [2/3] JUA3276": {
-   "status": "GAGAL-BERSEBASTIAN",
-   "tempoh_s": 1220.1,
-   "nota": "induk LULUS tetapi 2 anak GAGAL: hantar, senarai — {'tag': 'K-001', 'borang': 'K', 'no_rekod': 'PGP02K261009029', 'no_siri': 30, 'masa': '202",
-   "bukti": "bukti/mbpg-17-senarai-kosong-tarikh-akhir.jpg",
-   "bukti_kapsyen": "Hantar + senarai GAGAL: 'Tarikh Akhir' KOSONG, 0 baris — penapis separuh (bug skrip, Fix#25), bukan D-12.",
-   "bukti_kapsyen_en": "Hantar + senarai FAILED: 'Tarikh Akhir' EMPTY, 0 rows — half filter (script bug, Fix#25), not D-12."
+  "MBPG-TC-P-002": {
+   "status": "PASSED",
+   "nama": "Daftar Kompaun Pelbagai > Cetak",
+   "satu_baris": "Cetakan dihantar ke printer Bluetooth dan popup cetak ditutup.",
+   "maksud": "Skrip menekan CETAK pada popup pengesahan; app menutup popup selepas menghantar ke printer SPP-R410_110095 (12.7s).",
+   "kesan": "Kertas keluar (N/P 1x, K 3x). Kandungan kertas TIDAK dapat diperiksa oleh skrip.",
+   "tindakan": "Pemilik perlu semak kertas secara fizikal — tandatangan, kod akta, dan sama ada identiti pesalah betul. Skrip hanya membuktikan popup ditutup.",
+   "jenis": "APP",
+   "kitaran": "",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
   },
-  "borang K [3/3] JRT2649": {
-   "status": "GAGAL-BERSEBASTIAN",
-   "tempoh_s": 999.8,
-   "nota": "induk LULUS tetapi 2 anak GAGAL: hantar, senarai — {'tag': 'K-001', 'borang': 'K', 'no_rekod': 'PGP02K261009031', 'no_siri': 32, 'masa': '202",
-   "bukti": "bukti/mbpg-17-kalendar-masih-terbuka.jpg",
-   "bukti_kapsyen": "Gagal sama seperti [2/3] (punca sama, bingkai berbeza): kalendar julat tidak tertutup; 9 Okt separuh pil = julat tunggu tarikh akhir.",
-   "bukti_kapsyen_en": "Same failure as [2/3] (same root cause, different frame): range calendar not closing; Oct 9 a half pill = range awaiting its end date."
+  "MBPG-TC-P-003": {
+   "status": "FAILED",
+   "nama": "Serah Kompaun Pelbagai",
+   "satu_baris": "Serahan tersekat — skrip hilang rujukan elemen (StaleElement) selepas ~10 minit menunggu.",
+   "maksud": "Selepas Hantar Data, skrip cuba mengesahkan serahan tetapi elemen yang dirujuk sudah tidak melekat pada DOM (StaleElementReferenceException) selepas 590.5s. Ini kegagalan SKRIP, bukan bukti app menolak serahan.",
+   "kesan": "Serahan tidak dapat disahkan oleh skrip. Status sebenar di server tidak diketahui dari larian ini.",
+   "tindakan": "Betulkan skrip: cuba semula elemen yang basi (Fix#23 sudah ditampal, perlu retest). Tiada tindakan app.",
+   "jenis": "SKRIP",
+   "kitaran": "PUNCA SAMA kelas 'elemen basi' — dikira sekali, bukan dua masalah berasingan.",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
   },
-  "semak D-09": {
-   "status": "GAGAL",
-   "tempoh_s": 0.2,
-   "nota": "RuntimeError: D-09 MASIH ADA pada build ini - 1 dapatan merentas 4 rekod K. Lihat output di atas.",
-   "bukti": "bukti/mbpg-17-D09-semak-halt.jpg",
-   "bukti_kapsyen": "Skrin semasa semak D-09 dihentikan: Senarai kosong (Tarikh Akhir kosong). Bukti PII sebenar ialah dump rekod (93********05 pada JYX6605 + JUA3276) — BUKAN gambar ini.",
-   "bukti_kapsyen_en": "Screen when the D-09 check halted: empty Senarai (no end date). The real PII evidence is the record dump (93********05 on JYX6605 + JUA3276) — NOT this image."
+  "MBPG-TC-P-004": {
+   "status": "FAILED",
+   "nama": "Kemaskini Kompaun Pelbagai",
+   "satu_baris": "Popup proses BEKU pada 0% — kemaskini tidak selesai. DISAHKAN MATA pada build 2.1.25.",
+   "maksud": "Selepas mengisi borang dan menekan proses, popup 'MEMULAKAN PROSES...' kekal pada 0% selama 320.8s dan tidak boleh ditutup dengan butang BACK. Tangkapan mbpg-17-P004-kemaskini-beku-0pc.jpg menunjukkan popup beku pada 0% dengan 4/6 gambar. Pemilik menyaksikan sendiri kejadian ini.",
+   "kesan": "Rekod PGP02P261009027 tidak berkemaskini walaupun laluan dibuka. Ini menyekat TC kemaskini borang P secara langsung.",
+   "tindakan": "LAPOR DEVELOPER (APP): modal kemaskini tidak boleh selesai dan tidak boleh ditutup. Ini defek app, bukan skrip.",
+   "jenis": "APP",
+   "kitaran": "Berulang pada borang P. D-13.",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": "",
+   "bukti": "bukti/mbpg-17-P004-kemaskini-beku-0pc.jpg"
   },
-  "menu": {
-   "status": "LULUS",
-   "tempoh_s": 795.9,
-   "nota": "3 lulus, 0 gagal — senarai={'baris_dipapar': 9, 'dijumpai': ['P; hantar={'sebelum': {'H-001': {'jumlah': 6, '; tarik={'s"
+  "MBPG-TC-P-005": {
+   "status": "SKIPPED",
+   "nama": "Bookmark borang P",
+   "satu_baris": "Build ini tiada UI untuk membuat bookmark baharu.",
+   "maksud": "Popup 'Pilihan Kegemaran' hanya ada HAPUS/PILIH dan 'NO BOOKMARK FOUND' — tiada medan nama dan tiada butang SIMPAN.",
+   "kesan": "TC bookmark tidak boleh diuji langsung pada build 2.1.25 (D-04).",
+   "tindakan": "Developer: sediakan UI cipta bookmark, atau PM sahkan TC ini dikeluarkan daripada skop.",
+   "jenis": "APP",
+   "kitaran": "Berulang setiap larian; PUNCA SAMA (had build)."
+  },
+  "MBPG-TC-K-001": {
+   "status": "PASSED",
+   "nama": "Daftar Kompaun Letak Kereta",
+   "satu_baris": "Rekod dicipta dan dihantar; nombor rekod diterima daripada popup app.",
+   "maksud": "Borang diisi automasi, dihantar (Hantar Data + Hantar Gambar OK), dan nombor rekod diperoleh daripada popup app. Tiga kitaran K (JYX6605 · JUA3276 · JRT2649) semuanya mencipta rekod.",
+   "kesan": "Rekod production dicipta (data ujian) — perlu pembatalan PM.",
+   "tindakan": "PM batalkan rekod ujian melalui portal ePBT. Nota: identiti pesalah pada K TIDAK boleh dipercayai (lihat D-09).",
+   "jenis": "APP",
+   "kitaran": "",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": "",
+   "bukti": "bukti/mbpg-17-senarai-berjaya-tarikh-akhir.jpg"
+  },
+  "MBPG-TC-K-002": {
+   "status": "PASSED",
+   "nama": "Daftar Kompaun Letak Kereta > Cetak",
+   "satu_baris": "Cetakan dihantar ke printer Bluetooth dan popup cetak ditutup.",
+   "maksud": "Skrip menekan CETAK pada popup pengesahan; app menutup popup selepas menghantar ke printer SPP-R410_110095 (12.3s).",
+   "kesan": "Kertas keluar (N/P 1x, K 3x). Kandungan kertas TIDAK dapat diperiksa oleh skrip.",
+   "tindakan": "Pemilik perlu semak kertas secara fizikal — tandatangan, kod akta, dan sama ada identiti pesalah betul. Skrip hanya membuktikan popup ditutup.",
+   "jenis": "APP",
+   "kitaran": "",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
+  },
+  "MBPG-TC-K-003": {
+   "status": "FAILED",
+   "nama": "Serah Kompaun Letak Kereta",
+   "satu_baris": "Serahan tidak menunjukkan status baris yang dijangka (status = None).",
+   "maksud": "Untuk JUA3276 (rekod 030) dan JRT2649 (rekod 031): Hantar selesai di sebelah app, tetapi apabila skrip membaca status baris dalam Senarai ia mendapat None — kerana penapis Senarai tinggal 'Tarikh Mula' sahaja (kalendar julat tidak tutup), jadi baris itu memang tidak dipaparkan.",
+   "kesan": "Serahan tidak dapat disahkan. Rekod tetap wujud (dicipta & dicetak).",
+   "tindakan": "Betulkan skrip (Fix#25 — jawab titik AKHIR kalendar). Tiada tindakan app. Pemerhatian: K [1/3] JYX6605 LULUS pada laluan yang sama, jadi ini bukan kegagalan seragam.",
+   "jenis": "SKRIP",
+   "kitaran": "Punca SAMA untuk ketiga-tiga: pemilih tarikh MBPG ialah pemilih JULAT. Skrip menekan hari yang sama dua kali, jadi app anggap hari itu TITIK MULA dan menunggu titik AKHIR. Kalendar tidak tutup; butang Semak tertutup di belakangnya; penapis tinggal 'Tarikh Mula' sahaja dan memulangkan 0 baris. Bukti: mbpg-17-kalendar-masih-terbuka.jpg (9 Okt separuh-pil) dan mbpg-17-senarai-kosong-tarikh-akhir.jpg (Tarikh Akhir KOSONG, 0 baris). Ini bug SKRIP (Fix#25), BUKAN had 10 baris D-12 dan BUKAN defek app.",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
+  },
+  "MBPG-TC-K-004": {
+   "status": "FAILED",
+   "nama": "Kemaskini Kompaun Letak Kereta",
+   "satu_baris": "Rekod tidak dijumpai dalam Senarai (2/3 kitaran); kitaran 2 berjaya.",
+   "maksud": "K [1/3] JYX6605 dan K [3/3] JRT2649: rekod 'tidak dijumpai dalam Senarai' kerana penapis julat tinggal separuh. K [2/3] JUA3276 sebenarnya BERJAYA kemaskini (029 -> 030) — membuktikan laluan kemaskini app berfungsi.",
+   "kesan": "Kemaskini tidak dapat dijalankan pada 2 daripada 3 kitaran K — sebab skrip, bukan app.",
+   "tindakan": "Betulkan skrip (Fix#25). Tiada tindakan app. Kawalan: percubaan JUA3276 LULUS.",
+   "jenis": "SKRIP",
+   "kitaran": "Punca SAMA untuk ketiga-tiga: pemilih tarikh MBPG ialah pemilih JULAT. Skrip menekan hari yang sama dua kali, jadi app anggap hari itu TITIK MULA dan menunggu titik AKHIR. Kalendar tidak tutup; butang Semak tertutup di belakangnya; penapis tinggal 'Tarikh Mula' sahaja dan memulangkan 0 baris. Bukti: mbpg-17-kalendar-masih-terbuka.jpg (9 Okt separuh-pil) dan mbpg-17-senarai-kosong-tarikh-akhir.jpg (Tarikh Akhir KOSONG, 0 baris). Ini bug SKRIP (Fix#25), BUKAN had 10 baris D-12 dan BUKAN defek app.",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": "",
+   "bukti": "bukti/mbpg-17-senarai-kosong-tarikh-akhir.jpg"
+  },
+  "MBPG-TC-K-005": {
+   "status": "SKIPPED",
+   "nama": "Bookmark borang K",
+   "satu_baris": "Build ini tiada UI untuk membuat bookmark baharu.",
+   "maksud": "Popup 'Pilihan Kegemaran' hanya ada HAPUS/PILIH dan 'NO BOOKMARK FOUND' — tiada medan nama dan tiada butang SIMPAN.",
+   "kesan": "TC bookmark tidak boleh diuji langsung pada build 2.1.25 (D-04).",
+   "tindakan": "Developer: sediakan UI cipta bookmark, atau PM sahkan TC ini dikeluarkan daripada skop.",
+   "jenis": "APP",
+   "kitaran": "Berulang setiap larian; PUNCA SAMA (had build)."
+  },
+  "MBPG-TC-P-006": {
+   "status": "NEEDS_EYE",
+   "nama": "Isu berkenaan tandatangan",
+   "satu_baris": "Tandatangan pada cetakan mesti disemak mata — skrip tidak boleh menilainya.",
+   "maksud": "Skrip hanya membuktikan popup cetak ditutup. Ia tidak boleh membaca kertas yang keluar, jadi isu tandatangan kekal keputusan manusia.",
+   "kesan": "Verdik TC ini kekal terbuka sehingga pemilik semak kertas fizikal.",
+   "tindakan": "Pemilik: semak tandatangan pada cetakan PGP02N261009011/012 dan P/K261009027..031.",
+   "jenis": "APP",
+   "kitaran": "Berulang setiap larian (jujur: skrip tidak boleh menutupnya)."
+  },
+  "HASIL-D-09": {
+   "status": "FAILED",
+   "nama": "D-09 mySIKAP — identiti melekat merentas plat",
+   "satu_baris": "MASIH ROSAK: tiga rekod K berkongsi identiti pemilik yang SAMA walaupun plat berbeza.",
+   "maksud": "Empat rekod K disemak. PGP02K261009028 (JYX6605), ...029 (JUA3276) dan ...030 (JUA3276) membawa identiti SAMA 93********05 walaupun plat BERBEZA. Nama juga terpapar 'MO************************TH' berulang. Ini bermakna butiran pemilik terdahulu melekat pada rekod baharu — data peribadi orang sebenar pada rekod orang lain.",
+   "kesan": "Rekod K yang dicipta membawa identiti TIDAK BOLEH DIPERCAYAI. Jika diserahkan kepada penguatkuasaan, notis akan sampai kepada orang yang salah.",
+   "tindakan": "JANGAN SERAH rekod-rekod ini. Batalkan kesemuanya. Lapor developer sebagai keutamaan tinggi (PII).",
+   "jenis": "APP",
+   "kitaran": "Berulang: 13/08, 10/09, 13/09, 05/10, 08/10, 09/10. Disahkan LIVE pada 2.1.25.",
+   "bukti": "bukti/mbpg-17-D09-semak-halt.jpg"
+  },
+  "MBPG-TC-SK-001": {
+   "status": "FAILED",
+   "nama": "Senarai Kompaun",
+   "satu_baris": "Carian rekod tersekat — penapis julat tinggal separuh (bukan masalah data).",
+   "maksud": "Untuk menyemak rekod, skrip menyempitkan penapis Senarai ke tarikh rekod. Pemilih itu JULAT; ia tidak menutup, jadi 'Tarikh Akhir' tinggal kosong dan Semak memulangkan 0 baris. Bukti: mbpg-17-senarai-kosong-tarikh-akhir.jpg.",
+   "kesan": "Rekod baharu tidak dapat disahkan melalui Senarai. Pemerhatian berasingan: apabila penapis BETUL, 6 baris dipapar (kawalan) — jadi had paparan bukan punca kegagalan ini.",
+   "tindakan": "Betulkan skrip (Fix#25). Tiada tindakan data/app untuk kegagalan ini.",
+   "jenis": "SKRIP",
+   "kitaran": "Punca SAMA untuk ketiga-tiga: pemilih tarikh MBPG ialah pemilih JULAT. Skrip menekan hari yang sama dua kali, jadi app anggap hari itu TITIK MULA dan menunggu titik AKHIR. Kalendar tidak tutup; butang Semak tertutup di belakangnya; penapis tinggal 'Tarikh Mula' sahaja dan memulangkan 0 baris. Bukti: mbpg-17-kalendar-masih-terbuka.jpg (9 Okt separuh-pil) dan mbpg-17-senarai-kosong-tarikh-akhir.jpg (Tarikh Akhir KOSONG, 0 baris). Ini bug SKRIP (Fix#25), BUKAN had 10 baris D-12 dan BUKAN defek app.",
+   "bukti": "bukti/mbpg-17-senarai-berjaya-tarikh-akhir.jpg"
+  },
+  "MBPG-TC-H-001": {
+   "status": "PASSED",
+   "nama": "Hantar Semula Notis Amaran",
+   "satu_baris": "Laluan UI hantar-semula dipandu; 6 rekod disemak.",
+   "maksud": "Skrip membuka tab Data Ralat dan menekan HANTAR SEMULA. 6 rekod ditemui, 2 belum naik (PGP02N261009010/012 kekal M — rangkaian/app belum menaikkannya).",
+   "kesan": "2 rekod N masih belum naik selepas hantar semula.",
+   "tindakan": "Laluan UI DIBUKTIKAN. Untuk rekod yang kekal M, PM perlu semak jika isu berulang; ini mungkin keadaan app, bukan skrip.",
+   "jenis": "APP",
+   "kitaran": "Berulang; keadaan berbeza setiap larian bergantung rekod M.",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
+  },
+  "MBPG-TC-H-002": {
+   "status": "PASSED",
+   "nama": "Hantar Semula Kompaun Pelbagai",
+   "satu_baris": "Laluan UI hantar-semula dipandu; 5 rekod disemak.",
+   "maksud": "Skrip membuka tab Data Ralat dan menekan HANTAR SEMULA. 5 rekod ditemui, 0 belum naik (semua sudah berstatus H).",
+   "kesan": "Tiada — semua rekod sudah dihantar.",
+   "tindakan": "Laluan UI DIBUKTIKAN. Untuk rekod yang kekal M, PM perlu semak jika isu berulang; ini mungkin keadaan app, bukan skrip.",
+   "jenis": "APP",
+   "kitaran": "Berulang; keadaan berbeza setiap larian bergantung rekod M.",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
+  },
+  "MBPG-TC-H-003": {
+   "status": "PASSED",
+   "nama": "Hantar Semula Kompaun Letak Kereta",
+   "satu_baris": "Laluan UI hantar-semula dipandu; 19 rekod disemak.",
+   "maksud": "Skrip membuka tab Data Ralat dan menekan HANTAR SEMULA. 19 rekod ditemui, 0 belum naik (semua sudah berstatus H).",
+   "kesan": "Tiada — semua rekod sudah dihantar.",
+   "tindakan": "Laluan UI DIBUKTIKAN. Untuk rekod yang kekal M, PM perlu semak jika isu berulang; ini mungkin keadaan app, bukan skrip.",
+   "jenis": "APP",
+   "kitaran": "Berulang; keadaan berbeza setiap larian bergantung rekod M.",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
+  },
+  "MBPG-TC-H-004": {
+   "status": "SKIPPED",
+   "nama": "Hantar Semula Kompaun Lesen",
+   "satu_baris": "SKIP mutlak — di luar skop automation MBPG.",
+   "maksud": "Siri L (Lesen) dan S (Sitaan) di luar skop automation MBPG.",
+   "kesan": "Tidak diuji.",
+   "tindakan": "Tiada.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-H-005": {
+   "status": "SKIPPED",
+   "nama": "Hantar Semula Kompaun Sitaan",
+   "satu_baris": "SKIP mutlak — di luar skop automation MBPG.",
+   "maksud": "Siri L (Lesen) dan S (Sitaan) di luar skop automation MBPG.",
+   "kesan": "Tidak diuji.",
+   "tindakan": "Tiada.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-TN-001": {
+   "status": "PASSED",
+   "nama": "Tarik Notis by Penguatkuasa",
+   "satu_baris": "Laluan tarik dipandu; 0 baris ialah jawapan BETUL (notis belum luput).",
+   "maksud": "Skrip memasukkan ID 'msc' dan menekan TARIK. 0 baris = keputusan BETUL (tiada notis luput). Ujian kawalan dijalankan untuk memastikan skrin tidak sekadar kosong kerana penapis rosak. Notis ujian bertempoh 14 hari (layak 2026-10-23).",
+   "kesan": "Tiada.",
+   "tindakan": "Tiada tindakan. Dinilai sebagai 'laluan dipandu', bukan 'notis dijumpai'.",
+   "jenis": "APP",
+   "kitaran": "",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
+  },
+  "MBPG-TC-TN-002": {
+   "status": "PASSED",
+   "nama": "Tarik Notis by No. Notis",
+   "satu_baris": "Laluan tarik dipandu; 0 baris ialah jawapan BETUL (notis belum luput).",
+   "maksud": "PGP02N261009012 dicuba; tidak tersenarai = dijangka (notis belum luput). Laluan dipandu sampai habis. Notis ujian bertempoh 14 hari (layak 2026-10-23).",
+   "kesan": "Tiada.",
+   "tindakan": "Tiada tindakan. Dinilai sebagai 'laluan dipandu', bukan 'notis dijumpai'.",
+   "jenis": "APP",
+   "kitaran": "",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
+  },
+  "MBPG-TC-TN-003": {
+   "status": "PASSED",
+   "nama": "Tarik Notis by Tarikh",
+   "satu_baris": "Laluan tarik dipandu; 0 baris ialah jawapan BETUL (notis belum luput).",
+   "maksud": "Laluan dipandu; skrin tarik TIADA penapis tarikh (dump disimpan), jadi TARIK lalai dijalankan. Notis ujian bertempoh 14 hari (layak 2026-10-23).",
+   "kesan": "Tiada.",
+   "tindakan": "Tiada tindakan. Dinilai sebagai 'laluan dipandu', bukan 'notis dijumpai'.",
+   "jenis": "APP",
+   "kitaran": "",
+   "satu_baris_en": "",
+   "maksud_en": "",
+   "kesan_en": "",
+   "tindakan_en": "",
+   "kitaran_en": ""
+  },
+  "MBPG-TC-NK-001": {
+   "status": "SKIPPED",
+   "nama": "Notis ke Kompaun > Kompaun",
+   "satu_baris": "SKIP — notis PGP02N261009012 belum luput (layak 23/10).",
+   "maksud": "Notis bertempoh 14 hari; layak ditukar pada 2026-10-23. Skrin Notis Kompaun TIDAK disentuh (D-07: membuka borang membakar nombor siri).",
+   "kesan": "Tidak diuji pada larian ini.",
+   "tindakan": "Uji semula selepas 2026-10-23.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-NK-002": {
+   "status": "SKIPPED",
+   "nama": "Notis ke Kompaun > Patuh",
+   "satu_baris": "SKIP — notis PGP02N261009012 belum luput (layak 23/10).",
+   "maksud": "Notis bertempoh 14 hari; layak ditukar pada 2026-10-23. Skrin Notis Kompaun TIDAK disentuh (D-07: membuka borang membakar nombor siri).",
+   "kesan": "Tidak diuji pada larian ini.",
+   "tindakan": "Uji semula selepas 2026-10-23.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-L-001": {
+   "status": "SKIPPED",
+   "nama": "Lot 1",
+   "satu_baris": "SKIP mutlak — di luar skop.",
+   "maksud": "Siri L (Lesen) di luar skop automation MBPG.",
+   "kesan": "Tidak diuji.",
+   "tindakan": "Tiada.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-L-002": {
+   "status": "SKIPPED",
+   "nama": "Lot 2",
+   "satu_baris": "SKIP mutlak — di luar skop.",
+   "maksud": "Siri L (Lesen) di luar skop automation MBPG.",
+   "kesan": "Tidak diuji.",
+   "tindakan": "Tiada.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-L-003": {
+   "status": "SKIPPED",
+   "nama": "Lot 3",
+   "satu_baris": "SKIP mutlak — di luar skop.",
+   "maksud": "Siri L (Lesen) di luar skop automation MBPG.",
+   "kesan": "Tidak diuji.",
+   "tindakan": "Tiada.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-L-004": {
+   "status": "SKIPPED",
+   "nama": "Lot 4",
+   "satu_baris": "SKIP mutlak — di luar skop.",
+   "maksud": "Siri L (Lesen) di luar skop automation MBPG.",
+   "kesan": "Tidak diuji.",
+   "tindakan": "Tiada.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-L-005": {
+   "status": "SKIPPED",
+   "nama": "Lot 5",
+   "satu_baris": "SKIP mutlak — di luar skop.",
+   "maksud": "Siri L (Lesen) di luar skop automation MBPG.",
+   "kesan": "Tidak diuji.",
+   "tindakan": "Tiada.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-S-001": {
+   "status": "SKIPPED",
+   "nama": "Sita 1",
+   "satu_baris": "SKIP mutlak — di luar skop.",
+   "maksud": "Siri S (Sitaan) di luar skop automation MBPG.",
+   "kesan": "Tidak diuji.",
+   "tindakan": "Tiada.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-S-002": {
+   "status": "SKIPPED",
+   "nama": "Sita 2",
+   "satu_baris": "SKIP mutlak — di luar skop.",
+   "maksud": "Siri S (Sitaan) di luar skop automation MBPG.",
+   "kesan": "Tidak diuji.",
+   "tindakan": "Tiada.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-S-003": {
+   "status": "SKIPPED",
+   "nama": "Sita 3",
+   "satu_baris": "SKIP mutlak — di luar skop.",
+   "maksud": "Siri S (Sitaan) di luar skop automation MBPG.",
+   "kesan": "Tidak diuji.",
+   "tindakan": "Tiada.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-S-004": {
+   "status": "SKIPPED",
+   "nama": "Sita 4",
+   "satu_baris": "SKIP mutlak — di luar skop.",
+   "maksud": "Siri S (Sitaan) di luar skop automation MBPG.",
+   "kesan": "Tidak diuji.",
+   "tindakan": "Tiada.",
+   "jenis": "APP"
+  },
+  "MBPG-TC-S-005": {
+   "status": "SKIPPED",
+   "nama": "Sita 5",
+   "satu_baris": "SKIP mutlak — di luar skop.",
+   "maksud": "Siri S (Sitaan) di luar skop automation MBPG.",
+   "kesan": "Tidak diuji.",
+   "tindakan": "Tiada.",
+   "jenis": "APP"
   }
  },
  "anak": [
   {
    "peringkat": "bookmark N-005",
-   "induk": "borang N",
+   "induk": "MBPG-TC-N-001",
    "status": "TIDAK-DISOKONG",
    "tempoh_s": 369.3,
-   "nota": "had build 2.1.23 disahkan (popup tiada medan nama/SIMPAN); set MBPG_CUBA_BOOKMARK=1 untuk cuba semula pada build baharu"
+   "nota": "had build 2.1.23 disahkan (popup tiada medan nama/SIMPAN); set MBPG_CUBA_BOOKMARK=1 untuk cuba semula pada build baharu",
+   "induk_skrip": "borang N"
   },
   {
    "peringkat": "cipta",
-   "induk": "borang N",
+   "induk": "MBPG-TC-N-001",
    "status": "LULUS",
    "tempoh_s": 176.0,
-   "nota": "no_rekod=PGP02N261009011"
+   "nota": "no_rekod=PGP02N261009011",
+   "induk_skrip": "borang N"
   },
   {
    "peringkat": "cetak",
-   "induk": "borang N",
+   "induk": "MBPG-TC-N-001",
    "status": "LULUS",
    "tempoh_s": 12.3,
-   "nota": "printer SPP-R410_110095"
+   "nota": "printer SPP-R410_110095",
+   "induk_skrip": "borang N"
   },
   {
    "peringkat": "kemaskini",
-   "induk": "borang N",
+   "induk": "MBPG-TC-N-001",
    "status": "LULUS",
    "tempoh_s": 246.3,
-   "nota": "PGP02N261009011 -> PGP02N261009012"
+   "nota": "PGP02N261009011 -> PGP02N261009012",
+   "induk_skrip": "borang N"
   },
   {
    "peringkat": "tn_nk",
-   "induk": "borang N",
+   "induk": "MBPG-TC-N-001",
    "status": "SKIP-TIDAK-LAYAK",
    "tempoh_s": 0.5,
-   "nota": "notis PGP02N261009012 bertempoh 14 hari; layak ditukar pada 2026-10-23. Skrin Notis Kompaun TIDAK disentuh (D-07: membuka borang membakar nombor siri). Arahan pemilik 2026-08-17 + docs/recon/DAPATAN-N"
+   "nota": "notis PGP02N261009012 bertempoh 14 hari; layak ditukar pada 2026-10-23. Skrin Notis Kompaun TIDAK disentuh (D-07: membuka borang membakar nombor siri). Arahan pemilik 2026-08-17 + docs/recon/DAPATAN-N",
+   "induk_skrip": "borang N"
   },
   {
    "peringkat": "hantar",
-   "induk": "borang N",
+   "induk": "MBPG-TC-N-001",
    "status": "LULUS",
    "tempoh_s": 216.3,
-   "nota": "status baris PGP02N261009012 = ['N', '2026-10-09', '14:34', 'M', 'A', 'msc']"
+   "nota": "status baris PGP02N261009012 = ['N', '2026-10-09', '14:34', 'M', 'A', 'msc']",
+   "induk_skrip": "borang N"
   },
   {
    "peringkat": "senarai",
-   "induk": "borang N",
+   "induk": "MBPG-TC-N-001",
    "status": "LULUS",
    "tempoh_s": 25.9,
-   "nota": "PGP02N261009012 kelihatan dalam Senarai Kompaun"
+   "nota": "PGP02N261009012 kelihatan dalam Senarai Kompaun",
+   "induk_skrip": "borang N"
   },
   {
    "peringkat": "lampiran N-003",
-   "induk": "borang N",
+   "induk": "MBPG-TC-N-001",
    "status": "LULUS",
    "tempoh_s": 38.4,
-   "nota": "lampiran kamera diterima pada PGP02N261009012"
+   "nota": "lampiran kamera diterima pada PGP02N261009012",
+   "induk_skrip": "borang N"
   },
   {
    "peringkat": "p006",
-   "induk": "borang N",
+   "induk": "MBPG-TC-N-001",
    "status": "PERLU-MATA",
    "tempoh_s": 0.0,
-   "nota": "laluan cetak terbuka; tandatangan pada cetakan PGP02N261009012 perlu disemak fizikal oleh pemilik"
+   "nota": "laluan cetak terbuka; tandatangan pada cetakan PGP02N261009012 perlu disemak fizikal oleh pemilik",
+   "induk_skrip": "borang N"
   },
   {
    "peringkat": "bookmark P-005",
-   "induk": "borang P",
+   "induk": "MBPG-TC-P-001",
    "status": "TIDAK-DISOKONG",
    "tempoh_s": 321.4,
-   "nota": "had build 2.1.23 disahkan (popup tiada medan nama/SIMPAN); set MBPG_CUBA_BOOKMARK=1 untuk cuba semula pada build baharu"
+   "nota": "had build 2.1.23 disahkan (popup tiada medan nama/SIMPAN); set MBPG_CUBA_BOOKMARK=1 untuk cuba semula pada build baharu",
+   "induk_skrip": "borang P"
   },
   {
    "peringkat": "cipta",
-   "induk": "borang P",
+   "induk": "MBPG-TC-P-001",
    "status": "LULUS",
    "tempoh_s": 150.8,
-   "nota": "no_rekod=PGP02P261009027"
+   "nota": "no_rekod=PGP02P261009027",
+   "induk_skrip": "borang P"
   },
   {
    "peringkat": "cetak",
-   "induk": "borang P",
+   "induk": "MBPG-TC-P-001",
    "status": "LULUS",
    "tempoh_s": 12.7,
-   "nota": "printer SPP-R410_110095"
+   "nota": "printer SPP-R410_110095",
+   "induk_skrip": "borang P"
   },
   {
    "peringkat": "kemaskini",
-   "induk": "borang P",
+   "induk": "MBPG-TC-P-001",
    "status": "GAGAL",
    "tempoh_s": 320.8,
-   "nota": "popup proses BEKU pada 0% — kemaskini tidak lengkap (PGP02P261009027 tidak berkemaskini). Dapatan app, disahkan manual tester."
+   "nota": "popup proses BEKU pada 0% — kemaskini tidak lengkap (PGP02P261009027 tidak berkemaskini). Dapatan app, disahkan manual tester.",
+   "induk_skrip": "borang P"
   },
   {
    "peringkat": "tn_nk",
-   "induk": "borang P",
+   "induk": "MBPG-TC-P-001",
    "status": "TIDAK-DITAWARKAN",
    "tempoh_s": 1.1,
-   "nota": "TN/NK hanya wujud untuk borang N"
+   "nota": "TN/NK hanya wujud untuk borang N",
+   "induk_skrip": "borang P"
   },
   {
    "peringkat": "hantar",
-   "induk": "borang P",
+   "induk": "MBPG-TC-P-001",
    "status": "GAGAL",
    "tempoh_s": 590.5,
-   "nota": "StaleElementReferenceException: Message: The referenced element is no longer attached to the DOM; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdrive"
+   "nota": "StaleElementReferenceException: Message: The referenced element is no longer attached to the DOM; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdrive",
+   "induk_skrip": "borang P"
   },
   {
    "peringkat": "senarai",
-   "induk": "borang P",
+   "induk": "MBPG-TC-P-001",
    "status": "GAGAL",
    "tempoh_s": 195.4,
-   "nota": "StaleElementReferenceException: Message: The referenced element is no longer attached to the DOM; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdrive"
+   "nota": "StaleElementReferenceException: Message: The referenced element is no longer attached to the DOM; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdrive",
+   "induk_skrip": "borang P"
   },
   {
    "peringkat": "lampiran",
-   "induk": "borang P",
+   "induk": "MBPG-TC-P-001",
    "status": "TIDAK-DITAWARKAN",
    "tempoh_s": 138.0,
-   "nota": "N-003 sahaja dalam senarai retest; P/K/L/S-003 ialah serah, bukan lampiran, pada MBPG"
+   "nota": "N-003 sahaja dalam senarai retest; P/K/L/S-003 ialah serah, bukan lampiran, pada MBPG",
+   "induk_skrip": "borang P"
   },
   {
    "peringkat": "p006",
-   "induk": "borang P",
+   "induk": "MBPG-TC-P-001",
    "status": "PERLU-MATA",
    "tempoh_s": 0.0,
-   "nota": "laluan cetak terbuka; tandatangan pada cetakan PGP02P261009027 perlu disemak fizikal oleh pemilik"
+   "nota": "laluan cetak terbuka; tandatangan pada cetakan PGP02P261009027 perlu disemak fizikal oleh pemilik",
+   "induk_skrip": "borang P"
   },
   {
    "peringkat": "bookmark K-005",
-   "induk": "borang K [1/3] JYX6605",
+   "induk": "MBPG-TC-K-001",
    "status": "TIDAK-DISOKONG",
    "tempoh_s": 515.2,
-   "nota": "had build 2.1.23 disahkan (popup tiada medan nama/SIMPAN); set MBPG_CUBA_BOOKMARK=1 untuk cuba semula pada build baharu"
+   "nota": "had build 2.1.23 disahkan (popup tiada medan nama/SIMPAN); set MBPG_CUBA_BOOKMARK=1 untuk cuba semula pada build baharu",
+   "induk_skrip": "borang K [1/3] JYX6605"
   },
   {
    "peringkat": "cipta",
-   "induk": "borang K [1/3] JYX6605",
+   "induk": "MBPG-TC-K-001",
    "status": "LULUS",
    "tempoh_s": 86.6,
-   "nota": "no_rekod=PGP02K261009028"
+   "nota": "no_rekod=PGP02K261009028",
+   "induk_skrip": "borang K [1/3] JYX6605"
   },
   {
    "peringkat": "cetak",
-   "induk": "borang K [1/3] JYX6605",
+   "induk": "MBPG-TC-K-001",
    "status": "LULUS",
    "tempoh_s": 12.3,
-   "nota": "printer SPP-R410_110095"
+   "nota": "printer SPP-R410_110095",
+   "induk_skrip": "borang K [1/3] JYX6605"
   },
   {
    "peringkat": "kemaskini",
-   "induk": "borang K [1/3] JYX6605",
+   "induk": "MBPG-TC-K-001",
    "status": "TIDAK-DITAWARKAN",
    "tempoh_s": 103.9,
-   "nota": "rekod PGP02K261009028 tidak dijumpai dalam Senarai"
+   "nota": "rekod PGP02K261009028 tidak dijumpai dalam Senarai",
+   "induk_skrip": "borang K [1/3] JYX6605"
   },
   {
    "peringkat": "tn_nk",
-   "induk": "borang K [1/3] JYX6605",
+   "induk": "MBPG-TC-K-001",
    "status": "TIDAK-DITAWARKAN",
    "tempoh_s": 0.0,
-   "nota": "TN/NK hanya wujud untuk borang N"
+   "nota": "TN/NK hanya wujud untuk borang N",
+   "induk_skrip": "borang K [1/3] JYX6605"
   },
   {
    "peringkat": "hantar",
-   "induk": "borang K [1/3] JYX6605",
+   "induk": "MBPG-TC-K-001",
    "status": "LULUS",
    "tempoh_s": 194.2,
-   "nota": "status baris PGP02K261009028 = ['K', '2026-10-09', '15:18', 'H', 'A', 'msc']"
+   "nota": "status baris PGP02K261009028 = ['K', '2026-10-09', '15:18', 'H', 'A', 'msc']",
+   "induk_skrip": "borang K [1/3] JYX6605"
   },
   {
    "peringkat": "senarai",
-   "induk": "borang K [1/3] JYX6605",
+   "induk": "MBPG-TC-K-001",
    "status": "LULUS",
    "tempoh_s": 27.6,
-   "nota": "PGP02K261009028 kelihatan dalam Senarai Kompaun"
+   "nota": "PGP02K261009028 kelihatan dalam Senarai Kompaun",
+   "induk_skrip": "borang K [1/3] JYX6605"
   },
   {
    "peringkat": "lampiran",
-   "induk": "borang K [1/3] JYX6605",
+   "induk": "MBPG-TC-K-001",
    "status": "TIDAK-DITAWARKAN",
    "tempoh_s": 0.4,
-   "nota": "N-003 sahaja dalam senarai retest; P/K/L/S-003 ialah serah, bukan lampiran, pada MBPG"
+   "nota": "N-003 sahaja dalam senarai retest; P/K/L/S-003 ialah serah, bukan lampiran, pada MBPG",
+   "induk_skrip": "borang K [1/3] JYX6605"
   },
   {
    "peringkat": "p006",
-   "induk": "borang K [1/3] JYX6605",
+   "induk": "MBPG-TC-K-001",
    "status": "PERLU-MATA",
    "tempoh_s": 0.0,
-   "nota": "laluan cetak terbuka; tandatangan pada cetakan PGP02K261009028 perlu disemak fizikal oleh pemilik"
+   "nota": "laluan cetak terbuka; tandatangan pada cetakan PGP02K261009028 perlu disemak fizikal oleh pemilik",
+   "induk_skrip": "borang K [1/3] JYX6605"
   },
   {
    "peringkat": "bookmark K-005",
-   "induk": "borang K [2/3] JUA3276",
+   "induk": "MBPG-TC-K-001",
    "status": "TIDAK-DISOKONG",
    "tempoh_s": 522.6,
-   "nota": "had build 2.1.23 disahkan (popup tiada medan nama/SIMPAN); set MBPG_CUBA_BOOKMARK=1 untuk cuba semula pada build baharu"
+   "nota": "had build 2.1.23 disahkan (popup tiada medan nama/SIMPAN); set MBPG_CUBA_BOOKMARK=1 untuk cuba semula pada build baharu",
+   "induk_skrip": "borang K [2/3] JUA3276"
   },
   {
    "peringkat": "cipta",
-   "induk": "borang K [2/3] JUA3276",
+   "induk": "MBPG-TC-K-001",
    "status": "LULUS",
    "tempoh_s": 88.2,
-   "nota": "no_rekod=PGP02K261009029"
+   "nota": "no_rekod=PGP02K261009029",
+   "induk_skrip": "borang K [2/3] JUA3276"
   },
   {
    "peringkat": "cetak",
-   "induk": "borang K [2/3] JUA3276",
+   "induk": "MBPG-TC-K-001",
    "status": "LULUS",
    "tempoh_s": 12.4,
-   "nota": "printer SPP-R410_110095"
+   "nota": "printer SPP-R410_110095",
+   "induk_skrip": "borang K [2/3] JUA3276"
   },
   {
    "peringkat": "kemaskini",
-   "induk": "borang K [2/3] JUA3276",
+   "induk": "MBPG-TC-K-001",
    "status": "LULUS",
    "tempoh_s": 271.7,
-   "nota": "PGP02K261009029 -> PGP02K261009030"
+   "nota": "PGP02K261009029 -> PGP02K261009030",
+   "induk_skrip": "borang K [2/3] JUA3276"
   },
   {
    "peringkat": "tn_nk",
-   "induk": "borang K [2/3] JUA3276",
+   "induk": "MBPG-TC-K-001",
    "status": "TIDAK-DITAWARKAN",
    "tempoh_s": 0.4,
-   "nota": "TN/NK hanya wujud untuk borang N"
+   "nota": "TN/NK hanya wujud untuk borang N",
+   "induk_skrip": "borang K [2/3] JUA3276"
   },
   {
    "peringkat": "hantar",
-   "induk": "borang K [2/3] JUA3276",
+   "induk": "MBPG-TC-K-001",
    "status": "GAGAL",
    "tempoh_s": 273.4,
-   "nota": "status baris PGP02K261009030 = None"
+   "nota": "status baris PGP02K261009030 = None",
+   "induk_skrip": "borang K [2/3] JUA3276"
   },
   {
    "peringkat": "senarai",
-   "induk": "borang K [2/3] JUA3276",
+   "induk": "MBPG-TC-K-001",
    "status": "GAGAL",
    "tempoh_s": 50.2,
-   "nota": "PGP02K261009030 TIDAK kelihatan dalam Senarai Kompaun"
+   "nota": "PGP02K261009030 TIDAK kelihatan dalam Senarai Kompaun",
+   "induk_skrip": "borang K [2/3] JUA3276"
   },
   {
    "peringkat": "lampiran",
-   "induk": "borang K [2/3] JUA3276",
+   "induk": "MBPG-TC-K-001",
    "status": "TIDAK-DITAWARKAN",
    "tempoh_s": 0.8,
-   "nota": "N-003 sahaja dalam senarai retest; P/K/L/S-003 ialah serah, bukan lampiran, pada MBPG"
+   "nota": "N-003 sahaja dalam senarai retest; P/K/L/S-003 ialah serah, bukan lampiran, pada MBPG",
+   "induk_skrip": "borang K [2/3] JUA3276"
   },
   {
    "peringkat": "p006",
-   "induk": "borang K [2/3] JUA3276",
+   "induk": "MBPG-TC-K-001",
    "status": "PERLU-MATA",
    "tempoh_s": 0.0,
-   "nota": "laluan cetak terbuka; tandatangan pada cetakan PGP02K261009030 perlu disemak fizikal oleh pemilik"
+   "nota": "laluan cetak terbuka; tandatangan pada cetakan PGP02K261009030 perlu disemak fizikal oleh pemilik",
+   "induk_skrip": "borang K [2/3] JUA3276"
   },
   {
    "peringkat": "bookmark K-005",
-   "induk": "borang K [3/3] JRT2649",
+   "induk": "MBPG-TC-K-001",
    "status": "TIDAK-DISOKONG",
    "tempoh_s": 520.0,
-   "nota": "had build 2.1.23 disahkan (popup tiada medan nama/SIMPAN); set MBPG_CUBA_BOOKMARK=1 untuk cuba semula pada build baharu"
+   "nota": "had build 2.1.23 disahkan (popup tiada medan nama/SIMPAN); set MBPG_CUBA_BOOKMARK=1 untuk cuba semula pada build baharu",
+   "induk_skrip": "borang K [3/3] JRT2649"
   },
   {
    "peringkat": "cipta",
-   "induk": "borang K [3/3] JRT2649",
+   "induk": "MBPG-TC-K-001",
    "status": "LULUS",
    "tempoh_s": 88.7,
-   "nota": "no_rekod=PGP02K261009031"
+   "nota": "no_rekod=PGP02K261009031",
+   "induk_skrip": "borang K [3/3] JRT2649"
   },
   {
    "peringkat": "cetak",
-   "induk": "borang K [3/3] JRT2649",
+   "induk": "MBPG-TC-K-001",
    "status": "LULUS",
    "tempoh_s": 12.5,
-   "nota": "printer SPP-R410_110095"
+   "nota": "printer SPP-R410_110095",
+   "induk_skrip": "borang K [3/3] JRT2649"
   },
   {
    "peringkat": "kemaskini",
-   "induk": "borang K [3/3] JRT2649",
+   "induk": "MBPG-TC-K-001",
    "status": "TIDAK-DITAWARKAN",
    "tempoh_s": 101.5,
-   "nota": "rekod PGP02K261009031 tidak dijumpai dalam Senarai"
+   "nota": "rekod PGP02K261009031 tidak dijumpai dalam Senarai",
+   "induk_skrip": "borang K [3/3] JRT2649"
   },
   {
    "peringkat": "tn_nk",
-   "induk": "borang K [3/3] JRT2649",
+   "induk": "MBPG-TC-K-001",
    "status": "TIDAK-DITAWARKAN",
    "tempoh_s": 0.0,
-   "nota": "TN/NK hanya wujud untuk borang N"
+   "nota": "TN/NK hanya wujud untuk borang N",
+   "induk_skrip": "borang K [3/3] JRT2649"
   },
   {
    "peringkat": "hantar",
-   "induk": "borang K [3/3] JRT2649",
+   "induk": "MBPG-TC-K-001",
    "status": "GAGAL",
    "tempoh_s": 224.2,
-   "nota": "status baris PGP02K261009031 = None"
+   "nota": "status baris PGP02K261009031 = None",
+   "induk_skrip": "borang K [3/3] JRT2649"
   },
   {
    "peringkat": "senarai",
-   "induk": "borang K [3/3] JRT2649",
+   "induk": "MBPG-TC-K-001",
    "status": "GAGAL",
    "tempoh_s": 51.6,
-   "nota": "PGP02K261009031 TIDAK kelihatan dalam Senarai Kompaun"
+   "nota": "PGP02K261009031 TIDAK kelihatan dalam Senarai Kompaun",
+   "induk_skrip": "borang K [3/3] JRT2649"
   },
   {
    "peringkat": "lampiran",
-   "induk": "borang K [3/3] JRT2649",
+   "induk": "MBPG-TC-K-001",
    "status": "TIDAK-DITAWARKAN",
    "tempoh_s": 0.8,
-   "nota": "N-003 sahaja dalam senarai retest; P/K/L/S-003 ialah serah, bukan lampiran, pada MBPG"
+   "nota": "N-003 sahaja dalam senarai retest; P/K/L/S-003 ialah serah, bukan lampiran, pada MBPG",
+   "induk_skrip": "borang K [3/3] JRT2649"
   },
   {
    "peringkat": "p006",
-   "induk": "borang K [3/3] JRT2649",
+   "induk": "MBPG-TC-K-001",
    "status": "PERLU-MATA",
    "tempoh_s": 0.0,
-   "nota": "laluan cetak terbuka; tandatangan pada cetakan PGP02K261009031 perlu disemak fizikal oleh pemilik"
+   "nota": "laluan cetak terbuka; tandatangan pada cetakan PGP02K261009031 perlu disemak fizikal oleh pemilik",
+   "induk_skrip": "borang K [3/3] JRT2649"
   }
  ],
  "padanan_human": [
@@ -623,5 +1180,6 @@
  ],
  "padanan_nota": "Padanan ini dijawab secara jujur, termasuk di mana padanan TIDAK wujud. Daripada 8 Fail laporan human (V2.1.25), hanya 1 padan penuh dengan automasi (P-004), 2 sebahagian (H-002/H-003), 1 automasi buta (N-004), 1 tercanggah dalam laporan human sendiri (P-002), 1 tak boleh dibanding kerana automasi gagal lebih awal (K-004, punca SKRIP), dan 2 di luar skop automasi (H-005, L-002). Automasi pula menemui 2 defek yang human tidak uji: D-09 (PII mySIKAP) dan D-12 (had 10 baris Senarai).",
  "bukti_nota": "Tangkapan ada pada BARISnya sendiri dalam kolum Bukti jadual. Setiap satu disemak mata dan di-hash; tiada gambar direka. Baris tanpa tangkapan kekal —.",
- "nota_bukti_en": "Captures are placed on their own row in the 'Evidence' column. Each was visually checked and hashed; no image is invented or recycled as a separate event. Rows without a capture stay '—'."
+ "nota_bukti_en": "Captures are placed on their own row in the 'Evidence' column. Each was visually checked and hashed; no image is invented or recycled as a separate event. Rows without a capture stay '—'.",
+ "bilangan_tc": 50
 }
