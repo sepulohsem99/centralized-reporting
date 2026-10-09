@@ -120,15 +120,22 @@ def main():
     if SRC_BUKTI.is_dir():
         # Kosongkan dahulu — kalau tidak, gambar lama yang telah ditukar nama
         # akan terus hidup dalam public/ dan menyesatkan (fail bertindih).
+        # FIX#24(b): terima .png DAN .jpg — tangkapan bukti baharu ditukar
+        # ke JPEG (kualiti 78) supaya halaman kekal ringan; corak *.png
+        # sahaja bermakna ia tidak pernah sampai ke public/ dan tab
+        # padanan menunjuk gambar yang tiada.
         dst = PUB / "bukti"
-        if dst.is_dir():
-            for old in dst.glob("*.png"):
-                old.unlink()
         dst.mkdir(exist_ok=True)
+        corak = ("*.png", "*.jpg", "*.jpeg")
+        if dst.is_dir():
+            for pat in corak:
+                for old in dst.glob(pat):
+                    old.unlink()
         n = 0
-        for f in sorted(SRC_BUKTI.glob("*.png")):
-            shutil.copy2(f, dst / f.name)
-            n += 1
+        for pat in corak:
+            for f in sorted(SRC_BUKTI.glob(pat)):
+                shutil.copy2(f, dst / f.name)
+                n += 1
         print(f"[STATIK] bukti/ ({n} gambar)")
     else:
         print("[STATIK] AMARAN: folder bukti/ tiada — tab Gap Analysis "

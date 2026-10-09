@@ -218,11 +218,13 @@ function render(){
     <div class="tab ${sel.tab==='ganti'?'on':''}" onclick="pickTab('ganti')">${tr('Ganti Nilai','Replace Values')}</div>
     <div class="tab ${sel.tab==='manual'?'on':''}" onclick="pickTab('manual')">Manual User</div>
     <div class="tab ${sel.tab==='rekod'?'on':''}" onclick="pickTab('rekod')">${tr('Rekod Production','Production Records')}</div>
+    <div class="tab ${sel.tab==='padanan'?'on':''}" onclick="pickTab('padanan')">${tr('Padanan Human','Human Match')}</div>
     <div class="tab ${sel.tab==='gap'?'on':''}" onclick="pickTab('gap')">Gap Analysis</div>
   </div>`;
   if(sel.tab==='laporan') h+=laporanHtml(run);
   else if(sel.tab==='sejarah') h+=sejarahHtml(runs);
   else if(sel.tab==='rekod') h+=rekodHtml();
+  else if(sel.tab==='padanan') h+=padananHtml(run);
   else if(sel.tab==='ganti') h+=`<div class="panel"><div class="tut" id="gantiWrap"><div class="empty">${tr('memuat...','loading...')}</div></div></div>`;
   else if(sel.tab==='gap') h+=gapHtml();
   else h+=manualHtml(sel.pbt);
@@ -315,6 +317,63 @@ function laporanHtml(run){
   </div>`;
 }
 function renderTableOnly(run){ const t=document.getElementById('tbl'); if(t&&run) t.innerHTML=tableHtml(run); }
+
+/* PADANAN human vs automasi — FIX#24(b)
+   Pemilik tanya: "5 failed ni match tak dengan human tester report?"
+   Jawapannya mesti jujur TERMASUK di mana padanan TIDAK wujud. */
+const VER=ST; // guna palet status yang sama
+const VWARNA={
+  'PADAN':{c:'var(--fail)',bg:'var(--fail-bg)'},
+  'SEBAGIAN':{c:'var(--lain)',bg:'var(--lain-bg)'},
+  'TAK BOLEH BANDING':{c:'var(--lain)',bg:'var(--lain-bg)'},
+  'AUTOMASI BUTA':{c:'var(--lain)',bg:'var(--lain-bg)'},
+  'BERCANGGAH (HUMAN)':{c:'var(--lain)',bg:'var(--lain-bg)'},
+  'TAK DIUJI':{c:'var(--skip)',bg:'var(--skip-bg)'},
+  'HANYA AUTOMASI':{c:'var(--fail)',bg:'var(--fail-bg)'},
+};
+function pv(v){return VWARNA[v]||{c:'var(--dim)',bg:'var(--skip-bg)'};}
+function padananHtml(run){
+  const p=(run&&run.padanan_human)||[];
+  if(!p.length) return `<div class="panel"><div class="empty">${tr('Tiada data padanan untuk larian ini','No match data for this run')}</div></div>`;
+  const bil={};
+  for(const x of p) bil[x.verdict]=(bil[x.verdict]||0)+1;
+  const tanpaBukti=p.filter(x=>!x.bukti).length;
+  return `<div class="panel">
+    <div style="padding:11px 13px;border-bottom:1px solid var(--line)">
+      <b style="font-size:.85rem">${tr('Padanan: 5 GAGAL automasi vs 8 Fail laporan human (V2.1.25)','Match: 5 automation FAILED vs 8 human FAIL (V2.1.25)')}</b>
+      <div style="margin-top:6px;color:var(--dim);font-size:.65rem;line-height:1.5">
+        ${tr('Jawapannya TIDAK padan sepenuhnya. Hanya 1 padan penuh. Sebab utama: 3 daripada 5 GAGAL automasi berpunca daripada BUG SKRIP (penapis tarikh), bukan app — jadi automasi gagal lebih awal dan tidak sempat menguji langkah yang human uji.','The answer is NO, not a full match. Only 1 matches fully. Main reason: 3 of the 5 automation FAILs were caused by a SCRIPT BUG (date filter), not the app — so automation failed earlier and never exercised the steps the human did.')}
+      </div>
+      <div style="margin-top:7px;display:flex;gap:6px;flex-wrap:wrap;font-size:.6rem">
+        ${Object.entries(bil).map(([k,v])=>`<span class="badge" style="color:${pv(k).c};background:${pv(k).bg};border-color:${pv(k).c}55">${esc(k)}: ${v}</span>`).join('')}
+      </div>
+    </div>
+    <div class="scroll">
+    <table><thead><tr>
+      <th style="width:150px">TC Human</th><th style="width:70px">Status</th>
+      <th>Apa berlaku (human)</th><th style="width:150px">Peringkat automasi</th>
+      <th style="width:60px">Auto</th><th style="width:110px">${tr('Padanan','Match')}</th>
+      <th>${tr('Penjelasan','Explanation')}</th><th style="width:70px">${tr('Bukti','Evidence')}</th>
+    </tr></thead><tbody>
+    ${p.map(x=>{const w=pv(x.verdict);
+      const img=x.bukti?`<img src="${x.bukti}" alt="bukti" loading="lazy" onclick="bukaBukti(this.src)" title="${tr('Klik untuk besarkan','Click to enlarge')}" style="width:60px;height:auto;border:1px solid var(--line);border-radius:4px;display:block;cursor:zoom-in">`:'<span style="color:var(--dimmer);font-size:.58rem">—</span>';
+      const jn=x.jenis||'';
+      const jw=jn.indexOf('APP')>=0?'var(--fail)':'var(--lain)';
+      const jb=jn?`<span class="badge" style="color:${jw};background:${jn.indexOf('APP')>=0?'var(--fail-bg)':'var(--lain-bg)'};border-color:currentColor;font-size:.52rem">${esc(jn)}</span>`:'';
+      return `<tr><td class="tc">${esc(x.tc_human)}</td>
+        <td><span class="badge" style="color:${x.human==='Fail'?'var(--fail)':x.human==='Pass'?'var(--pass)':'var(--dim)'};background:${x.human==='Fail'?'var(--fail-bg)':x.human==='Pass'?'var(--pass-bg)':'var(--skip-bg)'};border-color:currentColor">${esc(x.human)}</span></td>
+        <td style="font-size:.63rem">${esc(x.apa_human)}</td>
+        <td style="font-size:.63rem;color:var(--dim)">${esc(x.tc_auto)}</td>
+        <td><span style="font-size:.6rem;color:${x.auto==='LULUS'?'var(--pass)':x.auto==='GAGAL'?'var(--fail)':'var(--dim)'};font-weight:600">${esc(x.auto)}</span></td>
+        <td><span class="badge" style="color:${w.c};background:${w.bg};border-color:${w.c}55">${esc(x.verdict)}</span></td>
+        <td style="font-size:.63rem">${esc(x.nota)}${jb?`<div style="margin-top:3px">${jb}</div>`:''}</td>
+        <td>${img}</td></tr>`;}).join('')}
+    </tbody></table></div>
+    ${tanpaBukti?`<div style="padding:8px 12px;font-size:.6rem;color:var(--dim);border-top:1px solid var(--line)">
+      <b>${tr('Jujur','Honest')}:</b> ${tr(tanpaBukti+' baris tiada gambar. Baris itu ialah laluan yang TIDAK diuji atau lulus tanpa tangkapan — bukan peristiwa yang dituntut berlaku. Tiada gambar direka atau dikitar semula.',tanpaBukti+' rows have no image. Those are paths never exercised, or passes with no capture — not events claimed to have happened. No image is invented or recycled.')}
+    </div>`:''}
+  </div>`;
+}
 function tableHtml(run){
   const q=sel.q.toLowerCase();
   // >>> Anak (sub-peringkat) ikut induk — FIX#24 <<<

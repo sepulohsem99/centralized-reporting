@@ -477,5 +477,128 @@
    "tempoh_s": 0.0,
    "nota": "laluan cetak terbuka; tandatangan pada cetakan PGP02K261009031 perlu disemak fizikal oleh pemilik"
   }
- ]
+ ],
+ "padanan_human": [
+  {
+   "tc_human": "MBPG-TC-P-004",
+   "human": "Fail",
+   "apa_human": "props error; KOD AKTA tidak sepadan; kemaskini tak boleh submit",
+   "tc_auto": "borang P → kemaskini",
+   "auto": "GAGAL",
+   "apa_auto": "popup 'MEMULAKAN PROSES...' BEKU pada 0%; modal tersekat, 8x BACK gagal",
+   "verdict": "PADAN",
+   "jenis": "APP",
+   "nota": "Punca SAMA. Manual nampak props error; automasi nampak popup beku 0%. Dua-dua = kemaskini P tidak boleh selesai (D-13).",
+   "bukti": "bukti/mbpg-17-P004-kemaskini-beku-0pc.jpg"
+  },
+  {
+   "tc_human": "MBPG-TC-K-004",
+   "human": "Fail",
+   "apa_human": "KOD AKTA tidak muncul semasa KEMASKINI KOMPAUN LETAK KERETA",
+   "tc_auto": "borang K [1/3] → kemaskini",
+   "auto": "TIDAK-DITAWARKAN",
+   "apa_auto": "rekod PGP02K261009028 tidak dijumpai dalam Senarai — borang Kemaskini TIDAK PERNAH dibuka",
+   "verdict": "TAK BOLEH BANDING",
+   "jenis": "SKRIP",
+   "nota": "Automasi gagal LEBIH AWAL daripada manual, jadi ia tidak pernah sampai ke langkah yang manual uji. Puncanya BUKAN app — ia bug skrip (penapis julat). Lihat penemuan D-14: 3 daripada 5 GAGAL automasi ialah bug skrip sendiri.",
+   "bukti": "bukti/mbpg-17-senarai-kosong-tarikh-akhir.jpg"
+  },
+  {
+   "tc_human": "MBPG-TC-H-002",
+   "human": "Fail",
+   "apa_human": "'props error' kadangkala keluar selepas Hantar Data Kompaun Pelbagai",
+   "tc_auto": "borang P → hantar",
+   "auto": "GAGAL",
+   "apa_auto": "StaleElementReferenceException + rekod tak dijumpai dalam Senarai",
+   "verdict": "SEBAGIAN",
+   "jenis": "APP+SKRIP",
+   "nota": "Kedua-duanya GAGAL pada Hantar P, tetapi sebabnya BERBEZA. Manual: props error (APP). Automasi: penapis tarikh tak termaktub (SKRIP). Automasi belum buktikan props error itu — ia tersekat sebelum sempat melihatnya.",
+   "bukti": "bukti/mbpg-17-kalendar-masih-terbuka.jpg"
+  },
+  {
+   "tc_human": "MBPG-TC-H-003",
+   "human": "Fail",
+   "apa_human": "LOKASI KESALAHAN tidak disimpan semasa DAFTAR KERETA (nampak di Hantar Data)",
+   "tc_auto": "borang K [2/3]+[3/3] → hantar",
+   "auto": "GAGAL",
+   "apa_auto": "status baris = None; rekod tak dijumpai dalam Senarai",
+   "verdict": "SEBAGIAN",
+   "jenis": "APP+SKRIP",
+   "nota": "Sama seperti H-002: dua-dua GAGAL, punca berbeza. Defek manual (LOKASI KESALAHAN hilang) TIDAK diuji automasi — ia gagal pada langkah Senarai dahulu (SKRIP).",
+   "bukti": "bukti/mbpg-17-senarai-kosong-tarikh-akhir.jpg"
+  },
+  {
+   "tc_human": "MBPG-TC-N-004",
+   "human": "Fail",
+   "apa_human": "KEMASKINI NOTIS tidak simpan ke H — ia simpan 'T' (boleh hantar semula)",
+   "tc_auto": "borang N → kemaskini",
+   "auto": "LULUS",
+   "apa_auto": "PGP02N261009011 -> PGP02N261009012 (nombor gantian diperoleh)",
+   "verdict": "AUTOMASI BUTA",
+   "jenis": "SKRIP",
+   "nota": "Automasi cuma semak nombor gantian wujud; ia TIDAK semak huruf status (T vs H). Jadi ia lulus walaupun defek sebenar ada. Ini had skrip yang diketahui — jenis sama seperti H-002/H-003.",
+   "bukti": null
+  },
+  {
+   "tc_human": "MBPG-TC-P-002",
+   "human": "Fail",
+   "apa_human": "Status = Fail, TETAPI Actual Results tulis 'User able to successfully print to a connected printer' — bercanggah",
+   "tc_auto": "borang P → cetak",
+   "auto": "LULUS",
+   "apa_auto": "printer SPP-R410_110095, 12.7s, popup CETAK tertutup",
+   "verdict": "BERCANGGAH (HUMAN)",
+   "jenis": "APP",
+   "nota": "Laporan human bercanggah dengan dirinya sendiri. Automasi + bukti cetakan menyokong LULUS. Perlu human sahkan semula status TC ini.",
+   "bukti": "bukti/mbpg-17-N001-serah-berjaya.jpg"
+  },
+  {
+   "tc_human": "MBPG-TC-H-005",
+   "human": "Fail",
+   "apa_human": "Hantar Semula Sitaan: Status Hantar='M', Status='A', masuk DATA RALAT",
+   "tc_auto": "—",
+   "auto": "TAK DIUJI",
+   "apa_auto": "siri Sitaan (S) di luar skop automasi (borang N/P/K sahaja)",
+   "verdict": "TAK DIUJI",
+   "jenis": "SKRIP",
+   "nota": "Perlu tambah borang Sitaan ke skop sebelum TC ini boleh disahkan automasi.",
+   "bukti": null
+  },
+  {
+   "tc_human": "MBPG-TC-L-002",
+   "human": "Fail",
+   "apa_human": "butiran cetakan masuk baris baharu",
+   "tc_auto": "—",
+   "auto": "TAK DIUJI",
+   "apa_auto": "siri Lesen (L) di luar skop automasi",
+   "verdict": "TAK DIUJI",
+   "jenis": "SKRIP",
+   "nota": "Sama seperti H-005 — di luar skop.",
+   "bukti": null
+  },
+  {
+   "tc_human": "— (tiada dalam laporan human)",
+   "human": "—",
+   "apa_human": "tidak diuji oleh human",
+   "tc_auto": "semak D-09",
+   "auto": "GAGAL",
+   "apa_auto": "mySIKAP: identiti 93********05 muncul pada DUA plat BERBEZA (JYX6605 + JUA3276) merentas 4 rekod K — PII orang sebenar",
+   "verdict": "HANYA AUTOMASI",
+   "jenis": "APP",
+   "nota": "KRITIKAL. Laporan human tidak menguji pertukaran plat. Corong: BATALKAN SEMUA rekod K, jangan serah kepada penguatkuasaan.",
+   "bukti": null
+  },
+  {
+   "tc_human": "MBPG-TC-SK-001",
+   "human": "Pass",
+   "apa_human": "No Kompaun dipapar mengikut urutan",
+   "tc_auto": "senarai (SK-001)",
+   "auto": "GAGAL",
+   "apa_auto": "Senarai had 10 baris keras; pagination-container KOSONG; carian diabaikan",
+   "verdict": "HANYA AUTOMASI",
+   "jenis": "APP",
+   "nota": "D-12. Human nampak 'Pass' kerana hanya ada <10 rekod pada satu masa; automasi cipta >10 sehari jadi had itu mendedahkan diri.",
+   "bukti": "bukti/mbpg-17-senarai-berjaya-tarikh-akhir.jpg"
+  }
+ ],
+ "padanan_nota": "Padanan ini dijawab secara jujur, termasuk di mana padanan TIDAK wujud. Daripada 8 Fail laporan human (V2.1.25), hanya 1 padan penuh dengan automasi (P-004), 2 sebahagian (H-002/H-003), 1 automasi buta (N-004), 1 tercanggah dalam laporan human sendiri (P-002), 1 tak boleh dibanding kerana automasi gagal lebih awal (K-004, punca SKRIP), dan 2 di luar skop automasi (H-005, L-002). Automasi pula menemui 2 defek yang human tidak uji: D-09 (PII mySIKAP) dan D-12 (had 10 baris Senarai)."
 }
