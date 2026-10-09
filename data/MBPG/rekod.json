@@ -1,8 +1,8 @@
 {
  "pbt": "MBPG",
- "dijana": "2026-10-09 23:37",
- "jumlah_rekod": 108,
- "jumlah_baris": 119,
+ "dijana": "2026-10-10 07:55",
+ "jumlah_rekod": 116,
+ "jumlah_baris": 128,
  "jumlah_larian": 18,
  "nota": "Setiap rekod di bawah ialah rekod HIDUP pada production MBPG (113.211.155.174). Semua ialah data ujian: nama pesalah bermula 'UJIAN AUTOMASI E2E' dan catatan membawa 'AUTOMASI-CLEANUP-PM'. Baris tanpa nombor = laluan kemaskini yang tidak menghasilkan nombor gantian (diketahui). Pembatalan melalui portal ePBT oleh PM — automasi TIDAK memadam apa-apa.",
  "runs": [
@@ -1623,16 +1623,24 @@
    "no_larian": 18,
    "label": "Larian #18",
    "mula": "2026-10-09 22:39",
-   "tamat": "2026-10-09 23:16",
+   "tamat": "2026-10-10 01:33",
    "tarikh": "2026-10-09",
-   "bilangan": 4,
-   "bilangan_bernombor": 4,
-   "bilangan_cetak": 3,
+   "bilangan": 13,
+   "bilangan_bernombor": 12,
+   "bilangan_cetak": 8,
    "no_rekod": [
     "PGP02N261009013",
     "PGP02N261009014",
     "PGP02P261009032",
-    "PGP02K261009033"
+    "PGP02K261009033",
+    "PGP02N261009015",
+    "PGP02P261010034",
+    "PGP02K261010035",
+    "PGP02K261010036",
+    "PGP02K261010037",
+    "PGP02K261010038",
+    "PGP02K261010039",
+    "PGP02K261010040"
    ],
    "rekod": [
     {
@@ -1678,6 +1686,105 @@
      "asal": "",
      "cetak_dihantar": true,
      "printer": "SPP-R410_110095"
+    },
+    {
+     "no_rekod": "PGP02N261009015",
+     "tc": "N-001",
+     "borang": "N",
+     "jenis": "Notis",
+     "masa": "2026-10-10 00:01:44",
+     "status": "baru",
+     "asal": "",
+     "cetak_dihantar": true,
+     "printer": "SPP-R410_110095"
+    },
+    {
+     "no_rekod": "PGP02P261010034",
+     "tc": "P-001",
+     "borang": "P",
+     "jenis": "Kompaun",
+     "masa": "2026-10-10 00:18:03",
+     "status": "baru",
+     "asal": "",
+     "cetak_dihantar": true,
+     "printer": "SPP-R410_110095"
+    },
+    {
+     "no_rekod": null,
+     "tc": "P-004",
+     "borang": "P",
+     "jenis": "Kompaun",
+     "masa": "2026-10-10 00:23:40",
+     "status": "hasil-kemaskini",
+     "asal": "PGP02P261010034",
+     "cetak_dihantar": false,
+     "printer": ""
+    },
+    {
+     "no_rekod": "PGP02K261010035",
+     "tc": "K-001",
+     "borang": "K",
+     "jenis": "Kompaun",
+     "masa": "2026-10-10 00:46:01",
+     "status": "baru",
+     "asal": "",
+     "cetak_dihantar": true,
+     "printer": "SPP-R410_110095"
+    },
+    {
+     "no_rekod": "PGP02K261010036",
+     "tc": "K-004",
+     "borang": "K",
+     "jenis": "Kompaun",
+     "masa": "2026-10-10 00:50:44",
+     "status": "hasil-kemaskini",
+     "asal": "PGP02K261010035",
+     "cetak_dihantar": false,
+     "printer": ""
+    },
+    {
+     "no_rekod": "PGP02K261010037",
+     "tc": "K-001",
+     "borang": "K",
+     "jenis": "Kompaun",
+     "masa": "2026-10-10 01:07:33",
+     "status": "baru",
+     "asal": "",
+     "cetak_dihantar": true,
+     "printer": "SPP-R410_110095"
+    },
+    {
+     "no_rekod": "PGP02K261010038",
+     "tc": "K-004",
+     "borang": "K",
+     "jenis": "Kompaun",
+     "masa": "2026-10-10 01:12:17",
+     "status": "hasil-kemaskini",
+     "asal": "PGP02K261010037",
+     "cetak_dihantar": false,
+     "printer": ""
+    },
+    {
+     "no_rekod": "PGP02K261010039",
+     "tc": "K-001",
+     "borang": "K",
+     "jenis": "Kompaun",
+     "masa": "2026-10-10 01:28:56",
+     "status": "baru",
+     "asal": "",
+     "cetak_dihantar": true,
+     "printer": "SPP-R410_110095"
+    },
+    {
+     "no_rekod": "PGP02K261010040",
+     "tc": "K-004",
+     "borang": "K",
+     "jenis": "Kompaun",
+     "masa": "2026-10-10 01:33:46",
+     "status": "hasil-kemaskini",
+     "asal": "PGP02K261010039",
+     "cetak_dihantar": false,
+     "printer": ""
     }
    ]
   }
@@ -1737,6 +1844,12 @@
   "PGP02K261009030",
   "PGP02K261009031",
   "PGP02K261009033",
+  "PGP02K261010035",
+  "PGP02K261010036",
+  "PGP02K261010037",
+  "PGP02K261010038",
+  "PGP02K261010039",
+  "PGP02K261010040",
   "PGP02N260817008",
   "PGP02N260818001",
   "PGP02N260819002",
@@ -1767,6 +1880,7 @@
   "PGP02N261009012",
   "PGP02N261009013",
   "PGP02N261009014",
+  "PGP02N261009015",
   "PGP02P260818001",
   "PGP02P260818002",
   "PGP02P260818003",
@@ -1790,6 +1904,7 @@
   "PGP02P261008020",
   "PGP02P261008023",
   "PGP02P261009027",
-  "PGP02P261009032"
+  "PGP02P261009032",
+  "PGP02P261010034"
  ]
 }
