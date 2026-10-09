@@ -403,6 +403,62 @@ def _read(path):
         return None
 
 
+_STATUS_NORM = {
+    "LULUS": "PASSED", "PASSED": "PASSED",
+    "GAGAL": "FAILED", "FAILED": "FAILED", "ERROR": "ERROR",
+    "GAGAL-BERSEBASTIAN": "FAILED", "GAGAL-AWAL": "FAILED",
+    "RANAP-D-01": "FAILED",
+    "SKIP": "SKIPPED", "SKIPPED": "SKIPPED",
+    "TIDAK-DITAWARKAN": "SKIPPED", "TIDAK-DISOKONG": "UNSUPPORTED",
+    "PERLU-MATA": "NEEDS_EYE",
+}
+
+
+def _norm_hasil(run):
+    """Normalkan status supaya SEMUA larian bercakap bahasa sama.
+
+    Dua format hidup dalam data/: larian lama sudah PASSED/FAILED/SKIPPED
+    (bentuk adapter), larian baru dari run_penuh masih LULUS/GAGAL.
+    Dashboard hanya tahu PASSED/FAILED, jadi tanpa normalisasi di SATU
+    tempat, `borang P: LULUS` dan `GAGAL-BERSEBASTIAN` kedua-duanya
+    muncul sebagai badge kosong — pembohongan yang sama seperti terminal.
+    """
+    res = run.get("results")
+    if not isinstance(res, dict):
+        return run
+    for v in res.values():
+        if not isinstance(v, dict):
+            continue
+        raw = str(v.get("status", "")).strip().upper()
+        v["status_asli"] = v.get("status")
+        v["status"] = _STATUS_NORM.get(raw, raw)
+    # Anak: sama peraturan, dan disertakan sebagai senarai berasingan
+    # supaya jadual boleh menunjukkannya di bawah induk.
+    for a in (run.get("anak") or []):
+        if isinstance(a, dict):
+            raw = str(a.get("status", "")).strip().upper()
+            a["status_asli"] = a.get("status")
+            a["status"] = _STATUS_NORM.get(raw, raw)
+    # Ringkasan dikira semula dari hasil supaya angka TIDAK boleh
+    # bercanggah dengan baris yang dipapar.
+    bil = {"passed": 0, "failed": 0, "skipped": 0, "lain": 0}
+    for v in res.values():
+        st = v.get("status") if isinstance(v, dict) else None
+        if st == "PASSED":
+            bil["passed"] += 1
+        elif st in ("FAILED", "ERROR"):
+            bil["failed"] += 1
+        elif st == "SKIPPED":
+            bil["skipped"] += 1
+        else:
+            bil["lain"] += 1
+    if run.get("summary"):
+        run["summary"].update(bil)
+    else:
+        run["summary"] = bil
+    return run
+
+
 def collect():
     manifest = _read(DATA / "manifest.json") or {"pbt": []}
     keluar = {"manifest": manifest, "runs": {}}
@@ -414,7 +470,7 @@ def collect():
             for f in sorted(folder.glob("*.json")):
                 d = _read(f)
                 if isinstance(d, dict):
-                    runs.append(d)
+                    runs.append(_norm_hasil(d))
         runs.sort(key=lambda r: str(r.get("generated_at", "")), reverse=True)
         keluar["runs"][kod] = runs
     # Rekod production — senarai rekod HIDUP untuk pembatalan PM (tab baharu).

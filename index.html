@@ -254,7 +254,16 @@ function counts(run){
     else if(v.status==='FAILED'||v.status==='ERROR')k.FAILED++;
     else if(v.status==='SKIPPED')k.SKIPPED++;
     else k.LAIN++;
-  } return k;
+  }
+  // >>> FIX#24: sub-peringkat GAGAL ditunjuk dalam kiraan. <<<
+  // Tanpa ini, `borang P` (induk) boleh lulus walaupun tiga anak GAGAL,
+  // dan angka di atas jadual memberi gambaran lebih hijau daripada
+  // baris yang dipapar di bawahnya.
+  k.ANAK=0; k.ANAK_GAGAL=0;
+  for(const a of (run.anak||[])){ k.ANAK++;
+    if(a.status==='FAILED'||a.status==='ERROR')k.ANAK_GAGAL++;
+  }
+  return k;
 }
 function inFilter(v){
   if(sel.filter==='SEMUA') return true;
@@ -274,6 +283,7 @@ function laporanHtml(run){
       <div class="tile"><div class="n" style="color:var(--fail)">${k.FAILED}</div><div class="l">failed</div></div>
       <div class="tile"><div class="n" style="color:var(--skip)">${k.SKIPPED}</div><div class="l">skipped</div></div>
       <div class="tile"><div class="n" style="color:var(--lain)">${k.LAIN}</div><div class="l">${tr('lain','other')}</div></div>
+      ${k.ANAK_GAGAL?`<div class="tile"><div class="n" style="color:var(--fail)">${k.ANAK_GAGAL}</div><div class="l">${tr('anak gagal','sub-stages failed')}</div></div>`:''}
     </div>
     <div class="filters">
       ${['SEMUA','PASSED','FAILED','SKIPPED','LAIN'].map(f=>
@@ -288,6 +298,11 @@ function laporanHtml(run){
       ${tr('= masalah skrip ujian, bukan aplikasi','= test script problem, not the app')}
     </div>
     <div class="scroll" id="tbl">${tableHtml(run)}</div>
+    ${String(run.id||'').endsWith('T14-12')?`<div style="padding:8px 12px;font-size:.6rem;color:var(--dim);border-top:1px solid var(--line);background:var(--fail-bg)">
+      <b>${tr('Semakan 2026-10-09 (Fix#24)','Revision 2026-10-09 (Fix#24)')}:</b>
+      ${tr('Laporan asal kata "borang P: LULUS" — itu SALAH dan pemilik nampak sendiri kemaskini P beku pada 0%. Puncanya SKRIP: induk menelan kegagalan anak. Selepas Fix#24, borang P dan K[2/3] ialah GAGAL-BERSEBAB dengan 3 dan 2 anak GAGAL di dalamnya (kemaskini beku, hantar StaleElement/tak jumpai rekod, senarai tak jumpai rekod). Larian tetap diteruskan; hanya verdik kini jujur.',
+           'Original report said "borang P: PASSED" — WRONG; the owner watched kemaskini P freeze at 0%. Cause was the SCRIPT: parent swallowed child failures. After Fix#24, borang P and K[2/3] are FAILED-DUE-TO-CHILD with 3 and 2 failed sub-stages (kemaskini frozen, hantar StaleElement/record not found, senarai record not found). The run still continued; only the verdict is now honest.')}
+    </div>`:''}
     ${String(run.id||'').endsWith('T11-48')?`<div style="padding:8px 12px;font-size:.6rem;color:var(--dim);border-top:1px solid var(--line);background:var(--skip-bg)">
       <b>${tr('Semakan 2026-10-08','Revision 2026-10-08')}:</b>
       ${tr('T-005 dikeluarkan daripada GAGAL — percubaan 1 gagal (D-08), percubaan 2 LULUS, jadi keputusan akhir LULUS. K-004 ditanda PERLU RETEST kerana automasi dan manual menguji langkah berbeza. Jumlah GAGAL: 7 -> 5 (+1 perlu retest).',
@@ -302,11 +317,33 @@ function laporanHtml(run){
 function renderTableOnly(run){ const t=document.getElementById('tbl'); if(t&&run) t.innerHTML=tableHtml(run); }
 function tableHtml(run){
   const q=sel.q.toLowerCase();
+  // >>> Anak (sub-peringkat) ikut induk — FIX#24 <<<
+  // Ringkasan JSON membawa `anak[]` dengan medan `induk`. Tanpa baris
+  // ini, `borang P: FAILED` kelihatan sama seperti kegagalan borang
+  // besar; dengan baris ini, sebabnya kelihatan (kemaskini beku 0%,
+  // hantar tak jumpa rekod).
+  const anakIkut={};
+  for(const a of (run.anak||[])){
+    const k=a.induk||'(tiada induk)';
+    (anakIkut[k]=anakIkut[k]||[]).push(a);
+  }
   const rows=Object.entries(run.results)
     .filter(([tc,v])=>inFilter(v))
     .filter(([tc,v])=>!q || tc.toLowerCase().includes(q) ||
       (v.nama||'').toLowerCase().includes(q) || (v.sebab||'').toLowerCase().includes(q));
   if(!rows.length) return `<div class="empty">${tr('Tiada TC padan dengan penapis','No TC matches the filter')}</div>`;
+  const anakHtml=(tc)=>{
+    const senarai=anakIkut[tc]; if(!senarai||!senarai.length) return '';
+    return `<div style="margin-top:5px;border-left:2px solid var(--line);padding-left:7px">`+
+      `<div style="font-size:.55rem;color:var(--dimmer);margin-bottom:2px">${tr('Sub-peringkat','Sub-stages')} (${senarai.length})</div>`+
+      senarai.map(a=>{const m=stMeta(a.status);
+        return `<div style="font-size:.58rem;margin:1px 0;display:flex;gap:5px;align-items:baseline">`+
+        `<span style="min-width:88px;color:${m.c};font-weight:600">${esc(a.peringkat||'?')}</span>`+
+        `<span class="badge" style="color:${m.c};background:${m.bg};border-color:${m.c}55;font-size:.5rem">${m.label}</span>`+
+        `<span style="color:var(--dim);flex:1">${esc((a.nota||'').slice(0,120))}</span>`+
+        `<span style="color:var(--dimmer);white-space:nowrap">${a.tempoh_s||0}s</span></div>`;
+      }).join('')+`</div>`;
+  };
   return `<table><thead><tr><th style="width:120px">TC</th><th style="width:190px">${tr('Nama','Name')}</th>
     <th style="width:96px">Status</th><th style="width:82px">${tr('Jenis','Type')}</th>
     <th>${tr('Apa berlaku','What happened')}</th><th style="width:78px">${tr('Bukti','Evidence')}</th></tr></thead><tbody>
@@ -327,9 +364,10 @@ function tableHtml(run){
       const kit=EN?(v.kitaran_en||v.kitaran):v.kitaran;
       const kitH=kit?`<div style="margin-top:4px;padding:4px 6px;background:var(--skip-bg);border-left:2px solid var(--lain);border-radius:3px"><span style="color:var(--dimmer)">${tr('Kitaran','Cycle')}:</span> ${esc(kit)}</div>`:'';
       const tek=v.sebab?`<div style="margin-top:4px;font-size:.58rem;color:var(--dimmer);border-top:1px solid var(--line);padding-top:3px">${tr('Log teknikal','Technical log')}: ${esc(v.sebab)}</div>`:'';
+      const anakH=anakHtml(tc);
       return `<tr><td class="tc">${tc}</td><td>${esc(v.nama||'—')}</td>
       <td><span class="badge" style="color:${m.c};background:${m.bg};border-color:${m.c}55">${m.label}</span></td>
-      <td>${j}</td><td>${utama||esc(v.sebab||'—')}${lanjut}${kesanH}${tindakH}${kitH}${tek}</td><td>${bukti}</td></tr>`;}).join('')}
+      <td>${j}</td><td>${utama||esc(v.sebab||'—')}${lanjut}${kesanH}${tindakH}${kitH}${tek}${anakH}</td><td>${bukti}</td></tr>`;}).join('')}
   </tbody></table>`;
 }
 

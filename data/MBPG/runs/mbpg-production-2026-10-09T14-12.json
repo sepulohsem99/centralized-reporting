@@ -8,10 +8,12 @@
  "device_model": "Ulefone Armor 27 (5008TF2010009401)",
  "duration_seconds": 7342,
  "summary": {
-  "passed": 20,
-  "failed": 2,
+  "passed": 17,
+  "failed": 5,
   "skipped": 0,
-  "lain": 0
+  "lain": 0,
+  "anak": 45,
+  "anak_gagal": 7
  },
  "rekod_production": [
   "PGP02N261009009",
@@ -45,7 +47,7 @@
   }
  ],
  "sumber": "Konsol run_penuh.py --borang NPK, 2026-10-09 (14:12:51 -> 16:15:14), MBPG_MOD_SEBENAR=1, MBPG_IZIN_PRODUCTION=1, MBPG_DRY_RUN=1. Log: reports/log/run-20261009-141246.log (+ .json). 22 peringkat: 20 LULUS / 2 GAGAL, TANPA HENTI AWAL. [CORONG] 499 tap dinilai, 0 disekat — Fix#22 (dialog hasil Hantar Gambar) berjaya; run pertama sampai HABIS dengan borang P & K. 5 cetakan keluar printer SPP-R410_110095 (N, P, K x3) — disahkan mata pemilik.",
- "nota_bahasa": "Larian penuh PERTAMA yang selesai hujung-ke-hujung. Fix#21 (kalendar julat) dan Fix#22 (dialog Hantar Gambar) berjaya: borang N kini LULUS PENUH termasuk peringkat `hantar` yang sebelum ini membunuh setiap run. Borang P dan K juga berjalan. 5 kertas tercetak. 2 kegagalan yang tinggal KEDUA-DUANYA bukan skrip: D-09 (identiti mySIKAP melekat merentas plat — PII orang sebenar) dan T-005 (D-08, app keluar latar, retry LULUS). Selebihnya kegagalan sub-peringkat berpunca D-12 (had 10 baris) dan D-13 (kemaskini P beku).",
+ "nota_bahasa": "Larian penuh PERTAMA yang selesai hujung-ke-hujung. Fix#21 (kalendar julat) dan Fix#22 (dialog Hantar Gambar) berjaya; 5 kertas tercetak. REVISI Fix#24: sub-peringkat kini DIKIRA. Borang P dan K[2/3] bukan lagi 'LULUS' — di dalamnya ada kemaskini yang beku pada 0%, hantar StaleElement, dan senarai yang tidak menjumpai rekod. Punca kekaburan laporan lama ialah skrip (induk menelan kegagalan anak), bukan app.",
  "nota_bukti": "reports/log/run-20261009-141246.log; reports/REKOD-SEBENAR-DICIPTA-2026-10-09.md; reports/e2e-screenshots/; reports/forensik/20261009-160155-semak-D-09.*; docs/D-12-SENARAI-HAD-10-BARIS.md; reports/tap_ledger.jsonl.",
  "results": {
   "gerbang siri": {
@@ -129,9 +131,9 @@
    "nota": "{'tag': 'N-001', 'borang': 'N', 'no_rekod': 'PGP02N261009011', 'no_siri': 12, 'masa': '2026-10-09 14:31:26', 'pesalah': "
   },
   "borang P": {
-   "status": "LULUS",
+   "status": "GAGAL-BERSEBASTIAN",
    "tempoh_s": 1731.2,
-   "nota": "{'tag': 'P-001', 'borang': 'P', 'no_rekod': 'PGP02P261009027', 'no_siri': 28, 'masa': '2026-10-09 14:48:21', 'pesalah': "
+   "nota": "induk LULUS tetapi 3 anak GAGAL: kemaskini, hantar, senarai — {'tag': 'P-001', 'borang': 'P', 'no_rekod': 'PGP02P261009027', 'no_siri': 28, 'masa': '202"
   },
   "borang K [1/3] JYX6605": {
    "status": "LULUS",
@@ -139,14 +141,14 @@
    "nota": "{'tag': 'K-001', 'borang': 'K', 'no_rekod': 'PGP02K261009028', 'no_siri': 29, 'masa': '2026-10-09 15:19:23', 'pesalah': "
   },
   "borang K [2/3] JUA3276": {
-   "status": "LULUS",
+   "status": "GAGAL-BERSEBASTIAN",
    "tempoh_s": 1220.1,
-   "nota": "{'tag': 'K-001', 'borang': 'K', 'no_rekod': 'PGP02K261009029', 'no_siri': 30, 'masa': '2026-10-09 15:35:15', 'pesalah': "
+   "nota": "induk LULUS tetapi 2 anak GAGAL: hantar, senarai — {'tag': 'K-001', 'borang': 'K', 'no_rekod': 'PGP02K261009029', 'no_siri': 30, 'masa': '202"
   },
   "borang K [3/3] JRT2649": {
-   "status": "LULUS",
+   "status": "GAGAL-BERSEBASTIAN",
    "tempoh_s": 999.8,
-   "nota": "{'tag': 'K-001', 'borang': 'K', 'no_rekod': 'PGP02K261009031', 'no_siri': 32, 'masa': '2026-10-09 15:55:36', 'pesalah': "
+   "nota": "induk LULUS tetapi 2 anak GAGAL: hantar, senarai — {'tag': 'K-001', 'borang': 'K', 'no_rekod': 'PGP02K261009031', 'no_siri': 32, 'masa': '202"
   },
   "semak D-09": {
    "status": "GAGAL",
@@ -158,5 +160,322 @@
    "tempoh_s": 795.9,
    "nota": "3 lulus, 0 gagal — senarai={'baris_dipapar': 9, 'dijumpai': ['P; hantar={'sebelum': {'H-001': {'jumlah': 6, '; tarik={'s"
   }
- }
+ },
+ "anak": [
+  {
+   "peringkat": "bookmark N-005",
+   "induk": "borang N",
+   "status": "TIDAK-DISOKONG",
+   "tempoh_s": 369.3,
+   "nota": "had build 2.1.23 disahkan (popup tiada medan nama/SIMPAN); set MBPG_CUBA_BOOKMARK=1 untuk cuba semula pada build baharu"
+  },
+  {
+   "peringkat": "cipta",
+   "induk": "borang N",
+   "status": "LULUS",
+   "tempoh_s": 176.0,
+   "nota": "no_rekod=PGP02N261009011"
+  },
+  {
+   "peringkat": "cetak",
+   "induk": "borang N",
+   "status": "LULUS",
+   "tempoh_s": 12.3,
+   "nota": "printer SPP-R410_110095"
+  },
+  {
+   "peringkat": "kemaskini",
+   "induk": "borang N",
+   "status": "LULUS",
+   "tempoh_s": 246.3,
+   "nota": "PGP02N261009011 -> PGP02N261009012"
+  },
+  {
+   "peringkat": "tn_nk",
+   "induk": "borang N",
+   "status": "SKIP-TIDAK-LAYAK",
+   "tempoh_s": 0.5,
+   "nota": "notis PGP02N261009012 bertempoh 14 hari; layak ditukar pada 2026-10-23. Skrin Notis Kompaun TIDAK disentuh (D-07: membuka borang membakar nombor siri). Arahan pemilik 2026-08-17 + docs/recon/DAPATAN-N"
+  },
+  {
+   "peringkat": "hantar",
+   "induk": "borang N",
+   "status": "LULUS",
+   "tempoh_s": 216.3,
+   "nota": "status baris PGP02N261009012 = ['N', '2026-10-09', '14:34', 'M', 'A', 'msc']"
+  },
+  {
+   "peringkat": "senarai",
+   "induk": "borang N",
+   "status": "LULUS",
+   "tempoh_s": 25.9,
+   "nota": "PGP02N261009012 kelihatan dalam Senarai Kompaun"
+  },
+  {
+   "peringkat": "lampiran N-003",
+   "induk": "borang N",
+   "status": "LULUS",
+   "tempoh_s": 38.4,
+   "nota": "lampiran kamera diterima pada PGP02N261009012"
+  },
+  {
+   "peringkat": "p006",
+   "induk": "borang N",
+   "status": "PERLU-MATA",
+   "tempoh_s": 0.0,
+   "nota": "laluan cetak terbuka; tandatangan pada cetakan PGP02N261009012 perlu disemak fizikal oleh pemilik"
+  },
+  {
+   "peringkat": "bookmark P-005",
+   "induk": "borang P",
+   "status": "TIDAK-DISOKONG",
+   "tempoh_s": 321.4,
+   "nota": "had build 2.1.23 disahkan (popup tiada medan nama/SIMPAN); set MBPG_CUBA_BOOKMARK=1 untuk cuba semula pada build baharu"
+  },
+  {
+   "peringkat": "cipta",
+   "induk": "borang P",
+   "status": "LULUS",
+   "tempoh_s": 150.8,
+   "nota": "no_rekod=PGP02P261009027"
+  },
+  {
+   "peringkat": "cetak",
+   "induk": "borang P",
+   "status": "LULUS",
+   "tempoh_s": 12.7,
+   "nota": "printer SPP-R410_110095"
+  },
+  {
+   "peringkat": "kemaskini",
+   "induk": "borang P",
+   "status": "GAGAL",
+   "tempoh_s": 320.8,
+   "nota": "popup proses BEKU pada 0% — kemaskini tidak lengkap (PGP02P261009027 tidak berkemaskini). Dapatan app, disahkan manual tester."
+  },
+  {
+   "peringkat": "tn_nk",
+   "induk": "borang P",
+   "status": "TIDAK-DITAWARKAN",
+   "tempoh_s": 1.1,
+   "nota": "TN/NK hanya wujud untuk borang N"
+  },
+  {
+   "peringkat": "hantar",
+   "induk": "borang P",
+   "status": "GAGAL",
+   "tempoh_s": 590.5,
+   "nota": "StaleElementReferenceException: Message: The referenced element is no longer attached to the DOM; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdrive"
+  },
+  {
+   "peringkat": "senarai",
+   "induk": "borang P",
+   "status": "GAGAL",
+   "tempoh_s": 195.4,
+   "nota": "StaleElementReferenceException: Message: The referenced element is no longer attached to the DOM; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdrive"
+  },
+  {
+   "peringkat": "lampiran",
+   "induk": "borang P",
+   "status": "TIDAK-DITAWARKAN",
+   "tempoh_s": 138.0,
+   "nota": "N-003 sahaja dalam senarai retest; P/K/L/S-003 ialah serah, bukan lampiran, pada MBPG"
+  },
+  {
+   "peringkat": "p006",
+   "induk": "borang P",
+   "status": "PERLU-MATA",
+   "tempoh_s": 0.0,
+   "nota": "laluan cetak terbuka; tandatangan pada cetakan PGP02P261009027 perlu disemak fizikal oleh pemilik"
+  },
+  {
+   "peringkat": "bookmark K-005",
+   "induk": "borang K [1/3] JYX6605",
+   "status": "TIDAK-DISOKONG",
+   "tempoh_s": 515.2,
+   "nota": "had build 2.1.23 disahkan (popup tiada medan nama/SIMPAN); set MBPG_CUBA_BOOKMARK=1 untuk cuba semula pada build baharu"
+  },
+  {
+   "peringkat": "cipta",
+   "induk": "borang K [1/3] JYX6605",
+   "status": "LULUS",
+   "tempoh_s": 86.6,
+   "nota": "no_rekod=PGP02K261009028"
+  },
+  {
+   "peringkat": "cetak",
+   "induk": "borang K [1/3] JYX6605",
+   "status": "LULUS",
+   "tempoh_s": 12.3,
+   "nota": "printer SPP-R410_110095"
+  },
+  {
+   "peringkat": "kemaskini",
+   "induk": "borang K [1/3] JYX6605",
+   "status": "TIDAK-DITAWARKAN",
+   "tempoh_s": 103.9,
+   "nota": "rekod PGP02K261009028 tidak dijumpai dalam Senarai"
+  },
+  {
+   "peringkat": "tn_nk",
+   "induk": "borang K [1/3] JYX6605",
+   "status": "TIDAK-DITAWARKAN",
+   "tempoh_s": 0.0,
+   "nota": "TN/NK hanya wujud untuk borang N"
+  },
+  {
+   "peringkat": "hantar",
+   "induk": "borang K [1/3] JYX6605",
+   "status": "LULUS",
+   "tempoh_s": 194.2,
+   "nota": "status baris PGP02K261009028 = ['K', '2026-10-09', '15:18', 'H', 'A', 'msc']"
+  },
+  {
+   "peringkat": "senarai",
+   "induk": "borang K [1/3] JYX6605",
+   "status": "LULUS",
+   "tempoh_s": 27.6,
+   "nota": "PGP02K261009028 kelihatan dalam Senarai Kompaun"
+  },
+  {
+   "peringkat": "lampiran",
+   "induk": "borang K [1/3] JYX6605",
+   "status": "TIDAK-DITAWARKAN",
+   "tempoh_s": 0.4,
+   "nota": "N-003 sahaja dalam senarai retest; P/K/L/S-003 ialah serah, bukan lampiran, pada MBPG"
+  },
+  {
+   "peringkat": "p006",
+   "induk": "borang K [1/3] JYX6605",
+   "status": "PERLU-MATA",
+   "tempoh_s": 0.0,
+   "nota": "laluan cetak terbuka; tandatangan pada cetakan PGP02K261009028 perlu disemak fizikal oleh pemilik"
+  },
+  {
+   "peringkat": "bookmark K-005",
+   "induk": "borang K [2/3] JUA3276",
+   "status": "TIDAK-DISOKONG",
+   "tempoh_s": 522.6,
+   "nota": "had build 2.1.23 disahkan (popup tiada medan nama/SIMPAN); set MBPG_CUBA_BOOKMARK=1 untuk cuba semula pada build baharu"
+  },
+  {
+   "peringkat": "cipta",
+   "induk": "borang K [2/3] JUA3276",
+   "status": "LULUS",
+   "tempoh_s": 88.2,
+   "nota": "no_rekod=PGP02K261009029"
+  },
+  {
+   "peringkat": "cetak",
+   "induk": "borang K [2/3] JUA3276",
+   "status": "LULUS",
+   "tempoh_s": 12.4,
+   "nota": "printer SPP-R410_110095"
+  },
+  {
+   "peringkat": "kemaskini",
+   "induk": "borang K [2/3] JUA3276",
+   "status": "LULUS",
+   "tempoh_s": 271.7,
+   "nota": "PGP02K261009029 -> PGP02K261009030"
+  },
+  {
+   "peringkat": "tn_nk",
+   "induk": "borang K [2/3] JUA3276",
+   "status": "TIDAK-DITAWARKAN",
+   "tempoh_s": 0.4,
+   "nota": "TN/NK hanya wujud untuk borang N"
+  },
+  {
+   "peringkat": "hantar",
+   "induk": "borang K [2/3] JUA3276",
+   "status": "GAGAL",
+   "tempoh_s": 273.4,
+   "nota": "status baris PGP02K261009030 = None"
+  },
+  {
+   "peringkat": "senarai",
+   "induk": "borang K [2/3] JUA3276",
+   "status": "GAGAL",
+   "tempoh_s": 50.2,
+   "nota": "PGP02K261009030 TIDAK kelihatan dalam Senarai Kompaun"
+  },
+  {
+   "peringkat": "lampiran",
+   "induk": "borang K [2/3] JUA3276",
+   "status": "TIDAK-DITAWARKAN",
+   "tempoh_s": 0.8,
+   "nota": "N-003 sahaja dalam senarai retest; P/K/L/S-003 ialah serah, bukan lampiran, pada MBPG"
+  },
+  {
+   "peringkat": "p006",
+   "induk": "borang K [2/3] JUA3276",
+   "status": "PERLU-MATA",
+   "tempoh_s": 0.0,
+   "nota": "laluan cetak terbuka; tandatangan pada cetakan PGP02K261009030 perlu disemak fizikal oleh pemilik"
+  },
+  {
+   "peringkat": "bookmark K-005",
+   "induk": "borang K [3/3] JRT2649",
+   "status": "TIDAK-DISOKONG",
+   "tempoh_s": 520.0,
+   "nota": "had build 2.1.23 disahkan (popup tiada medan nama/SIMPAN); set MBPG_CUBA_BOOKMARK=1 untuk cuba semula pada build baharu"
+  },
+  {
+   "peringkat": "cipta",
+   "induk": "borang K [3/3] JRT2649",
+   "status": "LULUS",
+   "tempoh_s": 88.7,
+   "nota": "no_rekod=PGP02K261009031"
+  },
+  {
+   "peringkat": "cetak",
+   "induk": "borang K [3/3] JRT2649",
+   "status": "LULUS",
+   "tempoh_s": 12.5,
+   "nota": "printer SPP-R410_110095"
+  },
+  {
+   "peringkat": "kemaskini",
+   "induk": "borang K [3/3] JRT2649",
+   "status": "TIDAK-DITAWARKAN",
+   "tempoh_s": 101.5,
+   "nota": "rekod PGP02K261009031 tidak dijumpai dalam Senarai"
+  },
+  {
+   "peringkat": "tn_nk",
+   "induk": "borang K [3/3] JRT2649",
+   "status": "TIDAK-DITAWARKAN",
+   "tempoh_s": 0.0,
+   "nota": "TN/NK hanya wujud untuk borang N"
+  },
+  {
+   "peringkat": "hantar",
+   "induk": "borang K [3/3] JRT2649",
+   "status": "GAGAL",
+   "tempoh_s": 224.2,
+   "nota": "status baris PGP02K261009031 = None"
+  },
+  {
+   "peringkat": "senarai",
+   "induk": "borang K [3/3] JRT2649",
+   "status": "GAGAL",
+   "tempoh_s": 51.6,
+   "nota": "PGP02K261009031 TIDAK kelihatan dalam Senarai Kompaun"
+  },
+  {
+   "peringkat": "lampiran",
+   "induk": "borang K [3/3] JRT2649",
+   "status": "TIDAK-DITAWARKAN",
+   "tempoh_s": 0.8,
+   "nota": "N-003 sahaja dalam senarai retest; P/K/L/S-003 ialah serah, bukan lampiran, pada MBPG"
+  },
+  {
+   "peringkat": "p006",
+   "induk": "borang K [3/3] JRT2649",
+   "status": "PERLU-MATA",
+   "tempoh_s": 0.0,
+   "nota": "laluan cetak terbuka; tandatangan pada cetakan PGP02K261009031 perlu disemak fizikal oleh pemilik"
+  }
+ ]
 }
