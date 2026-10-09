@@ -257,12 +257,14 @@ function render(){
     <div class="tab ${sel.tab==='manual'?'on':''}" onclick="pickTab('manual')">Manual User</div>
     <div class="tab ${sel.tab==='rekod'?'on':''}" onclick="pickTab('rekod')">${tr('Rekod Production','Production Records')}</div>
     <div class="tab ${sel.tab==='padanan'?'on':''}" onclick="pickTab('padanan')">${tr('Padanan Human','Human Match')}</div>
+    <div class="tab ${sel.tab==='nota'?'on':''}" onclick="pickTab('nota')">${tr('Nota & Semakan','Notes & Revisions')}</div>
     <div class="tab ${sel.tab==='gap'?'on':''}" onclick="pickTab('gap')">Gap Analysis</div>
   </div>`;
   if(sel.tab==='laporan') h+=laporanHtml(run);
   else if(sel.tab==='sejarah') h+=sejarahHtml(runs);
   else if(sel.tab==='rekod') h+=rekodHtml();
   else if(sel.tab==='padanan') h+=padananHtml(run);
+  else if(sel.tab==='nota') h+=notaHtml(run);
   else if(sel.tab==='ganti') h+=`<div class="panel"><div class="tut" id="gantiWrap"><div class="empty">${tr('memuat...','loading...')}</div></div></div>`;
   else if(sel.tab==='gap') h+=gapHtml();
   else h+=manualHtml(sel.pbt);
@@ -338,24 +340,39 @@ function laporanHtml(run){
       ${tr('= masalah skrip ujian, bukan aplikasi','= test script problem, not the app')}
     </div>
     <div class="scroll" id="tbl">${tableHtml(run)}</div>
-    ${ringkasPadanan(run)}
-    ${String(run.id||'').endsWith('T14-12')?`<div style="padding:8px 12px;font-size:.6rem;color:var(--dim);border-top:1px solid var(--line);background:var(--fail-bg)">
-      <b>${tr('Semakan 2026-10-09 (Fix#24)','Revision 2026-10-09 (Fix#24)')}:</b>
-      ${tr('Laporan asal kata "borang P: LULUS" — itu SALAH dan pemilik nampak sendiri kemaskini P beku pada 0%. Puncanya SKRIP: induk menelan kegagalan anak. Selepas Fix#24, borang P dan K[2/3] ialah GAGAL-BERSEBAB dengan 3 dan 2 anak GAGAL di dalamnya (kemaskini beku, hantar StaleElement/tak jumpai rekod, senarai tak jumpai rekod). Larian tetap diteruskan; hanya verdik kini jujur.',
-           'Original report said "borang P: PASSED" — WRONG; the owner watched kemaskini P freeze at 0%. Cause was the SCRIPT: parent swallowed child failures. After Fix#24, borang P and K[2/3] are FAILED-DUE-TO-CHILD with 3 and 2 failed sub-stages (kemaskini frozen, hantar StaleElement/record not found, senarai record not found). The run still continued; only the verdict is now honest.')}
-    </div>`:''}
-    ${String(run.id||'').endsWith('T11-48')?`<div style="padding:8px 12px;font-size:.6rem;color:var(--dim);border-top:1px solid var(--line);background:var(--skip-bg)">
-      <b>${tr('Semakan 2026-10-08','Revision 2026-10-08')}:</b>
-      ${tr('T-005 dikeluarkan daripada GAGAL — percubaan 1 gagal (D-08), percubaan 2 LULUS, jadi keputusan akhir LULUS. K-004 ditanda PERLU RETEST kerana automasi dan manual menguji langkah berbeza. Jumlah GAGAL: 7 -> 5 (+1 perlu retest).',
-           'T-005 removed from FAILED — attempt 1 failed (D-08), attempt 2 PASSED, so the final result is PASSED. K-004 marked NEEDS RETEST because automation and manual exercised different steps. FAILED count: 7 -> 5 (+1 needs retest).')}
-    </div>`:''}
-    ${(run.nota_bahasa||run.nota_bukti)?`<div style="padding:8px 12px;font-size:.6rem;color:var(--dimmer);border-top:1px solid var(--line)">
-      ${run.nota_bahasa?esc(LANG==='EN'?(run.nota_bahasa_en||run.nota_bahasa):run.nota_bahasa):''}
-      ${run.nota_bukti?`<br>${esc(LANG==='EN'?(run.nota_bukti_en||run.nota_bukti):run.nota_bukti)}`:''}
-    </div>`:''}
   </div>`;
 }
 function renderTableOnly(run){ const t=document.getElementById('tbl'); if(t&&run) t.innerHTML=tableHtml(run); }
+
+/* >>> FIX#27 — tab Laporan mesti tinggal JADUAL sahaja. <<<
+   Pemilik: "mengganggu duduk kat sini". Blok padanan + bar semakan +
+   nota bahasa dulu bertimbun terus di bawah jadual dan menolak/menutupi
+   jadual. Ia dipindahkan ke tab 'Padanan Human' (lihat padananHtml);
+   tab Laporan kini = tiles + penapis + legenda + jadual. */
+function notaHtml(run){
+  const blok=[];
+  if(String(run.id||'').endsWith('T14-12')){
+    blok.push(`<div style="padding:8px 12px;font-size:.6rem;color:var(--dim);border:1px solid var(--fail);border-radius:6px;background:var(--fail-bg)">
+      <b>${tr('Semakan 2026-10-09 (Fix#24)','Revision 2026-10-09 (Fix#24)')}:</b>
+      ${tr('Laporan asal kata "borang P: LULUS" — itu SALAH dan pemilik nampak sendiri kemaskini P beku pada 0%. Puncanya SKRIP: induk menelan kegagalan anak. Selepas Fix#24, borang P dan K[2/3] ialah GAGAL-BERSEBAB dengan 3 dan 2 anak GAGAL di dalamnya. Larian tetap diteruskan; hanya verdik kini jujur.',
+           'Original report said "borang P: PASSED" — WRONG; the owner watched kemaskini P freeze at 0%. Cause was the SCRIPT: parent swallowed child failures. After Fix#24, borang P and K[2/3] are FAILED-DUE-TO-CHILD with 3 and 2 failed sub-stages. The run still continued; only the verdict is now honest.')}
+    </div>`);
+  }
+  if(String(run.id||'').endsWith('T11-48')){
+    blok.push(`<div style="padding:8px 12px;font-size:.6rem;color:var(--dim);border:1px solid var(--line);border-radius:6px;background:var(--skip-bg)">
+      <b>${tr('Semakan 2026-10-08','Revision 2026-10-08')}:</b>
+      ${tr('T-005 dikeluarkan daripada GAGAL — percubaan 1 gagal (D-08), percubaan 2 LULUS. K-004 ditanda PERLU RETEST. Jumlah GAGAL: 7 -> 5 (+1 perlu retest).',
+           'T-005 removed from FAILED — attempt 1 failed (D-08), attempt 2 PASSED. K-004 marked NEEDS RETEST. FAILED count: 7 -> 5 (+1 needs retest).')}
+    </div>`);
+  }
+  if(run.nota_bahasa||run.nota_bukti){
+    blok.push(`<div style="padding:8px 12px;font-size:.6rem;color:var(--dimmer);border:1px solid var(--line);border-radius:6px">
+      ${run.nota_bahasa?esc(LANG==='EN'?(run.nota_bahasa_en||run.nota_bahasa):run.nota_bahasa):''}
+      ${run.nota_bukti?`<br>${esc(LANG==='EN'?(run.nota_bukti_en||run.nota_bukti):run.nota_bukti)}`:''}
+    </div>`);
+  }
+  return blok.length?`<div style="display:flex;flex-direction:column;gap:7px;padding:10px">${blok.join('')}</div>`:'';
+}
 
 /* ================= RINGKAS PADANAN (tambah 2026-10-09) =================
    Pemilik dua kali kata dia TAK NAMPAK padanan: ia hanya hidup di dalam
@@ -414,14 +431,35 @@ function padananHtml(run){
   const bil={};
   for(const x of p) bil[x.verdict]=(bil[x.verdict]||0)+1;
   const tanpaBukti=p.filter(x=>!x.bukti).length;
+  const nFail=p.filter(x=>x.human==='Fail').length;
+  const nGagal=p.filter(x=>x.auto==='GAGAL').length;
+  const nPadan=bil['PADAN']||0;
+  // Legenda verdik — pembaca bukan teknikal perlu tahu maksud label ini.
+  const LEGENDA=[
+    ['PADAN','Automasi dan human sama-sama gagal pada perkara yang sama.'],
+    ['SEBAGIAN','Dua-dua gagal, tetapi sebab berbeza.'],
+    ['TAK BOLEH BANDING','Automasi gagal lebih awal, jadi ia tidak pernah sampai ke langkah yang human uji.'],
+    ['AUTOMASI BUTA','Skrip kata LULUS, human kata Fail — skrip tidak memeriksa perkara yang human periksa.'],
+    ['BERCANGGAH (HUMAN)','Laporan human bercanggah sendiri (status Fail tetapi catatan menerangkan kejayaan).'],
+    ['TAK DIUJI','Di luar skop automasi (contoh: siri Lesen/Sitaan).'],
+    ['HANYA AUTOMASI','Defek yang automasi jumpa tetapi human tidak pernah menguji.'],
+  ];
   return `<div class="panel">
     <div style="padding:11px 13px;border-bottom:1px solid var(--line)">
-      <b style="font-size:.85rem">${tr('Padanan: 5 GAGAL automasi vs 8 Fail laporan human (V2.1.25)','Match: 5 automation FAILED vs 8 human FAIL (V2.1.25)')}</b>
+      <b style="font-size:.85rem">${tr(`Padanan: ${nGagal} GAGAL automasi vs ${nFail} Fail laporan human (V2.1.25)`,
+                                        `Match: ${nGagal} automation FAILED vs ${nFail} human FAIL (V2.1.25)`)}</b>
       <div style="margin-top:6px;color:var(--dim);font-size:.65rem;line-height:1.5">
-        ${tr('Jawapannya TIDAK padan sepenuhnya. Hanya 1 padan penuh. Sebab utama: 3 daripada 5 GAGAL automasi berpunca daripada BUG SKRIP (penapis tarikh), bukan app — jadi automasi gagal lebih awal dan tidak sempat menguji langkah yang human uji.','The answer is NO, not a full match. Only 1 matches fully. Main reason: 3 of the 5 automation FAILs were caused by a SCRIPT BUG (date filter), not the app — so automation failed earlier and never exercised the steps the human did.')}
+        ${tr(`Jawapannya TIDAK padan sepenuhnya. Hanya ${nPadan} padan penuh. Sebahagian GAGAL automasi berpunca daripada BUG SKRIP (penapis tarikh separuh), bukan app — jadi automasi gagal lebih awal dan tidak sempat menguji langkah yang human uji.`,
+             `The answer is NO, not a full match. Only ${nPadan} match fully. Some automation FAILs came from a SCRIPT BUG (half date filter), not the app — so automation failed earlier and never reached the steps the human tested.`)}
       </div>
       <div style="margin-top:7px;display:flex;gap:6px;flex-wrap:wrap;font-size:.6rem">
         ${Object.entries(bil).map(([k,v])=>`<span class="badge" style="color:${pv(k).c};background:${pv(k).bg};border-color:${pv(k).c}55">${esc(k)}: ${v}</span>`).join('')}
+      </div>
+    </div>
+    <div style="padding:9px 13px;border-bottom:1px solid var(--line);background:var(--panel2)">
+      <b style="font-size:.6rem;text-transform:uppercase;letter-spacing:1px;color:var(--dimmer)">${tr('Maksud label','Label meanings')}</b>
+      <div style="margin-top:5px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:5px;font-size:.6rem">
+        ${LEGENDA.map(([k,d])=>`<div><span class="badge" style="color:${pv(k).c};background:${pv(k).bg};border-color:${pv(k).c}55;font-size:.5rem">${esc(k)}</span> <span style="color:var(--dim)">${esc(d)}</span></div>`).join('')}
       </div>
     </div>
     <div class="scroll">
