@@ -1,9 +1,9 @@
 {
  "pbt": "MBPG",
- "dijana": "2026-10-09 10:49",
- "jumlah_rekod": 95,
- "jumlah_baris": 105,
- "jumlah_larian": 15,
+ "dijana": "2026-10-09 12:57",
+ "jumlah_rekod": 97,
+ "jumlah_baris": 107,
+ "jumlah_larian": 16,
  "nota": "Setiap rekod di bawah ialah rekod HIDUP pada production MBPG (113.211.155.174). Semua ialah data ujian: nama pesalah bermula 'UJIAN AUTOMASI E2E' dan catatan membawa 'AUTOMASI-CLEANUP-PM'. Baris tanpa nombor = laluan kemaskini yang tidak menghasilkan nombor gantian (diketahui). Pembatalan melalui portal ePBT oleh PM — automasi TIDAK memadam apa-apa.",
  "runs": [
   {
@@ -1471,6 +1471,44 @@
      "printer": "SPP-R410_110095"
     }
    ]
+  },
+  {
+   "no_larian": 16,
+   "label": "Larian #16",
+   "mula": "2026-10-09 12:35",
+   "tamat": "2026-10-09 12:40",
+   "tarikh": "2026-10-09",
+   "bilangan": 2,
+   "bilangan_bernombor": 2,
+   "bilangan_cetak": 1,
+   "no_rekod": [
+    "PGP02N261009009",
+    "PGP02N261009010"
+   ],
+   "rekod": [
+    {
+     "no_rekod": "PGP02N261009009",
+     "tc": "N-001",
+     "borang": "N",
+     "jenis": "Notis",
+     "masa": "2026-10-09 12:35:53",
+     "status": "baru",
+     "asal": "",
+     "cetak_dihantar": true,
+     "printer": "SPP-R410_110095"
+    },
+    {
+     "no_rekod": "PGP02N261009010",
+     "tc": "N-004",
+     "borang": "N",
+     "jenis": "Notis",
+     "masa": "2026-10-09 12:40:26",
+     "status": "hasil-kemaskini",
+     "asal": "PGP02N261009009",
+     "cetak_dihantar": false,
+     "printer": ""
+    }
+   ]
   }
  ],
  "semua_nombor": [
@@ -1547,6 +1585,8 @@
   "PGP02N261005006",
   "PGP02N261008007",
   "PGP02N261008008",
+  "PGP02N261009009",
+  "PGP02N261009010",
   "PGP02P260818001",
   "PGP02P260818002",
   "PGP02P260818003",

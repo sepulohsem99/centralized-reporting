@@ -1,0 +1,113 @@
+{
+ "id": "mbpg-production-2026-10-09T12-16",
+ "pbt": "MBPG",
+ "env": "production",
+ "app_version": "2.1.25",
+ "generated_at": "2026-10-09T12:16:49",
+ "tester": "mrsai",
+ "device_model": "Ulefone Armor 27 (5008TF2010009401)",
+ "duration_seconds": 1504,
+ "summary": {
+  "passed": 14,
+  "failed": 2,
+  "skipped": 0,
+  "lain": 0
+ },
+ "rekod_production": [
+  "PGP02N261009009",
+  "PGP02N261009010"
+ ],
+ "penemuan_app": [
+  {
+   "kod": "D-12-SENARAI-HAD-10",
+   "tajuk": "Senarai Kompaun: had 10 baris KERAS tanpa pagination/skrol/susunan",
+   "butiran": "Skrin Senarai memapar TEPAT 10 baris PERTAMA (terlama) dalam julat tarikh dan tiada mekanisme ke baris ke-11: komponen `pagination-container` WUJUD dalam DOM tetapi KOSONG (sifar anak, 162px); jadual TIADA elemen scrollable (swipe diterima, 0px anjakan); 3 header (NO/NO AKAUN/KETERANGAN) clickable tetapi tap TIDAK mengubah susunan; panel carian (No Kompaun/Notis, Tarikh Mula/Akhir, CARI) menerima input tetapi DIABAIKAN — 3 kes ujian (nombor dalam-10 dan luar-10) pulang 10 baris IDENTIK. Kesan: rekod ke-11+ tidak boleh dibuka terus melalui UI; ini punca SEBENAR SK-001 dan kegagalan Kemaskini rekod hari yang sibuk. Klasifikasi: APP (bukan skrip).",
+   "jenis": "APP"
+  }
+ ],
+ "sumber": "Konsol run_penuh.py --borang NPK --terus, 2026-10-09 (12:16:49 -> 12:41:53), MBPG_MOD_SEBENAR=1, MBPG_IZIN_PRODUCTION=1, MBPG_DRY_RUN=1. Log: reports/log/run-20261009-121644.log (+ .json). Retest selepas Fix#21 (kalendar julat). 16 peringkat: 14 LULUS / 2 GAGAL. HENTI AWAL: borang N mati pada DryRunViolation (dialog hasil Hantar Gambar 'Ralat | Beberapa gambar tidak berjaya di muatnaik' — butang OK disekat corong). P dan K tidak diuji. Milestone: N-004 (kemaskini) LULUS 260.1s — salah satu daripada 7 GAGAL asal, kini lulus selepas Fix#21.",
+ "nota_bahasa": "Retest selepas Fix#21. Enam daripada tujuh kegagalan larian sebelum ini berpunca daripada SATU kecacatan skrip (pemilih tarikh JULAT) — kini dibaiki dan disahkan secara langsung: kemaskini rekod PGP02N261009009 -> PGP02N261009010 LULUS. Kegagalan yang tinggal (SK-001) ialah kecacatan APP: skrin Senarai memapar 10 baris sahaja tanpa pagination, skrol atau carian yang berfungsi. Larian berhenti awal kerana dialog hasil Hantar Gambar disekat corong; P dan K belum diuji.",
+ "nota_bukti": "Bukti: reports/log/run-20261009-121644.log; reports/forensik/20261009-124151__tiada__OK.xml (dialog terlibat); reports/e2e-screenshots/N-001-03-selepas-kemaskini-20261009-124026.png; docs/D-12-SENARAI-HAD-10-BARIS.md; probe ui_dumps/probe_cari5_*.xml.",
+ "results": {
+  "gerbang siri": {
+   "status": "LULUS",
+   "tempoh_s": 0,
+   "nota": "kaunter selamat (95 nombor diketahui)"
+  },
+  "sesi": {
+   "status": "LULUS",
+   "tempoh_s": 130.4,
+   "nota": "sesi + login + mod sebenar HIDUP"
+  },
+  "tetapan T-001": {
+   "status": "LULUS",
+   "tempoh_s": 16.3,
+   "nota": "external padan profil; internal kosong (D-02 — nota, bukan gagal)"
+  },
+  "tetapan T-002": {
+   "status": "LULUS",
+   "tempoh_s": 7.1,
+   "nota": "lesen padan profil (baca balik)"
+  },
+  "selaras T-003": {
+   "status": "LULUS",
+   "tempoh_s": 23.8,
+   "nota": "Selaras Pengguna Apps"
+  },
+  "selaras T-004": {
+   "status": "LULUS",
+   "tempoh_s": 118.0,
+   "nota": "Selaras Maklumat Alamat"
+  },
+  "selaras T-005": {
+   "status": "GAGAL",
+   "tempoh_s": 24.8,
+   "nota": "AssertionError: [_scroll_down] App TERKELUAR dari latar hadapan (package semasa 'com.android.lau"
+  },
+  "selaras T-005 (retry)": {
+   "status": "LULUS",
+   "tempoh_s": 25.2,
+   "nota": "Selaras Maklumat Kompaun"
+  },
+  "selaras T-006": {
+   "status": "LULUS",
+   "tempoh_s": 24.2,
+   "nota": "Selaras Maklumat Jenis Kenderaan"
+  },
+  "selaras T-007": {
+   "status": "LULUS",
+   "tempoh_s": 24.1,
+   "nota": "Selaras Maklumat Warna"
+  },
+  "selaras T-009": {
+   "status": "LULUS",
+   "tempoh_s": 24.2,
+   "nota": "Selaras Maklumat Barang Sita"
+  },
+  "tetapan T-010": {
+   "status": "LULUS",
+   "tempoh_s": 38.3,
+   "nota": "Tetapan Skrin Utama"
+  },
+  "tetapan T-011": {
+   "status": "LULUS",
+   "tempoh_s": 30.9,
+   "nota": "Semak Kemaskini"
+  },
+  "selaras": {
+   "status": "LULUS",
+   "tempoh_s": 459.3,
+   "nota": "10 lulus, 0 gagal daripada 6 modul selaras + T-010/T-011 (T-008 TIDAK disentuh)"
+  },
+  "gerbang kod kompaun": {
+   "status": "LULUS",
+   "tempoh_s": 0,
+   "nota": "9 baris kod kompaun dalam DB peranti"
+  },
+  "borang N": {
+   "status": "GAGAL",
+   "tempoh_s": 909.3,
+   "nota": "DryRunViolation: "
+  }
+ }
+}
