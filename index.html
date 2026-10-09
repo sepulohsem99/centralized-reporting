@@ -444,6 +444,13 @@ function padananHtml(run){
     ['TAK DIUJI','Di luar skop automasi (contoh: siri Lesen/Sitaan).'],
     ['HANYA AUTOMASI','Defek yang automasi jumpa tetapi human tidak pernah menguji.'],
   ];
+  // Maksud token statushantar — disahkan pemilik 2026-10-09.
+  // Hanya 'H' bermakna rekod sampai ke server production.
+  const TOKEN=[
+    ['H','hantar — berjaya sampai ke server production (LULUS)'],
+    ['M','belum naik — masih tersimpan di peranti, TIDAK sampai server'],
+    ['T','tidak hantar — tersimpan tempatan sahaja, TIDAK dihantar'],
+  ];
   return `<div class="panel">
     <div style="padding:11px 13px;border-bottom:1px solid var(--line)">
       <b style="font-size:.85rem">${tr(`Padanan: ${nGagal} GAGAL automasi vs ${nFail} Fail laporan human (V2.1.25)`,
@@ -460,6 +467,12 @@ function padananHtml(run){
       <b style="font-size:.6rem;text-transform:uppercase;letter-spacing:1px;color:var(--dimmer)">${tr('Maksud label','Label meanings')}</b>
       <div style="margin-top:5px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:5px;font-size:.6rem">
         ${LEGENDA.map(([k,d])=>`<div><span class="badge" style="color:${pv(k).c};background:${pv(k).bg};border-color:${pv(k).c}55;font-size:.5rem">${esc(k)}</span> <span style="color:var(--dim)">${esc(d)}</span></div>`).join('')}
+      </div>
+      <div style="margin-top:8px;border-top:1px dashed var(--line);padding-top:7px">
+        <b style="font-size:.6rem;text-transform:uppercase;letter-spacing:1px;color:var(--dimmer)">${tr('Token Status Hantar','Send status tokens')}</b>
+        <div style="margin-top:5px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:5px;font-size:.6rem">
+          ${TOKEN.map(([k,d])=>`<div><code style="color:var(--dim);font-size:.6rem">${esc(k)}</code> <span style="color:var(--dim)">${esc(d)}</span></div>`).join('')}
+        </div>
       </div>
     </div>
     <div class="scroll">
